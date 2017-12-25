@@ -21,28 +21,33 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.selectable.common;
+package cubicchunks.asm.mixin.core.common;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import cubicchunks.world.ICubicWorldServer;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.WorldServer;
+import cubicchunks.event.CCEventFactory;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.WorldSettings;
+import net.minecraft.world.WorldType;
+import net.minecraft.world.storage.ISaveHandler;
+import net.minecraft.world.storage.WorldInfo;
 
-@Mixin(value = WorldServer.class, priority = 1001)
-public abstract class MixinWorldServer_UpdateBlocks implements ICubicWorldServer {
+@Mixin(MinecraftServer.class)
+public class MixinMinecraftServer {
 
-    /**
-     * This redirection (if selected by {@link cubicchunks.asm.CubicChunksMixinConfig})
-     * will return value {@code 0} instead of {@code getGameRules().getInt("randomTickSpeed")} for cubic type worlds.
-     * Redirected function is located inside WorldServer.updateBlocks() function at a line 404.
-     * Returned zero will cause {@code if (i > 0)} check at a line 474 to fail and random block ticks skipped.
-     * For cubic worlds random block ticks handled inside {@link cubicchunks.world.cube.Cube} class.
-     **/
-    @Redirect(method = "updateBlocks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/GameRules;getInt(Ljava/lang/String;)I"), require = 1)
-    public int redirectGetRandomTickSpeed(GameRules gameRules, String ruleName) {
-        return this.isCubicWorld() ? 0 : gameRules.getInt(ruleName);
+    @Inject(method = "loadAllWorlds",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/WorldSettings;setGeneratorOptions(Ljava/lang/String;)Lnet/minecraft/world/WorldSettings;",
+                    shift = At.Shift.AFTER
+            ),
+            locals = LocalCapture.CAPTURE_FAILHARD)
+    private void onWorldSettingsCreate(String saveName, String worldNameIn, long seed, WorldType type, String generatorOptions, CallbackInfo cbi, ISaveHandler isavehandler, WorldInfo worldinfo, WorldSettings worldsettings) {
+        CCEventFactory.onWorldSettingsCreate(worldsettings);
     }
+
 }
