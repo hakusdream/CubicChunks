@@ -21,15 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static cubicchunks.asm.JvmNames.BLOCK_POS;
-import static cubicchunks.asm.JvmNames.BLOCK_POS_ADD;
-import static cubicchunks.asm.JvmNames.BLOCK_POS_CONSTR_ENTITY;
-import static cubicchunks.asm.JvmNames.BLOCK_POS_DOWN;
-import static cubicchunks.asm.JvmNames.WORLD_SERVER_GET_ACTUAL_HEIGHT;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_ADD;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_CONSTR_ENTITY;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_DOWN;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_SERVER_GET_ACTUAL_HEIGHT;
 
-import cubicchunks.asm.JvmNames;
+import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;

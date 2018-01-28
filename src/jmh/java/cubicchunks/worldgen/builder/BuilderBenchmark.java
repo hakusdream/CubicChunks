@@ -24,7 +24,7 @@
 package cubicchunks.worldgen.builder;
 
 import com.google.common.collect.AbstractIterator;
-import cubicchunks.worldgen.generator.custom.builder.IBuilder;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.IBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;

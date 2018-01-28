@@ -21,13 +21,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.selectable.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.selectable.common;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import cubicchunks.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.WorldServer;
 

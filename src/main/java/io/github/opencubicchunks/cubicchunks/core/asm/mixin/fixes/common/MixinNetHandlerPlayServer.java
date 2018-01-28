@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;

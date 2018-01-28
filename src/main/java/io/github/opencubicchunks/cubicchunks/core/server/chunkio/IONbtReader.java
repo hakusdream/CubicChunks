@@ -21,18 +21,18 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.server.chunkio;
+package io.github.opencubicchunks.cubicchunks.core.server.chunkio;
 
-import static cubicchunks.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.lighting.LightingManager;
-import cubicchunks.util.Coords;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.ICubicWorldServer;
-import cubicchunks.world.ServerHeightMap;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;

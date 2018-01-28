@@ -21,16 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.client;
+package io.github.opencubicchunks.cubicchunks.core.client;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.XYZMap;
-import cubicchunks.world.ICubeProvider;
-import cubicchunks.world.ICubicWorldClient;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.BlankCube;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import jline.internal.Preconditions;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.multiplayer.ChunkProviderClient;

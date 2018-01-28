@@ -23,7 +23,7 @@
  */
 package cubicchunks.worldgen.builder;
 
-import static cubicchunks.util.MathUtil.lerp;
+import static io.github.opencubicchunks.cubicchunks.core.util.MathUtil.lerp;
 
 import mcp.MethodsReturnNonnullByDefault;
 

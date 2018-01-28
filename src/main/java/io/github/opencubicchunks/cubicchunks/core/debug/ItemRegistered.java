@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.debug;
+package io.github.opencubicchunks.cubicchunks.core.debug;
 
-import cubicchunks.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.Item;
 

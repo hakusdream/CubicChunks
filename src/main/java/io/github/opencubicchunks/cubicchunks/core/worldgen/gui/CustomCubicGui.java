@@ -21,21 +21,21 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.malisisText;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.vanillaText;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.vanillaText;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonSyntaxException;
-import cubicchunks.CubicChunks;
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
-import cubicchunks.worldgen.gui.component.NoTranslationFont;
-import cubicchunks.worldgen.gui.component.UIBorderLayout;
-import cubicchunks.worldgen.gui.component.UIColoredPanel;
-import cubicchunks.worldgen.gui.component.UIMultilineLabel;
-import cubicchunks.worldgen.gui.component.UITabbedContainer;
-import cubicchunks.worldgen.gui.component.UIVerticalTableLayout;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.NoTranslationFont;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIBorderLayout;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIColoredPanel;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIMultilineLabel;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UITabbedContainer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIVerticalTableLayout;
 import mcp.MethodsReturnNonnullByDefault;
 import net.malisis.core.client.gui.Anchor;
 import net.malisis.core.client.gui.GuiRenderer;

@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.util;
+package io.github.opencubicchunks.cubicchunks.core.util;
 
 public class IntRange {
     private final int min, max;

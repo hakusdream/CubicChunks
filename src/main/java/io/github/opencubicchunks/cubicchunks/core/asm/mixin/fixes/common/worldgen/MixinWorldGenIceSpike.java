@@ -21,14 +21,14 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.common.worldgen;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldgen;
 
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 
-import cubicchunks.util.Coords;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.worldgen.generator.custom.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

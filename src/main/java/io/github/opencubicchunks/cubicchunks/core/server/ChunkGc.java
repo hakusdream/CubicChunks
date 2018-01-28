@@ -21,13 +21,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.server;
+package io.github.opencubicchunks.cubicchunks.core.server;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.CubicChunks.Config;
-import cubicchunks.IConfigUpdateListener;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks.Config;
+import io.github.opencubicchunks.cubicchunks.core.IConfigUpdateListener;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 
 import java.util.Collection;

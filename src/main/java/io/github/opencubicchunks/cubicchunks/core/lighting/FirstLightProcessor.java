@@ -21,22 +21,22 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.lighting;
+package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.blockToLocal;
-import static cubicchunks.util.Coords.cubeToMaxBlock;
-import static cubicchunks.util.Coords.cubeToMinBlock;
-import static cubicchunks.util.Coords.getCubeCenter;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMaxBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.getCubeCenter;
 
-import cubicchunks.util.FastCubeBlockAccess;
-import cubicchunks.util.MathUtil;
-import cubicchunks.world.ICubeProvider;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.ICubicWorldServer;
-import cubicchunks.world.IHeightMap;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.util.FastCubeBlockAccess;
+import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenCustomHashMap;
 import it.unimi.dsi.fastutil.ints.IntHash;

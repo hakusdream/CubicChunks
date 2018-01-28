@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import cubicchunks.util.Bits;
+import io.github.opencubicchunks.cubicchunks.core.util.Bits;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;

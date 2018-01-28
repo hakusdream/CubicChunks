@@ -21,15 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static cubicchunks.asm.JvmNames.BLOCK_FALLING_CAN_FALL_THROUGH;
-import static cubicchunks.asm.JvmNames.BLOCK_POS_GETY;
-import static cubicchunks.asm.JvmNames.WORLD_IS_AIR_BLOCK;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_FALLING_CAN_FALL_THROUGH;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_GETY;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AIR_BLOCK;
 
-import cubicchunks.asm.MixinUtils;
-import cubicchunks.util.CubePos;
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;

@@ -21,13 +21,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world.cube;
+package io.github.opencubicchunks.cubicchunks.core.world.cube;
 
-import cubicchunks.lighting.LightingManager;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.ticket.TicketList;
-import cubicchunks.world.BlankEntityContainer;
-import cubicchunks.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.ticket.TicketList;
+import io.github.opencubicchunks.cubicchunks.core.world.BlankEntityContainer;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

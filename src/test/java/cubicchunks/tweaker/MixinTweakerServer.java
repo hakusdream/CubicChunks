@@ -23,8 +23,8 @@
  */
 package cubicchunks.tweaker;
 
-import cubicchunks.asm.CubicChunksCoreMod;
-import cubicchunks.util.ReflectionUtil;
+import io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksCoreMod;
+import io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;

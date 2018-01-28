@@ -21,28 +21,28 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.entity.CubicEntityTracker;
-import cubicchunks.lighting.FirstLightProcessor;
-import cubicchunks.server.ChunkGc;
-import cubicchunks.server.CubeProviderServer;
-import cubicchunks.server.PlayerCubeMap;
-import cubicchunks.util.AddressTools;
-import cubicchunks.util.Bits;
-import cubicchunks.util.Coords;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.IntRange;
-import cubicchunks.world.CubeWorldEntitySpawner;
-import cubicchunks.world.CubicSaveHandler;
-import cubicchunks.world.FastCubeWorldEntitySpawner;
-import cubicchunks.world.ICubicWorldServer;
-import cubicchunks.world.NotCubicChunksWorldException;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.IProviderExtras.Requirement;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.world.provider.ICubicWorldProvider;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
+import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;
+import io.github.opencubicchunks.cubicchunks.core.server.ChunkGc;
+import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.util.Bits;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.world.CubeWorldEntitySpawner;
+import io.github.opencubicchunks.cubicchunks.core.world.CubicSaveHandler;
+import io.github.opencubicchunks.cubicchunks.core.world.FastCubeWorldEntitySpawner;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras.Requirement;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

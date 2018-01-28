@@ -21,39 +21,36 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks;
+package io.github.opencubicchunks.cubicchunks.core;
 
-import static cubicchunks.api.worldgen.biome.CubicBiome.oceanWaterReplacer;
-import static cubicchunks.api.worldgen.biome.CubicBiome.surfaceDefaultReplacer;
-import static cubicchunks.api.worldgen.biome.CubicBiome.terrainShapeReplacer;
+import static io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome.oceanWaterReplacer;
+import static io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome.terrainShapeReplacer;
 
-import cubicchunks.debug.DebugTools;
-import cubicchunks.debug.DebugWorldType;
-import cubicchunks.network.PacketDispatcher;
-import cubicchunks.proxy.CommonProxy;
-import cubicchunks.server.chunkio.async.forge.AsyncWorldIOExecutor;
-import cubicchunks.world.type.CustomCubicWorldType;
-import cubicchunks.world.type.FlatCubicWorldType;
-import cubicchunks.world.type.VanillaCubicWorldType;
-import cubicchunks.worldgen.generator.CubeGeneratorsRegistry;
-import cubicchunks.api.worldgen.biome.CubicBiome;
-import cubicchunks.worldgen.generator.custom.ConversionUtils;
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
-import cubicchunks.worldgen.generator.custom.biome.replacer.MesaSurfaceReplacer;
-import cubicchunks.worldgen.generator.custom.biome.replacer.MutatedSavannaSurfaceReplacer;
-import cubicchunks.worldgen.generator.custom.biome.replacer.SwampWaterWithLilypadReplacer;
-import cubicchunks.worldgen.generator.custom.biome.replacer.TaigaSurfaceReplacer;
-import cubicchunks.worldgen.generator.custom.populator.DefaultDecorator;
-import cubicchunks.worldgen.generator.custom.populator.DesertDecorator;
-import cubicchunks.worldgen.generator.custom.populator.ForestDecorator;
-import cubicchunks.worldgen.generator.custom.populator.HillsDecorator;
-import cubicchunks.worldgen.generator.custom.populator.JungleDecorator;
-import cubicchunks.worldgen.generator.custom.populator.MesaDecorator;
-import cubicchunks.worldgen.generator.custom.populator.PlainsDecorator;
-import cubicchunks.worldgen.generator.custom.populator.SavannaDecorator;
-import cubicchunks.worldgen.generator.custom.populator.SnowBiomeDecorator;
-import cubicchunks.worldgen.generator.custom.populator.SwampDecorator;
-import cubicchunks.worldgen.generator.custom.populator.TaigaDecorator;
+import io.github.opencubicchunks.cubicchunks.core.debug.DebugWorldType;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
+import io.github.opencubicchunks.cubicchunks.core.proxy.CommonProxy;
+import io.github.opencubicchunks.cubicchunks.core.world.type.CustomCubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.world.type.FlatCubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.world.type.VanillaCubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubeGeneratorsRegistry;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.MesaSurfaceReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.MutatedSavannaSurfaceReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.SwampWaterWithLilypadReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.TaigaSurfaceReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.DefaultDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.DesertDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.ForestDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.HillsDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.JungleDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.MesaDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PlainsDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.SavannaDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.SnowBiomeDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.SwampDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.TaigaDecorator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -75,7 +72,6 @@ import net.minecraft.world.biome.BiomeSnow;
 import net.minecraft.world.biome.BiomeStoneBeach;
 import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.biome.BiomeTaiga;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.ModFixs;
@@ -94,7 +90,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkCheckHandler;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
-import net.minecraftforge.fml.common.versioning.ComparableVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 import net.minecraftforge.fml.common.versioning.VersionRange;
@@ -118,7 +113,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @Mod(modid = CubicChunks.MODID,
         name = "CubicChunks",
         version = CubicChunks.VERSION,
-        guiFactory = "cubicchunks.client.GuiFactory",
+        guiFactory = "io.github.opencubicchunks.cubicchunks.core.client.GuiFactory",
         //@formatter:off
         dependencies = "after:forge@[13.20.1.2454,)"/*@@DEPS_PLACEHOLDER@@*/)// This will be replaced by gradle with full deps list not alter it
         //@formatter:on
@@ -152,7 +147,7 @@ public class CubicChunks {
     @Nonnull
     public static Logger LOGGER = LogManager.getLogger("EarlyCubicChunks");//use some logger even before it's set. useful for unit tests
 
-    @SidedProxy(clientSide = "cubicchunks.proxy.ClientProxy", serverSide = "cubicchunks.proxy.ServerProxy")
+    @SidedProxy(clientSide = "io.github.opencubicchunks.cubicchunks.core.proxy.ClientProxy", serverSide = "io.github.opencubicchunks.cubicchunks.core.proxy.ServerProxy")
     public static CommonProxy proxy;
 
     @Nullable

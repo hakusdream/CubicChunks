@@ -21,10 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.server;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.server;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.server.dedicated.DedicatedServer;
 import org.spongepowered.asm.mixin.Mixin;

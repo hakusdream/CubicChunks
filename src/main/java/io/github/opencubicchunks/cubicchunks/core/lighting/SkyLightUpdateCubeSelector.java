@@ -21,16 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.lighting;
+package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static cubicchunks.util.Coords.cubeToMaxBlock;
-import static cubicchunks.util.Coords.cubeToMinBlock;
-import static cubicchunks.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMaxBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
 
-import cubicchunks.util.Coords;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 import mcp.MethodsReturnNonnullByDefault;

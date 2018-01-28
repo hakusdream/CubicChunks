@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.client;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
-import cubicchunks.event.CCEventFactory;
+import io.github.opencubicchunks.cubicchunks.core.event.CCEventFactory;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraft.world.WorldSettings;

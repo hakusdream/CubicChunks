@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui.event;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui.event;
 
 import net.malisis.core.util.MouseButton;
 

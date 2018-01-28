@@ -21,24 +21,24 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.server;
+package io.github.opencubicchunks.cubicchunks.core.server;
 
 import com.google.common.base.Predicate;
-import cubicchunks.CubicChunks;
-import cubicchunks.api.CubeUnWatchEvent;
-import cubicchunks.api.CubeWatchEvent;
-import cubicchunks.lighting.LightingManager;
-import cubicchunks.network.PacketCubeBlockChange;
-import cubicchunks.network.PacketDispatcher;
-import cubicchunks.network.PacketUnloadCube;
-import cubicchunks.server.chunkio.async.forge.AsyncWorldIOExecutor;
-import cubicchunks.util.AddressTools;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.XYZAddressable;
-import cubicchunks.util.ticket.ITicket;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.IProviderExtras;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeUnWatchEvent;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeWatchEvent;
+import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketCubeBlockChange;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketUnloadCube;
+import io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge.AsyncWorldIOExecutor;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
+import io.github.opencubicchunks.cubicchunks.core.util.ticket.ITicket;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.list.TShortList;
 import gnu.trove.list.array.TShortArrayList;
 import gnu.trove.map.TIntObjectMap;

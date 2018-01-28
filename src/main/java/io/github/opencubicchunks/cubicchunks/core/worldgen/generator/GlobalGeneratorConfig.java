@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator;
 
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 
 /**
  * Configuration values for the CubicChunks custom terrain generator

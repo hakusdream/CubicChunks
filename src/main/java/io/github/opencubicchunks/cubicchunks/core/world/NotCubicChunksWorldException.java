@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world;
+package io.github.opencubicchunks.cubicchunks.core.world;
 
 import mcp.MethodsReturnNonnullByDefault;
 

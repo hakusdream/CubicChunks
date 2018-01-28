@@ -21,14 +21,14 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
 import com.google.common.base.Predicate;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.IHeightMap;
-import cubicchunks.world.column.CubeMap;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.CubeMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

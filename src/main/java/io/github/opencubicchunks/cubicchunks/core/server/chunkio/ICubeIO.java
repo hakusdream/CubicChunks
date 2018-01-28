@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.server.chunkio;
+package io.github.opencubicchunks.cubicchunks.core.server.chunkio;
 
-import cubicchunks.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.storage.IThreadedFileIO;
 
@@ -31,7 +31,7 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 
 public interface ICubeIO extends IThreadedFileIO {
 	void flush() throws IOException;

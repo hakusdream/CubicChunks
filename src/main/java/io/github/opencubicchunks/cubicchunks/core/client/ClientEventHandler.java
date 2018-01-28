@@ -21,16 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.client;
+package io.github.opencubicchunks.cubicchunks.core.client;
 
-import cubicchunks.CommonEventHandler;
-import cubicchunks.CubicChunks;
-import cubicchunks.CubicChunks.Config.IntOptions;
-import cubicchunks.event.CreateNewWorldEvent;
-import cubicchunks.server.ICubicPlayerList;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.ICubicWorldSettings;
-import cubicchunks.world.type.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.CommonEventHandler;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks.Config.IntOptions;
+import io.github.opencubicchunks.cubicchunks.core.event.CreateNewWorldEvent;
+import io.github.opencubicchunks.cubicchunks.core.server.ICubicPlayerList;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldSettings;
+import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

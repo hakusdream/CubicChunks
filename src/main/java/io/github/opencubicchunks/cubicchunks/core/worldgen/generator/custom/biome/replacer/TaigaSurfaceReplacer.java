@@ -21,10 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom.biome.replacer;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer;
 
-import cubicchunks.api.worldgen.biome.CubicBiome;
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.state.IBlockState;

@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.network;
+package io.github.opencubicchunks.cubicchunks.core.network;
 
 import com.google.common.base.Preconditions;
-import cubicchunks.util.AddressTools;
-import cubicchunks.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
 import gnu.trove.list.TByteList;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.array.TByteArrayList;

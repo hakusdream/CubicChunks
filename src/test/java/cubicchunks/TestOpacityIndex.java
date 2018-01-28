@@ -27,10 +27,10 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.Lists;
-import cubicchunks.util.Bits;
-import cubicchunks.util.Coords;
-import cubicchunks.world.IHeightMap;
-import cubicchunks.world.ServerHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.util.Bits;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
 import mcp.MethodsReturnNonnullByDefault;
 import org.junit.Test;
 import org.junit.runner.RunWith;

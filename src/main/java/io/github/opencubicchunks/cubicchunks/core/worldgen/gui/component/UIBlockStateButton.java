@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui.component;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import org.lwjgl.opengl.GL11;
 
-import cubicchunks.worldgen.gui.DummyWorld;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.DummyWorld;
 import net.malisis.core.client.gui.GuiRenderer;
 import net.malisis.core.client.gui.MalisisGui;
 import net.malisis.core.client.gui.component.UIComponent;

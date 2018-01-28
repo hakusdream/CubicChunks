@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.noncritical.common.command;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static cubicchunks.asm.JvmNames.COMMAND_BASE_PARSE_DOUBLE;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.COMMAND_BASE_PARSE_DOUBLE;
 
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

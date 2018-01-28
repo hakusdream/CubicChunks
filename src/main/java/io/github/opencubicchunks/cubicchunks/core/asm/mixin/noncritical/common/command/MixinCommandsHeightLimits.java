@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.noncritical.common.command;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandClone;
 import net.minecraft.command.CommandCompare;

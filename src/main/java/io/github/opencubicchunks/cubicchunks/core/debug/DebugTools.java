@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.debug;
+package io.github.opencubicchunks.cubicchunks.core.debug;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.debug.item.GetLightValueItem;
-import cubicchunks.debug.item.RelightSkyBlockItem;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.debug.item.GetLightValueItem;
+import io.github.opencubicchunks.cubicchunks.core.debug.item.RelightSkyBlockItem;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

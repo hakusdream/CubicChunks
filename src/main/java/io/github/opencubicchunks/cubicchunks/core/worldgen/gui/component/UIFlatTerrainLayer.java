@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui.component;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component;
 
-import cubicchunks.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import net.malisis.core.client.gui.Anchor;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.malisis.core.client.gui.component.container.UIContainer;
@@ -34,14 +34,14 @@ import net.malisis.core.client.gui.component.interaction.UITextField;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.malisisText;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
 
 import com.google.common.eventbus.Subscribe;
 
-import cubicchunks.worldgen.generator.flat.Layer;
-import cubicchunks.worldgen.gui.FlatCubicGui;
-import cubicchunks.worldgen.gui.FlatLayersTab;
-import cubicchunks.worldgen.gui.SelectBlockGui;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.flat.Layer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.FlatCubicGui;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.FlatLayersTab;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.SelectBlockGui;
 
 public class UIFlatTerrainLayer extends UIContainer<UIFlatTerrainLayer> {
 

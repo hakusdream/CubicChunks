@@ -21,12 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static cubicchunks.asm.JvmNames.BLOCK_POS_GETY;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_GETY;
 
-import cubicchunks.asm.MixinUtils;
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkCache;

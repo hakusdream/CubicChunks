@@ -21,17 +21,17 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
 import com.google.common.base.Preconditions;
-import cubicchunks.worldgen.gui.component.UIFlatTerrainLayer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIFlatTerrainLayer;
 
-import static cubicchunks.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
 
 import java.util.Collection;
 
-import cubicchunks.worldgen.gui.component.UIBlockStateButton;
-import cubicchunks.worldgen.gui.component.UIItemGrid;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIBlockStateButton;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIItemGrid;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.minecraft.block.state.IBlockState;
 

@@ -21,19 +21,19 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom.structure.feature;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature;
 
-import static cubicchunks.util.Coords.blockCeilToCube;
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.cubeToCenterBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockCeilToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToCenterBlock;
 import static java.lang.Math.cos;
 import static java.lang.Math.round;
 import static java.lang.Math.sin;
 
 import com.google.common.collect.Lists;
-import cubicchunks.util.Coords;
-import cubicchunks.util.CubePos;
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;

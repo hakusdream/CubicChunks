@@ -1,6 +1,6 @@
 {
     "required": true,
-    "package": "cubicchunks.asm.mixin.selectable",
+    "package": "io.github.opencubicchunks.cubicchunks.core.asm.mixin.selectable",
     "refmap": "cubicchunks.mixins.refmap.json",
     "compatibilityLevel": "JAVA_8",
     "minVersion": "0.6.15-SNAPSHOT",

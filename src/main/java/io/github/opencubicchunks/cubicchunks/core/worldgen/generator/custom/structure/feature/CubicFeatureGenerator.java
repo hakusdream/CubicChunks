@@ -21,16 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom.structure.feature;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature;
 
-import static cubicchunks.util.Coords.cubeToCenterBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToCenterBlock;
 
-import cubicchunks.util.CubePos;
-import cubicchunks.util.XYZMap;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.worldgen.generator.ICubePrimer;
-import cubicchunks.worldgen.generator.custom.structure.CubicStructureGenerator;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.CubicStructureGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;

@@ -21,18 +21,18 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.client;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
-import static cubicchunks.asm.JvmNames.BLOCK_POS_GETY;
-import static cubicchunks.asm.JvmNames.CHUNK_GET_ENTITY_LISTS;
-import static cubicchunks.asm.JvmNames.WORLD_CLIENT_GET_CHUNK_FROM_BLOCK_COORDS;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_GETY;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_GET_ENTITY_LISTS;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_CLIENT_GET_CHUNK_FROM_BLOCK_COORDS;
 
-import cubicchunks.util.ClassInheritanceMultiMapFactory;
-import cubicchunks.util.Coords;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.BlankCube;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.util.ClassInheritanceMultiMapFactory;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.ViewFrustum;

@@ -21,10 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom.builder;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder;
 
-import cubicchunks.util.MathUtil;
-import cubicchunks.util.cache.HashCacheDoubles;
+import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
+import io.github.opencubicchunks.cubicchunks.core.util.cache.HashCacheDoubles;
 import gnu.trove.function.TDoubleFunction;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.MathHelper;

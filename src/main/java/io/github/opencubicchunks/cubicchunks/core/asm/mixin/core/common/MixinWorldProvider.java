@@ -21,15 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.NotCubicChunksWorldException;
-import cubicchunks.world.SpawnPlaceFinder;
-import cubicchunks.world.provider.ICubicWorldProvider;
-import cubicchunks.world.type.ICubicWorldType;
-import cubicchunks.worldgen.generator.ICubeGenerator;
-import cubicchunks.worldgen.generator.vanilla.VanillaCompatibilityGenerator;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
+import io.github.opencubicchunks.cubicchunks.core.world.SpawnPlaceFinder;
+import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
+import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.vanilla.VanillaCompatibilityGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;

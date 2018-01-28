@@ -23,7 +23,7 @@
  */
 package cubicchunks.testutil;
 
-import cubicchunks.lighting.ILightBlockAccess;
+import io.github.opencubicchunks.cubicchunks.core.lighting.ILightBlockAccess;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.structure.StructureBoundingBox;

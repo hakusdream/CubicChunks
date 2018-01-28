@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.client.isblockloaded;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.client.isblockloaded;
 
-import cubicchunks.asm.JvmNames;
+import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;

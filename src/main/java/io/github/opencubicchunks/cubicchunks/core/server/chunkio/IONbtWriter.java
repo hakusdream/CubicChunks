@@ -21,16 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.server.chunkio;
+package io.github.opencubicchunks.cubicchunks.core.server.chunkio;
 
-import static cubicchunks.util.WorldServerAccess.getPendingTickListEntriesHashSet;
-import static cubicchunks.util.WorldServerAccess.getPendingTickListEntriesThisTick;
+import static io.github.opencubicchunks.cubicchunks.core.util.WorldServerAccess.getPendingTickListEntriesHashSet;
+import static io.github.opencubicchunks.cubicchunks.core.util.WorldServerAccess.getPendingTickListEntriesThisTick;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.util.Coords;
-import cubicchunks.world.ServerHeightMap;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.CompressedStreamTools;

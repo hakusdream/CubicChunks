@@ -21,10 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.noncritical.client;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.client;
 
-import cubicchunks.client.RenderCubeCache;
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.client.RenderCubeCache;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.math.BlockPos;

@@ -21,15 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.noncritical.common.command;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static cubicchunks.asm.JvmNames.BLOCK_POS_GETY;
-import static cubicchunks.asm.JvmNames.ICOMMAND_SENDER_GET_ENTITY_WORLD;
-import static cubicchunks.asm.JvmNames.WORLD_IS_BLOCK_LOADED;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_GETY;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.ICOMMAND_SENDER_GET_ENTITY_WORLD;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_BLOCK_LOADED;
 
-import cubicchunks.asm.MixinUtils;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

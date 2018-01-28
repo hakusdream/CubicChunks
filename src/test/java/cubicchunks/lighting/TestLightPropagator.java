@@ -23,14 +23,14 @@
  */
 package cubicchunks.lighting;
 
-import static cubicchunks.testutil.LightingMatchers.hasCorrectLight;
-import static cubicchunks.testutil.LightingMatchers.range;
+import static io.github.opencubicchunks.cubicchunks.core.testutil.LightingMatchers.hasCorrectLight;
+import static io.github.opencubicchunks.cubicchunks.core.testutil.LightingMatchers.range;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import com.google.common.collect.Lists;
-import cubicchunks.testutil.TestLightBlockAccessImpl;
+import io.github.opencubicchunks.cubicchunks.core.testutil.TestLightBlockAccessImpl;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ReportedException;

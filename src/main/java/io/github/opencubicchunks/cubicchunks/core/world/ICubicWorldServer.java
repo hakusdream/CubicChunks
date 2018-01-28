@@ -21,15 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world;
+package io.github.opencubicchunks.cubicchunks.core.world;
 
-import cubicchunks.IConfigUpdateListener;
-import cubicchunks.entity.CubicEntityTracker;
-import cubicchunks.lighting.FirstLightProcessor;
-import cubicchunks.server.ChunkGc;
-import cubicchunks.server.CubeProviderServer;
-import cubicchunks.server.PlayerCubeMap;
-import cubicchunks.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.IConfigUpdateListener;
+import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
+import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;
+import io.github.opencubicchunks.cubicchunks.core.server.ChunkGc;
+import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
+import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.math.BlockPos;

@@ -21,16 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.common.structuregen;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common.structuregen;
 
-import static cubicchunks.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
 
 import com.google.common.base.Preconditions;
-import cubicchunks.util.CubePos;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
-import cubicchunks.worldgen.generator.custom.structure.feature.ICubicStructureStart;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature.ICubicStructureStart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;

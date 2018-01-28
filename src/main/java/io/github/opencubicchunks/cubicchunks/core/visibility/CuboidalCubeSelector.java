@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.visibility;
+package io.github.opencubicchunks.cubicchunks.core.visibility;
 
-import cubicchunks.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.ChunkPos;
 

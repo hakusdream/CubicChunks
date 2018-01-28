@@ -23,11 +23,11 @@
  */
 package cubicchunks.worldgen.builder;
 
-import static cubicchunks.util.MathUtil.lerp;
+import static io.github.opencubicchunks.cubicchunks.core.util.MathUtil.lerp;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import cubicchunks.worldgen.generator.custom.builder.IBuilder;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.IBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.Vec3i;
 

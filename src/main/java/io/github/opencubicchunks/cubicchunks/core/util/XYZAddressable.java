@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.util;
+package io.github.opencubicchunks.cubicchunks.core.util;
 
 /**
  * Classes implementing this interface represent objects in a 3-dimensional cartesian coordinate system.

@@ -21,11 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,17 +32,16 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import cubicchunks.api.ICubicWorldGenerator;
-import cubicchunks.api.worldgen.biome.CubicBiome;
-import cubicchunks.util.CubePos;
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.ICubicWorldGenerator;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Ints;
 
-import cubicchunks.api.worldgen.populator.ICubicPopulator;
-import net.minecraft.util.math.BlockPos;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.registry.GameRegistry;

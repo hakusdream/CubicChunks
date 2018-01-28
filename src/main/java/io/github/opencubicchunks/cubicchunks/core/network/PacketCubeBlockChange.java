@@ -21,15 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.network;
+package io.github.opencubicchunks.cubicchunks.core.network;
 
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
 import static net.minecraftforge.fml.common.network.ByteBufUtils.readVarInt;
 
-import cubicchunks.util.AddressTools;
-import cubicchunks.util.CubePos;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.TShortCollection;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.set.TIntSet;

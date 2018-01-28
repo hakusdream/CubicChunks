@@ -21,22 +21,22 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.server;
+package io.github.opencubicchunks.cubicchunks.core.server;
 
-import static cubicchunks.util.ReflectionUtil.getFieldGetterHandle;
-import static cubicchunks.util.ReflectionUtil.getFieldSetterHandle;
+import static io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil.getFieldGetterHandle;
+import static io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil.getFieldSetterHandle;
 
 import com.google.common.base.Throwables;
-import cubicchunks.CubicChunks;
-import cubicchunks.network.PacketColumn;
-import cubicchunks.network.PacketDispatcher;
-import cubicchunks.network.PacketHeightMapUpdate;
-import cubicchunks.network.PacketUnloadColumn;
-import cubicchunks.server.chunkio.async.forge.AsyncWorldIOExecutor;
-import cubicchunks.util.AddressTools;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.XZAddressable;
-import cubicchunks.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketColumn;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketHeightMapUpdate;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketUnloadColumn;
+import io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge.AsyncWorldIOExecutor;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.XZAddressable;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import gnu.trove.list.TByteList;
 import gnu.trove.list.array.TByteArrayList;
 import mcp.MethodsReturnNonnullByDefault;

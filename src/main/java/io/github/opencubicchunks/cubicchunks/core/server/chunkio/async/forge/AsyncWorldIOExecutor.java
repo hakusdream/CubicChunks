@@ -17,19 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package cubicchunks.server.chunkio.async.forge;
+package io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
-import cubicchunks.CubicChunks;
-import cubicchunks.server.CubeProviderServer;
-import cubicchunks.server.chunkio.ICubeIO;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.IProviderExtras;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;

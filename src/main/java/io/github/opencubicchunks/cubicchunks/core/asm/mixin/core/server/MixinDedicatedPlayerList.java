@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.server;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.server;
 
-import cubicchunks.asm.mixin.core.common.MixinPlayerList;
+import io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common.MixinPlayerList;
 import net.minecraft.server.dedicated.DedicatedPlayerList;
 import net.minecraft.server.dedicated.DedicatedServer;
 import org.spongepowered.asm.mixin.Mixin;

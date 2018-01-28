@@ -21,35 +21,35 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.api;
+package io.github.opencubicchunks.cubicchunks.api.worldgen;
 
 import javax.annotation.Nullable;
 
-import cubicchunks.server.CubeWatcher;
-import cubicchunks.util.CubePos;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
- * This event fired from server thread every time player stop watching 
- * (stop sending updates to client) {@link Cube} associated with {@link CubeWatcher}. 
+ * This event fired from server thread every time player start to watch 
+ * (sent updates to client) {@link Cube} associated with {@link CubeWatcher}. 
  * This event can be fired several times for a same cube during game session
  * for a same and for a different players.
  *
  * This is not an {@link #isCancelable()} event.
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  */
-public class CubeUnWatchEvent extends Event {
+public class CubeWatchEvent extends Event {
 
     @Nullable private final Cube cube;
     private final CubePos cubePos;
     private final CubeWatcher cubeWatcher;
     private final EntityPlayerMP player;
 
-    public CubeUnWatchEvent(@Nullable Cube cubeIn, CubePos cubePosIn, CubeWatcher cubeWatcherIn, EntityPlayerMP playerIn) {
+    public CubeWatchEvent(@Nullable Cube cubeIn, CubePos cubePosIn, CubeWatcher cubeWatcherIn, EntityPlayerMP playerIn) {
         super();
         cube = cubeIn;
         cubePos = cubePosIn;

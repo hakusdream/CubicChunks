@@ -21,43 +21,65 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.api.worldgen.populator;
+package io.github.opencubicchunks.cubicchunks.api.worldgen;
 
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
+import javax.annotation.Nullable;
+
+import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
- * This event is fired when an {@link Cube} is populated in flat and custom
- * cubic world types. <br> This event is {@link Cancelable}. If canceled, cube
- * will remain untouched by populator. In that case only cube primer and
- * subscribed event handlers will affect cube population. This event is fired on
- * the {@link MinecraftForge#EVENT_BUS}.
+ * This event fired from server thread every time player stop watching 
+ * (stop sending updates to client) {@link Cube} associated with {@link CubeWatcher}. 
+ * This event can be fired several times for a same cube during game session
+ * for a same and for a different players.
+ *
+ * This is not an {@link #isCancelable()} event.
+ * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  */
-@Cancelable
-public class CubePopulatorEvent extends Event {
+public class CubeUnWatchEvent extends Event {
 
-    private final Cube cube;
-    private final ICubicWorld world;
+    @Nullable private final Cube cube;
+    private final CubePos cubePos;
+    private final CubeWatcher cubeWatcher;
+    private final EntityPlayerMP player;
 
-    public CubePopulatorEvent(ICubicWorld worldIn, Cube cubeIn) {
+    public CubeUnWatchEvent(@Nullable Cube cubeIn, CubePos cubePosIn, CubeWatcher cubeWatcherIn, EntityPlayerMP playerIn) {
         super();
         cube = cubeIn;
-        world = worldIn;
+        cubePos = cubePosIn;
+        cubeWatcher = cubeWatcherIn;
+        player = playerIn;
     }
 
+    @Nullable
     public Cube getCube() {
         return cube;
     }
+    
+    public CubePos getCubePos() {
+        return cubePos;
+    }
+    
+    public CubeWatcher getCubeWatcher() {
+        return cubeWatcher;
+    }
 
     public ICubicWorld getWorld() {
-        return world;
+        return (ICubicWorld) player.world;
+    }
+    
+    public EntityPlayerMP getPlayer() {
+        return player;
     }
 
     @Override
     public boolean isCancelable() {
-        return true;
+        return false;
     }
 }

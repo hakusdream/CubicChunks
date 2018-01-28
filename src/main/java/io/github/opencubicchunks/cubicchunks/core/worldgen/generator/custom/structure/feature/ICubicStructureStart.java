@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom.structure.feature;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature;
 
-import cubicchunks.util.CubePos;
-import cubicchunks.util.XYZAddressable;
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
 import net.minecraft.world.World;
 
 public interface ICubicStructureStart extends XYZAddressable {

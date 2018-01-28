@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm;
+package io.github.opencubicchunks.cubicchunks.core.asm;
 
 import java.io.File;
 import java.io.FileReader;

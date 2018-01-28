@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom;
 
 import com.flowpowered.noise.Utils;
 import net.minecraft.world.gen.NoiseGeneratorImproved;

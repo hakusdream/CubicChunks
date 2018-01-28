@@ -21,17 +21,17 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom.builder;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder;
 
-import cubicchunks.util.Coords;
-import cubicchunks.util.cache.HashCache;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.worldgen.generator.custom.ConversionUtils;
-import cubicchunks.api.worldgen.biome.CubicBiome;
-import cubicchunks.worldgen.generator.custom.biome.replacer.BiomeBlockReplacerConfig;
-import cubicchunks.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacer;
-import cubicchunks.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacerProvider;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.util.cache.HashCache;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.BiomeBlockReplacerConfig;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacerProvider;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3i;
@@ -40,7 +40,6 @@ import net.minecraft.world.biome.BiomeProvider;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;

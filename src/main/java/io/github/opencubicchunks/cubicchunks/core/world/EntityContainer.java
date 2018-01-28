@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world;
+package io.github.opencubicchunks.cubicchunks.core.world;
 
 import com.google.common.base.Predicate;
-import cubicchunks.CubicChunks;
-import cubicchunks.util.ClassInheritanceMultiMapFactory;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.util.ClassInheritanceMultiMapFactory;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;

@@ -21,10 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui.component;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component;
 
-import cubicchunks.worldgen.gui.DummyWorld;
-import cubicchunks.worldgen.gui.ExtraGui;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.DummyWorld;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.ExtraGui;
 import net.malisis.core.client.gui.ClipArea;
 import net.malisis.core.client.gui.GuiRenderer;
 import net.malisis.core.client.gui.MalisisGui;

@@ -21,12 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static cubicchunks.asm.JvmNames.IBLOCK_ACCESS_GET_BLOCK_STATE;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.IBLOCK_ACCESS_GET_BLOCK_STATE;
 
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.IMinMaxHeight;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.IMinMaxHeight;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

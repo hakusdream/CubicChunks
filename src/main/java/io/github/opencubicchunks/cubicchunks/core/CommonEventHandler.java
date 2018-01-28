@@ -21,20 +21,20 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks;
+package io.github.opencubicchunks.cubicchunks.core;
 
-import cubicchunks.network.PacketDispatcher;
-import cubicchunks.event.CreateNewWorldEvent;
-import cubicchunks.network.PacketCubicWorldData;
-import cubicchunks.server.SpawnCubes;
-import cubicchunks.util.IntRange;
-import cubicchunks.util.ReflectionUtil;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.ICubicWorldServer;
-import cubicchunks.world.ICubicWorldSettings;
-import cubicchunks.world.WorldSavedCubicChunksData;
-import cubicchunks.world.provider.ICubicWorldProvider;
-import cubicchunks.world.type.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
+import io.github.opencubicchunks.cubicchunks.core.event.CreateNewWorldEvent;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketCubicWorldData;
+import io.github.opencubicchunks.cubicchunks.core.server.SpawnCubes;
+import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldSettings;
+import io.github.opencubicchunks.cubicchunks.core.world.WorldSavedCubicChunksData;
+import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
+import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;

@@ -21,14 +21,14 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.noncritical.common.command;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static cubicchunks.asm.JvmNames.COMMAND_TP_GET_COMMAND_SENDER_AS_PLAYER;
-import static cubicchunks.asm.JvmNames.COMMAND_TP_GET_ENTITY;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.COMMAND_TP_GET_COMMAND_SENDER_AS_PLAYER;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.COMMAND_TP_GET_ENTITY;
 import static net.minecraft.command.CommandBase.getCommandSenderAsPlayer;
 import static net.minecraft.command.CommandBase.getEntity;
 
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandTP;

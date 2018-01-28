@@ -21,20 +21,20 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
-import static cubicchunks.worldgen.gui.CustomCubicGui.HORIZONTAL_INSETS;
-import static cubicchunks.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
-import static cubicchunks.worldgen.gui.CustomCubicGui.VERTICAL_INSETS;
-import static cubicchunks.worldgen.gui.CustomCubicGui.WIDTH_2_COL;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeBiomeList;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeCheckbox;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeExponentialSlider;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeIntSlider;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.malisisText;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.HORIZONTAL_INSETS;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.VERTICAL_INSETS;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.WIDTH_2_COL;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeBiomeList;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeCheckbox;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeExponentialSlider;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeIntSlider;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
 
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
-import cubicchunks.worldgen.gui.component.UIVerticalTableLayout;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIVerticalTableLayout;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.malisis.core.client.gui.component.interaction.UICheckBox;
 import net.malisis.core.client.gui.component.interaction.UISelect;

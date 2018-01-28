@@ -30,10 +30,10 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import cubicchunks.testutil.MinecraftEnvironment;
-import cubicchunks.util.IntRange;
-import cubicchunks.world.ICubicWorldServer;
-import cubicchunks.world.type.FlatCubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.testutil.MinecraftEnvironment;
+import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.type.FlatCubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.server.MinecraftServer;

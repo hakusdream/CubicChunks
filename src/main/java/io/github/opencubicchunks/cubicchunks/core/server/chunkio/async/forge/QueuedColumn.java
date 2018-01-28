@@ -17,11 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package cubicchunks.server.chunkio.async.forge;
+package io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import cubicchunks.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 
 import javax.annotation.Nonnull;

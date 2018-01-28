@@ -21,26 +21,24 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.api.worldgen.biome;
+package io.github.opencubicchunks.cubicchunks.api.worldgen.biome;
 
 import com.google.common.base.Preconditions;
-import cubicchunks.CubicChunks;
-import cubicchunks.api.worldgen.populator.CubicPopulatorList;
-import cubicchunks.api.worldgen.populator.ICubicPopulator;
-import cubicchunks.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacerProvider;
-import cubicchunks.worldgen.generator.custom.biome.replacer.OceanWaterReplacer;
-import cubicchunks.worldgen.generator.custom.biome.replacer.SurfaceDefaultReplacer;
-import cubicchunks.worldgen.generator.custom.biome.replacer.TerrainShapeReplacer;
-import cubicchunks.worldgen.generator.custom.populator.AnimalsPopulator;
-import cubicchunks.worldgen.generator.custom.populator.DefaultDecorator;
-import cubicchunks.worldgen.generator.custom.populator.PrePopulator;
-import cubicchunks.worldgen.generator.custom.populator.SnowBiomeDecorator;
-import cubicchunks.worldgen.generator.custom.populator.SurfaceSnowPopulator;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.CubicPopulatorList;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacerProvider;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.OceanWaterReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.SurfaceDefaultReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.TerrainShapeReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.AnimalsPopulator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.DefaultDecorator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PrePopulator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.SurfaceSnowPopulator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;

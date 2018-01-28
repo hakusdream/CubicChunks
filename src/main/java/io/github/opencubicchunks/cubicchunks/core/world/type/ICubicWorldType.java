@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world.type;
+package io.github.opencubicchunks.cubicchunks.core.world.type;
 
-import cubicchunks.util.IntRange;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;

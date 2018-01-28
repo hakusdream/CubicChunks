@@ -21,44 +21,42 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom;
 
-import static cubicchunks.util.Coords.blockToLocal;
-import static cubicchunks.worldgen.generator.custom.builder.IBuilder.NEGATIVE;
-import static cubicchunks.worldgen.generator.custom.builder.IBuilder.POSITIVE;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.IBuilder.NEGATIVE;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.IBuilder.POSITIVE;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.api.worldgen.biome.CubicBiome;
-import cubicchunks.api.worldgen.populator.CubePopulatorEvent;
-import cubicchunks.api.worldgen.populator.ICubicPopulator;
-import cubicchunks.util.Box;
-import cubicchunks.util.Coords;
-import cubicchunks.util.CubePos;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.worldgen.generator.BasicCubeGenerator;
-import cubicchunks.worldgen.generator.CubeGeneratorsRegistry;
-import cubicchunks.worldgen.generator.CubePrimer;
-import cubicchunks.worldgen.generator.ICubePrimer;
-import cubicchunks.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacer;
-import cubicchunks.worldgen.generator.custom.builder.BiomeSource;
-import cubicchunks.worldgen.generator.custom.builder.IBuilder;
-import cubicchunks.worldgen.generator.custom.builder.NoiseSource;
-import cubicchunks.worldgen.generator.custom.structure.CubicCaveGenerator;
-import cubicchunks.worldgen.generator.custom.structure.CubicRavineGenerator;
-import cubicchunks.worldgen.generator.custom.structure.CubicStructureGenerator;
-import cubicchunks.worldgen.generator.custom.structure.feature.CubicFeatureGenerator;
-import cubicchunks.worldgen.generator.custom.structure.feature.CubicStrongholdGenerator;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.CubePopulatorEvent;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
+import io.github.opencubicchunks.cubicchunks.core.util.Box;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.BasicCubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubeGeneratorsRegistry;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubePrimer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.BiomeSource;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.IBuilder;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.NoiseSource;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.CubicCaveGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.CubicRavineGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.CubicStructureGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature.CubicFeatureGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature.CubicStrongholdGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;

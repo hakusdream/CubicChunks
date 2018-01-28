@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
-import cubicchunks.util.ReflectionUtil;
-import cubicchunks.worldgen.gui.component.IDragTickable;
-import cubicchunks.worldgen.gui.component.UILayout;
+import io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.IDragTickable;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UILayout;
 import net.malisis.core.client.gui.MalisisGui;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.malisis.core.client.gui.component.container.UIContainer;

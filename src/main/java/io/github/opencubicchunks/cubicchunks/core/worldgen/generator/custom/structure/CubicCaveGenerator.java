@@ -21,22 +21,22 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom.structure;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure;
 
-import static cubicchunks.util.Coords.cubeToMinBlock;
-import static cubicchunks.util.Coords.localToBlock;
-import static cubicchunks.util.StructureGenUtil.normalizedDistance;
-import static cubicchunks.util.StructureGenUtil.scanWallsForBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.StructureGenUtil.normalizedDistance;
+import static io.github.opencubicchunks.cubicchunks.core.util.StructureGenUtil.scanWallsForBlock;
 import static java.lang.Math.max;
 import static net.minecraft.util.math.MathHelper.cos;
 import static net.minecraft.util.math.MathHelper.floor;
 import static net.minecraft.util.math.MathHelper.sin;
 
-import cubicchunks.util.CubePos;
-import cubicchunks.util.StructureGenUtil;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.StructureGenUtil;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

@@ -21,20 +21,20 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world.cube;
+package io.github.opencubicchunks.cubicchunks.core.world.cube;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.debug.Dbg;
-import cubicchunks.lighting.LightingManager;
-import cubicchunks.util.AddressTools;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.XYZAddressable;
-import cubicchunks.util.ticket.TicketList;
-import cubicchunks.world.EntityContainer;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.IHeightMap;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.debug.Dbg;
+import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
+import io.github.opencubicchunks.cubicchunks.core.util.ticket.TicketList;
+import io.github.opencubicchunks.cubicchunks.core.world.EntityContainer;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -70,7 +70,7 @@ import org.apache.logging.log4j.LogManager;
 
 import com.google.common.collect.Sets;
 
-import static cubicchunks.util.Coords.*;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.*;
 
 /**
  * A cube is our extension of minecraft's chunk system to three dimensions. Each cube encloses a cubic area in the world

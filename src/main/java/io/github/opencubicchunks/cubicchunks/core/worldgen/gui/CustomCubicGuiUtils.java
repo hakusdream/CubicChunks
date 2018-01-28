@@ -21,15 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
 import static java.lang.Math.round;
 
 import com.google.common.base.Converter;
 import com.google.common.eventbus.Subscribe;
-import cubicchunks.worldgen.gui.component.UIRangeSlider;
-import cubicchunks.worldgen.gui.component.UISliderImproved;
-import cubicchunks.worldgen.gui.converter.Converters;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIRangeSlider;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UISliderImproved;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.converter.Converters;
 import net.malisis.core.client.gui.Anchor;
 import net.malisis.core.client.gui.MalisisGui;
 import net.malisis.core.client.gui.component.UIComponent;

@@ -21,28 +21,28 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
-import static cubicchunks.worldgen.gui.CustomCubicGui.HORIZONTAL_INSETS;
-import static cubicchunks.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
-import static cubicchunks.worldgen.gui.CustomCubicGui.VERTICAL_INSETS;
-import static cubicchunks.worldgen.gui.CustomCubicGui.WIDTH_1_COL;
-import static cubicchunks.worldgen.gui.CustomCubicGui.WIDTH_2_COL;
-import static cubicchunks.worldgen.gui.CustomCubicGui.WIDTH_3_COL;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.label;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeCheckbox;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeExponentialSlider;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeFloatSlider;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeIntSlider;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeInvertedExponentialSlider;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.makeUISelect;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.malisisText;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.HORIZONTAL_INSETS;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.VERTICAL_INSETS;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.WIDTH_1_COL;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.WIDTH_2_COL;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.WIDTH_3_COL;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.label;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeCheckbox;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeExponentialSlider;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeFloatSlider;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeIntSlider;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeInvertedExponentialSlider;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeUISelect;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
 
 import com.google.common.eventbus.Subscribe;
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
-import cubicchunks.worldgen.gui.component.UISplitLayout;
-import cubicchunks.worldgen.gui.component.UITerrainPreview;
-import cubicchunks.worldgen.gui.component.UIVerticalTableLayout;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UISplitLayout;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UITerrainPreview;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIVerticalTableLayout;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.malisis.core.client.gui.component.container.UIContainer;
 import net.malisis.core.client.gui.component.interaction.UICheckBox;

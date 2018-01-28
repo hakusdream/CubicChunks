@@ -21,24 +21,24 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.debug;
+package io.github.opencubicchunks.cubicchunks.core.debug;
 
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 
 import com.flowpowered.noise.module.source.Perlin;
-import cubicchunks.CubicChunks;
-import cubicchunks.util.Box;
-import cubicchunks.util.Coords;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.IntRange;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.world.type.ICubicWorldType;
-import cubicchunks.worldgen.generator.BasicCubeGenerator;
-import cubicchunks.worldgen.generator.CubePrimer;
-import cubicchunks.worldgen.generator.ICubeGenerator;
-import cubicchunks.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.util.Box;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.BasicCubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubePrimer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

@@ -21,19 +21,19 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static cubicchunks.asm.JvmNames.WORLD_GET_LIGHT_WITH_FLAG;
-import static cubicchunks.asm.JvmNames.WORLD_IS_AREA_LOADED;
-import static cubicchunks.asm.JvmNames.WORLD_IS_BLOCK_LOADED_Z;
-import static cubicchunks.asm.JvmNames.WORLD_IS_CHUNK_LOADED;
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_GET_LIGHT_WITH_FLAG;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AREA_LOADED;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_BLOCK_LOADED_Z;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_CHUNK_LOADED;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 
-import cubicchunks.asm.MixinUtils;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.cube.BlankCube;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.util.ticket;
+package io.github.opencubicchunks.cubicchunks.core.util.ticket;
 
 import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;

@@ -21,17 +21,17 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.generator.custom;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom;
 
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_DEPTH_NOISE_FACTOR;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_DEPTH_NOISE_FREQUENCY;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_Y;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FACTOR;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_XZ;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_Y;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_OFFSET;
-import static cubicchunks.worldgen.generator.custom.ConversionUtils.frequencyFromVanilla;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_DEPTH_NOISE_FACTOR;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_DEPTH_NOISE_FREQUENCY;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_Y;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FACTOR;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_XZ;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_Y;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_OFFSET;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.frequencyFromVanilla;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,10 +48,10 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import cubicchunks.CCFixType;
-import cubicchunks.CubicChunks;
-import cubicchunks.world.cube.Cube;
-import cubicchunks.worldgen.generator.custom.biome.replacer.BiomeBlockReplacerConfig;
+import io.github.opencubicchunks.cubicchunks.core.CCFixType;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.BiomeBlockReplacerConfig;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;

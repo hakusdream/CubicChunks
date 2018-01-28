@@ -21,21 +21,21 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
-import static cubicchunks.worldgen.gui.CustomCubicGui.HORIZONTAL_INSETS;
-import static cubicchunks.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
-import static cubicchunks.worldgen.gui.CustomCubicGui.VERTICAL_INSETS;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.HORIZONTAL_INSETS;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.HORIZONTAL_PADDING;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui.VERTICAL_INSETS;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import cubicchunks.worldgen.generator.flat.FlatGeneratorSettings;
-import cubicchunks.worldgen.generator.flat.Layer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.flat.FlatGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.flat.Layer;
 import java.util.Comparator;
-import cubicchunks.worldgen.gui.component.UIFlatTerrainLayer;
-import cubicchunks.worldgen.gui.component.UIVerticalTableLayout;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIFlatTerrainLayer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIVerticalTableLayout;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.malisis.core.client.gui.component.container.UIContainer;
 
@@ -51,7 +51,7 @@ public class FlatLayersTab implements Comparator<UIFlatTerrainLayer> {
         this.gui = guiFor;
         int i = settings.layers.entrySet().size();
         uiLayersList = new ArrayList<UIFlatTerrainLayer>(i);
-        for (Entry<Integer, cubicchunks.worldgen.generator.flat.Layer> entry : settings.layers.entrySet()) {
+        for (Entry<Integer, Layer> entry : settings.layers.entrySet()) {
             UIFlatTerrainLayer uiLayer = new UIFlatTerrainLayer(gui, this, entry.getValue());
             uiLayersList.add(uiLayer);
         }

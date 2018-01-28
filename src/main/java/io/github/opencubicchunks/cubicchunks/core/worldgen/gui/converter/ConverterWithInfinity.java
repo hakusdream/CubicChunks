@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui.converter;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui.converter;
 
 import com.google.common.base.Converter;
 

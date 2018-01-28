@@ -21,14 +21,14 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.proxy;
+package io.github.opencubicchunks.cubicchunks.core.proxy;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.client.ClientEventHandler;
-import cubicchunks.util.AddressTools;
-import cubicchunks.util.ReflectionUtil;
-import cubicchunks.world.ICubicWorldSettings;
-import cubicchunks.world.type.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.client.ClientEventHandler;
+import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
+import io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldSettings;
+import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.block.state;
+package io.github.opencubicchunks.cubicchunks.core.block.state;
 
 import javax.annotation.Nullable;
 

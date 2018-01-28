@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm;
+package io.github.opencubicchunks.cubicchunks.core.asm;
 
 @Deprecated // MinecraftDev plugin provides autocomplete for these, but it won't work for these fields, these should no longer be used
 public class JvmNames {

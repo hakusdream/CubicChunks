@@ -17,12 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package cubicchunks.server.chunkio.async.forge;
+package io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge;
 
-import cubicchunks.CubicChunks;
-import cubicchunks.server.chunkio.ICubeIO;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.chunk.Chunk;
 

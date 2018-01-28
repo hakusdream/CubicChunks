@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui;
 
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.malisisText;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,11 +31,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import cubicchunks.worldgen.gui.component.UIBorderLayout;
-import cubicchunks.worldgen.gui.component.UIColoredPanel;
-import cubicchunks.worldgen.gui.component.UIFlatTerrainLayer;
-import cubicchunks.worldgen.gui.component.UIMultilineLabel;
-import cubicchunks.worldgen.gui.component.UITabbedContainer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIBorderLayout;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIColoredPanel;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIFlatTerrainLayer;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIMultilineLabel;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UITabbedContainer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.malisis.core.client.gui.Anchor;
 import net.malisis.core.client.gui.MalisisGui;

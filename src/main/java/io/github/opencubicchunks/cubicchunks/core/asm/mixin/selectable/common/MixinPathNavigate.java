@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.selectable.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.selectable.common;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

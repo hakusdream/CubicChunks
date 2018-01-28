@@ -21,21 +21,21 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.lighting;
+package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.cubeToMaxBlock;
-import static cubicchunks.util.Coords.cubeToMinBlock;
-import static cubicchunks.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMaxBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
 
-import cubicchunks.server.PlayerCubeMap;
-import cubicchunks.util.Coords;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.FastCubeBlockAccess;
-import cubicchunks.world.ICubeProvider;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.FastCubeBlockAccess;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.set.TIntSet;
 import mcp.MethodsReturnNonnullByDefault;

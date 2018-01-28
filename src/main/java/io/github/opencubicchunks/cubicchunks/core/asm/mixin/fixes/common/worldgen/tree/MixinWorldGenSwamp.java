@@ -21,13 +21,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.common.worldgen.tree;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldgen.tree;
 
-import static cubicchunks.asm.JvmNames.MATERIAL_WATER;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.MATERIAL_WATER;
 
-import cubicchunks.asm.JvmNames;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.worldgen.generator.custom.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;

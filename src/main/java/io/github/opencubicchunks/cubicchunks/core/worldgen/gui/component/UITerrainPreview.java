@@ -21,20 +21,20 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.worldgen.gui.component;
+package io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component;
 
 import static com.flowpowered.noise.Noise.gradientNoise3D;
-import static cubicchunks.worldgen.gui.CustomCubicGuiUtils.malisisText;
+import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
 
 import com.flowpowered.noise.NoiseQuality;
 import com.flowpowered.noise.Utils;
-import cubicchunks.CubicChunks;
-import cubicchunks.util.MathUtil;
-import cubicchunks.worldgen.generator.custom.ConversionUtils;
-import cubicchunks.worldgen.generator.custom.CustomGeneratorSettings;
-import cubicchunks.worldgen.gui.CustomCubicGui;
-import cubicchunks.worldgen.gui.CustomCubicGuiUtils;
-import cubicchunks.worldgen.gui.render.DynamicTexture;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.render.DynamicTexture;
 import net.malisis.core.client.gui.ClipArea;
 import net.malisis.core.client.gui.GuiRenderer;
 import net.malisis.core.client.gui.component.IClipable;

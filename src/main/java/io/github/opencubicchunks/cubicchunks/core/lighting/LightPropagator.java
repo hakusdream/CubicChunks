@@ -21,10 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.lighting;
+package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static cubicchunks.lighting.LightUpdateQueue.MAX_DISTANCE;
-import static cubicchunks.lighting.LightUpdateQueue.MIN_DISTANCE;
+import static io.github.opencubicchunks.cubicchunks.core.lighting.LightUpdateQueue.MAX_DISTANCE;
+import static io.github.opencubicchunks.cubicchunks.core.lighting.LightUpdateQueue.MIN_DISTANCE;
 import static net.minecraft.crash.CrashReportCategory.getCoordinateInfo;
 
 import mcp.MethodsReturnNonnullByDefault;

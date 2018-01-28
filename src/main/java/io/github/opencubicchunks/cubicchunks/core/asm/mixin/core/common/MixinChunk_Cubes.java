@@ -21,27 +21,27 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static cubicchunks.asm.JvmNames.CHUNK_CONSTRUCT_1;
-import static cubicchunks.asm.JvmNames.CHUNK_IS_CHUNK_LOADED;
-import static cubicchunks.asm.JvmNames.CHUNK_IS_MODIFIED;
-import static cubicchunks.asm.JvmNames.CHUNK_STORAGE_ARRAYS;
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_CONSTRUCT_1;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_IS_CHUNK_LOADED;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_IS_MODIFIED;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_STORAGE_ARRAYS;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
 
 import com.google.common.base.Predicate;
-import cubicchunks.CubicChunks;
-import cubicchunks.util.Coords;
-import cubicchunks.world.ClientHeightMap;
-import cubicchunks.world.ICubicWorld;
-import cubicchunks.world.IHeightMap;
-import cubicchunks.world.ServerHeightMap;
-import cubicchunks.world.column.ColumnTileEntityMap;
-import cubicchunks.world.column.CubeMap;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.BlankCube;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.ClientHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.ColumnTileEntityMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.CubeMap;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

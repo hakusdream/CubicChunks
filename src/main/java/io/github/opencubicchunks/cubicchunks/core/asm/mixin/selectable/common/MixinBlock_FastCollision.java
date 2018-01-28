@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.selectable.common;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.selectable.common;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,9 +32,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import cubicchunks.block.state.BlockStairsFieldBasedBlockStateContainer;
-import cubicchunks.block.state.FullBlockBlockStateContainer;
-import cubicchunks.block.state.NonCollidingBlockStateContainer;
+import io.github.opencubicchunks.cubicchunks.core.block.state.BlockStairsFieldBasedBlockStateContainer;
+import io.github.opencubicchunks.cubicchunks.core.block.state.FullBlockBlockStateContainer;
+import io.github.opencubicchunks.cubicchunks.core.block.state.NonCollidingBlockStateContainer;
 import net.minecraft.block.*;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;

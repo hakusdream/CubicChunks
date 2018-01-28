@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.util;
+package io.github.opencubicchunks.cubicchunks.core.util;
 
 import mcp.MethodsReturnNonnullByDefault;
 
@@ -33,7 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import cubicchunks.server.CubeWatcher;
+import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
 
 /**
  * Hash table implementation for objects in a 3-dimensional cartesian coordinate

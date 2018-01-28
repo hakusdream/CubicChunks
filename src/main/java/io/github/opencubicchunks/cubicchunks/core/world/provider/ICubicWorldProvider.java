@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world.provider;
+package io.github.opencubicchunks.cubicchunks.core.world.provider;
 
-import cubicchunks.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 
 import javax.annotation.Nullable;

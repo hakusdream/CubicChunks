@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm;
+package io.github.opencubicchunks.cubicchunks.core.asm;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraftforge.common.ForgeVersion;
@@ -79,7 +79,7 @@ public class CubicChunksCoreMod implements IFMLLoadingPlugin {
 
     @Nullable @Override
     public String getModContainerClass() {
-        return "cubicchunks.asm.CubicChunksCoreContainer";
+        return "io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksCoreContainer";
     }
 
     @Nullable @Override

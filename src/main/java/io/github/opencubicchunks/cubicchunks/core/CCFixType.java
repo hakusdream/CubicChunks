@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks;
+package io.github.opencubicchunks.cubicchunks.core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

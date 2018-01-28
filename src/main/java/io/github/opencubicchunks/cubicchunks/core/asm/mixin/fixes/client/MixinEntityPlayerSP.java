@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.fixes.client;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.client;
 
 import com.mojang.authlib.GameProfile;
-import cubicchunks.asm.JvmNames;
-import cubicchunks.asm.MixinUtils;
+import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
+import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;

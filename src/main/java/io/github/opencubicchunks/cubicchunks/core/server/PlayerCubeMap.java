@@ -21,10 +21,10 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.server;
+package io.github.opencubicchunks.cubicchunks.core.server;
 
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
 import static net.minecraft.util.math.MathHelper.clamp;
 
 import com.google.common.base.Predicate;
@@ -34,18 +34,18 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
-import cubicchunks.CubicChunks;
-import cubicchunks.lighting.LightingManager;
-import cubicchunks.network.PacketCubes;
-import cubicchunks.network.PacketDispatcher;
-import cubicchunks.util.CubePos;
-import cubicchunks.util.XYZMap;
-import cubicchunks.util.XZMap;
-import cubicchunks.visibility.CubeSelector;
-import cubicchunks.visibility.CuboidalCubeSelector;
-import cubicchunks.world.ICubicWorldServer;
-import cubicchunks.world.column.IColumn;
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketCubes;
+import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
+import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
+import io.github.opencubicchunks.cubicchunks.core.util.XZMap;
+import io.github.opencubicchunks.cubicchunks.core.visibility.CubeSelector;
+import io.github.opencubicchunks.cubicchunks.core.visibility.CuboidalCubeSelector;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import mcp.MethodsReturnNonnullByDefault;

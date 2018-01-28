@@ -21,12 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.asm.mixin.core.client;
+package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
-import cubicchunks.asm.mixin.core.common.MixinWorld;
-import cubicchunks.client.CubeProviderClient;
-import cubicchunks.util.IntRange;
-import cubicchunks.world.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common.MixinWorld;
+import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
+import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldClient;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.ChunkProviderClient;

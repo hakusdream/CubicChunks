@@ -21,14 +21,14 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.util;
+package io.github.opencubicchunks.cubicchunks.core.util;
 
-import static cubicchunks.util.Coords.blockToCube;
-import static cubicchunks.util.Coords.getCubeXForEntity;
-import static cubicchunks.util.Coords.getCubeYForEntity;
-import static cubicchunks.util.Coords.getCubeZForEntity;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.getCubeXForEntity;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.getCubeYForEntity;
+import static io.github.opencubicchunks.cubicchunks.core.util.Coords.getCubeZForEntity;
 
-import cubicchunks.world.cube.Cube;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
