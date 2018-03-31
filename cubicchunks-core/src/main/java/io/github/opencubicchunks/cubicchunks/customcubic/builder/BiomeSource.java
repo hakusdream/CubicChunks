@@ -21,20 +21,20 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder;
+package io.github.opencubicchunks.cubicchunks.customcubic.builder;
 
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.util.cache.HashCache;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils;
+import io.github.opencubicchunks.cubicchunks.customcubic.ConversionUtils;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.BiomeBlockReplacerConfig;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.IBiomeBlockReplacerProvider;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.BiomeBlockReplacerConfig;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.IBiomeBlockReplacer;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.IBiomeBlockReplacerProvider;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -80,7 +80,7 @@ public class BiomeSource {
 
     private final HashCache<Vec3i, BiomeTerrainData> biomeDataCache;
 
-    public BiomeSource(ICubicWorld world, BiomeBlockReplacerConfig conf, BiomeProvider biomeGen, int smoothRadius) {
+    public BiomeSource(World world, BiomeBlockReplacerConfig conf, BiomeProvider biomeGen, int smoothRadius) {
         this.biomeGen = biomeGen;
         this.smoothRadius = smoothRadius;
         this.smoothDiameter = smoothRadius * 2 + 1;

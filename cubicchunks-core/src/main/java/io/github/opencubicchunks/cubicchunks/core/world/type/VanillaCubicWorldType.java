@@ -25,12 +25,11 @@ package io.github.opencubicchunks.cubicchunks.core.world.type;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.vanilla.VanillaCompatibilityGenerator;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.world.WorldProvider;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldType;
 
@@ -54,8 +53,8 @@ public class VanillaCubicWorldType extends WorldType implements ICubicWorldType 
     }
 
     @Nullable @Override
-    public ICubeGenerator createCubeGenerator(ICubicWorld world) {
-        return new VanillaCompatibilityGenerator(world.getProvider().createChunkGenerator(), world);
+    public ICubeGenerator createCubeGenerator(World world) {
+        return new VanillaCompatibilityGenerator(world.provider.createChunkGenerator(), world);
     }
 
     @Override public IntRange calculateGenerationHeightRange(WorldServer world) {

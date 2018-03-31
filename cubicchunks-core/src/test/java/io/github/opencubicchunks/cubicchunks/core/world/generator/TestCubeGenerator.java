@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world.generator;
+package io.github.opencubicchunks.cubicchunks.core.world.generator;
 
-import io.github.opencubicchunks.cubicchunks.core.api.worldgen.populator.ICubicPopulator;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubeGeneratorsRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraftforge.fml.common.registry.GameRegistry;

@@ -43,6 +43,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 
@@ -80,7 +81,7 @@ class ColumnWatcher extends PlayerChunkMapEntry implements XZAddressable {
     // CHECKED: 1.10.2-12.18.1.2092
     public void addPlayer(EntityPlayerMP player) {
         if (this.getPlayers().contains(player)) {
-            CubicChunks.LOGGER.debug("Failed to add player. {} already is in chunk {}, {}", player,
+            CubicChunks.LOGGER.debug("Failed to expand player. {} already is in chunk {}, {}", player,
                     this.getPos().x,
                     this.getPos().z);
             return;
@@ -94,7 +95,7 @@ class ColumnWatcher extends PlayerChunkMapEntry implements XZAddressable {
         //always sent to players, no need to check it
 
         if (this.isSentToPlayers()) {
-            PacketColumn message = new PacketColumn(this.getColumn());
+            PacketColumn message = new PacketColumn(this.getChunk());
             PacketDispatcher.sendTo(message, player);
             //this.sendNearbySpecialEntities - done by cube entry
             MinecraftForge.EVENT_BUS.post(new ChunkWatchEvent.Watch(this.getPos(), player));
@@ -106,12 +107,12 @@ class ColumnWatcher extends PlayerChunkMapEntry implements XZAddressable {
         if (!this.getPlayers().contains(player)) {
             return;
         }
-        if (this.getColumn() == null) {
+        if (this.getChunk() == null) {
             this.getPlayers().remove(player);
             if (this.getPlayers().isEmpty()) {
                 if (isLoading()) {
                     AsyncWorldIOExecutor.dropQueuedColumnLoad(
-                            playerCubeMap.getWorld(), getPos().x, getPos().z, (c) -> loadedRunnable.run());
+                            playerCubeMap.getWorldServer(), getPos().x, getPos().z, (c) -> loadedRunnable.run());
                 }
                 this.playerCubeMap.removeEntry(this);
             }
@@ -155,12 +156,12 @@ class ColumnWatcher extends PlayerChunkMapEntry implements XZAddressable {
         if (this.isSentToPlayers()) {
             return true;
         }
-        if (getColumn() == null) {
+        if (getChunk() == null) {
             return false;
         }
 
         try {
-            PacketColumn message = new PacketColumn(this.getColumn());
+            PacketColumn message = new PacketColumn(this.getChunk());
             for (EntityPlayerMP player : this.getPlayers()) {
                 PacketDispatcher.sendTo(message, player);
             }
@@ -193,20 +194,14 @@ class ColumnWatcher extends PlayerChunkMapEntry implements XZAddressable {
         if (!this.isSentToPlayers() || this.dirtyColumns.isEmpty()) {
             return;
         }
-        IColumn column = getColumn();
-        assert column != null;
+        assert getChunk() != null;
         for (EntityPlayerMP player : this.getPlayers()) {
-            PacketDispatcher.sendTo(new PacketHeightMapUpdate(getPos(), dirtyColumns, column.getOpacityIndex()), player);
+            PacketDispatcher.sendTo(new PacketHeightMapUpdate(getPos(), dirtyColumns, ((IColumn) getChunk()).getOpacityIndex()), player);
         }
         this.dirtyColumns.clear();
     }
 
     //containsPlayer, hasPlayerMatching, hasPlayerMatchingInRange, isAddedToChunkUpdateQueue, getChunk, getClosestPlayerDistance - ok
-
-    @Nullable
-    public IColumn getColumn() {
-        return (IColumn) this.getChunk();
-    }
 
     private boolean isLoading() {
         try {

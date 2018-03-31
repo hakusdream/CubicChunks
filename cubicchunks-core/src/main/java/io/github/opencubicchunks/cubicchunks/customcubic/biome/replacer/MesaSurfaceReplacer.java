@@ -21,13 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer;
+package io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.core.util.cache.HashCacheDoubles;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.IBuilder;
+import io.github.opencubicchunks.cubicchunks.customcubic.builder.IBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockDirt;
@@ -36,6 +35,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeMesa;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
@@ -74,7 +74,7 @@ public class MesaSurfaceReplacer implements IBiomeBlockReplacer {
     protected static final IBlockState ORANGE_STAINED_HARDENED_CLAY = STAINED_HARDENED_CLAY.withProperty(BlockColored.COLOR, EnumDyeColor.ORANGE);
 
 
-    public MesaSurfaceReplacer(ICubicWorld world, CubicBiome biome, double heightOffset, double heightScale, double waterHeight) {
+    public MesaSurfaceReplacer(World world, CubicBiome biome, double heightOffset, double heightScale, double waterHeight) {
         this.biomeMesa = (BiomeMesa) biome.getBiome();
         this.heightOffset = heightOffset;
         this.heightScale = heightScale;

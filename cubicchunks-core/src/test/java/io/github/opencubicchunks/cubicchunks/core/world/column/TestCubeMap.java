@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world.column;
+package io.github.opencubicchunks.cubicchunks.core.world.column;
 
 import static it.ozimov.cirneco.hamcrest.java7.collect.IsIterableWithDistinctElements.hasDistinctElements;
 import static org.hamcrest.Matchers.greaterThan;
@@ -60,7 +60,7 @@ public class TestCubeMap {
         for (int y = -30; y < 30; y++) {
             try {
                 testedCubeMap.put(createCube(y));
-                fail("Was able to add a Cube to the CubeMap at the same y coordinate as another Cube");
+                fail("Was able to expand a Cube to the CubeMap at the same y coordinate as another Cube");
             } catch (IllegalArgumentException e) {
                 // this should always happen
             }
@@ -79,7 +79,7 @@ public class TestCubeMap {
         for (int y = -30; y < 30; y++) {
             try {
                 testedCubeMap.put(createCube(y));
-                fail("Was able to add a Cube to the CubeMap at the same y coordinate as another Cube");
+                fail("Was able to expand a Cube to the CubeMap at the same y coordinate as another Cube");
             } catch (IllegalArgumentException e) {
                 // this should always happen
             }

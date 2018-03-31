@@ -20,9 +20,9 @@
 package io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,9 +34,9 @@ class QueuedColumn {
 
     final int x;
     final int z;
-    @Nonnull final ICubicWorld world;
+    @Nonnull final World world;
 
-    QueuedColumn(int x, int z, ICubicWorld world) {
+    QueuedColumn(int x, int z, World world) {
         this.x = x;
         this.z = z;
         this.world = world;

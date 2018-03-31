@@ -29,16 +29,15 @@ import io.github.opencubicchunks.cubicchunks.core.network.PacketCubicWorldData;
 import io.github.opencubicchunks.cubicchunks.core.server.SpawnCubes;
 import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
 import io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldSettings;
 import io.github.opencubicchunks.cubicchunks.core.world.WorldSavedCubicChunksData;
 import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
 import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldServerMulti;
@@ -66,7 +65,7 @@ public class CommonEventHandler {
         if (evt.getObject().isRemote) {
             return; // we will send packet to the client when it joins, client shouldn't change world types as it wants
         }
-        ICubicWorldServer world = (ICubicWorldServer) evt.getObject();
+        WorldServer world = (WorldServer) evt.getObject();
 
         WorldSavedCubicChunksData savedData =
                 (WorldSavedCubicChunksData) evt.getObject().getMapStorage().getOrLoadData(WorldSavedCubicChunksData.class, "cubicChunksData");
@@ -85,10 +84,10 @@ public class CommonEventHandler {
         }
         CubicChunks.LOGGER.info("Initializing world " + evt.getObject() + " with type " + evt.getObject().getWorldType());
 
-        IntRange generationRange = new IntRange(0, ((ICubicWorldProvider) world.getProvider()).getOriginalActualHeight());
+        IntRange generationRange = new IntRange(0, ((ICubicWorldProvider) world.provider).getOriginalActualHeight());
         WorldType type = evt.getObject().getWorldType();
         if (type instanceof ICubicWorldType) {
-            generationRange = ((ICubicWorldType) type).calculateGenerationHeightRange((WorldServer) world);
+            generationRange = ((ICubicWorldType) type).calculateGenerationHeightRange(world);
         }
 
         if (savedData == null) {
@@ -96,7 +95,7 @@ public class CommonEventHandler {
         }
         int minHeight = savedData.minHeight;
         int maxHeight = savedData.maxHeight;
-        world.initCubicWorldServer(new IntRange(minHeight, maxHeight), generationRange);
+        ((ICubicWorldInternal.Server) world).initCubicWorldServer(new IntRange(minHeight, maxHeight), generationRange);
         savedData.markDirty();
         evt.getObject().getMapStorage().setData("cubicChunksData", savedData);
         evt.getObject().getMapStorage().saveAllData();
@@ -107,24 +106,19 @@ public class CommonEventHandler {
         if (!((ICubicWorld) evt.getWorld()).isCubicWorld()) {
             return;
         }
-        ICubicWorld world = (ICubicWorld) evt.getWorld();
-
-        if (!world.isRemote()) {
-            SpawnCubes.update(world);
+        if (!evt.getWorld().isRemote) {
+            SpawnCubes.update(evt.getWorld());
         }
     }
 
     @SubscribeEvent
     public void onWorldServerTick(TickEvent.WorldTickEvent evt) {
-        ICubicWorldServer world = (ICubicWorldServer) evt.world;
+        WorldServer world = (WorldServer) evt.world;
         //Forge (at least version 11.14.3.1521) doesn't call this event for client world.
-        if (evt.phase == TickEvent.Phase.END && world.isCubicWorld() && evt.side == Side.SERVER) {
-            world.tickCubicWorld();
-
-            if (!world.isRemote()) {
-                // There is no event for when the spawn location changes, so check every tick for now
-                SpawnCubes.update(world);
-            }
+        if (evt.phase == TickEvent.Phase.END && ((ICubicWorld) world).isCubicWorld() && evt.side == Side.SERVER) {
+            ((ICubicWorldInternal) world).tickCubicWorld();
+            // There is no event for when the spawn location changes, so check every tick for now
+            SpawnCubes.update(world);
         }
     }
 

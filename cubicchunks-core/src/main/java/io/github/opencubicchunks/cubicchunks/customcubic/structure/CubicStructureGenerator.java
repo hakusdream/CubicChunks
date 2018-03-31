@@ -21,17 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure;
+package io.github.opencubicchunks.cubicchunks.customcubic.structure;
 
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.World;
 
 import java.util.Random;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
@@ -51,7 +50,7 @@ public abstract class CubicStructureGenerator {
     @Nonnull protected Random rand = new Random();
 
     /** This world object. */
-    protected ICubicWorld world;
+    protected World world;
 
     /** The minimum spacing of structures. */
     protected final int spacing;
@@ -70,7 +69,7 @@ public abstract class CubicStructureGenerator {
      * @param cube the block buffer to be filled with blocks (Cube)
      * @param cubePos position of the cube to generate structures in
      */
-    public void generate(ICubicWorld world, ICubePrimer cube, CubePos cubePos) {
+    public void generate(World world, CubePrimer cube, CubePos cubePos) {
 
         //TODO: maybe skip some of this stuff if the cube is empty? (would need to use hints)
 
@@ -120,7 +119,7 @@ public abstract class CubicStructureGenerator {
      * @param structureZ z coordinate of the starting position of currently generated structure
      * @param generatedCubePos position of the cube to fill with blocks
      */
-    protected abstract void generate(ICubicWorld world, ICubePrimer cube,
+    protected abstract void generate(World world, CubePrimer cube,
             int structureX, int structureY, int structureZ,
             CubePos generatedCubePos);
 }

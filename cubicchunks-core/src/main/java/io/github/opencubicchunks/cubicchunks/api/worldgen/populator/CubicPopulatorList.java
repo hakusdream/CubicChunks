@@ -25,8 +25,9 @@ package io.github.opencubicchunks.cubicchunks.api.worldgen.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +59,7 @@ public final class CubicPopulatorList implements ICubicPopulator {
         this.list = Collections.unmodifiableList(list);
     }
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
         list.forEach(p -> p.generate(world, random, pos, biome));
     }
 }

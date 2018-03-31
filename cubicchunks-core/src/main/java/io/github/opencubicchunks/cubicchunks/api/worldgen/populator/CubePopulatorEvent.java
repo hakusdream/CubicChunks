@@ -23,8 +23,9 @@
  */
 package io.github.opencubicchunks.cubicchunks.api.worldgen.populator;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -40,9 +41,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 public class CubePopulatorEvent extends Event {
 
     private final Cube cube;
-    private final ICubicWorld world;
+    private final World world;
 
-    public CubePopulatorEvent(ICubicWorld worldIn, Cube cubeIn) {
+    public CubePopulatorEvent(World worldIn, Cube cubeIn) {
         super();
         cube = cubeIn;
         world = worldIn;
@@ -52,7 +53,7 @@ public class CubePopulatorEvent extends Event {
         return cube;
     }
 
-    public ICubicWorld getWorld() {
+    public World getWorld() {
         return world;
     }
 

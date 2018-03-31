@@ -24,7 +24,7 @@
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.client;
 
 import io.github.opencubicchunks.cubicchunks.core.client.RenderCubeCache;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +48,7 @@ public class MixinRenderChunk {
     @Inject(method = "createRegionRenderCache", at = @At(value = "HEAD"), remap = false, cancellable = true)
     protected void createCubicChunkCache(World world, BlockPos from, BlockPos to, int subtract, CallbackInfoReturnable<ChunkCache> cbi) {
         if (((ICubicWorld) world).isCubicWorld()) {
-            cbi.setReturnValue(new RenderCubeCache((ICubicWorld) world, from, to, subtract));
+            cbi.setReturnValue(new RenderCubeCache(world, from, to, subtract));
             cbi.cancel();
         }
     }

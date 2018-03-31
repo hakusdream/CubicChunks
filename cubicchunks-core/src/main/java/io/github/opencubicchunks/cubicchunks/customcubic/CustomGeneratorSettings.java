@@ -21,17 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom;
-
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_DEPTH_NOISE_FACTOR;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_DEPTH_NOISE_FREQUENCY;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_Y;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FACTOR;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_XZ;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_Y;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.VANILLA_SELECTOR_NOISE_OFFSET;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils.frequencyFromVanilla;
+package io.github.opencubicchunks.cubicchunks.customcubic;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,11 +37,10 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import io.github.opencubicchunks.cubicchunks.core.CCFixType;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.BiomeBlockReplacerConfig;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.BiomeBlockReplacerConfig;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
@@ -62,16 +51,13 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.IFixableData;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraftforge.common.util.ModFixs;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -143,31 +129,31 @@ public class CustomGeneratorSettings {
     public float heightFactor = 64;// height scale
     public float heightOffset = 64;// sea level
 
-    public float depthNoiseFactor = VANILLA_DEPTH_NOISE_FACTOR;
+    public float depthNoiseFactor = ConversionUtils.VANILLA_DEPTH_NOISE_FACTOR;
     public float depthNoiseOffset = 0;
-    public float depthNoiseFrequencyX = VANILLA_DEPTH_NOISE_FREQUENCY;
-    public float depthNoiseFrequencyZ = VANILLA_DEPTH_NOISE_FREQUENCY;
+    public float depthNoiseFrequencyX = ConversionUtils.VANILLA_DEPTH_NOISE_FREQUENCY;
+    public float depthNoiseFrequencyZ = ConversionUtils.VANILLA_DEPTH_NOISE_FREQUENCY;
     public int depthNoiseOctaves = 16;
 
-    public float selectorNoiseFactor = VANILLA_SELECTOR_NOISE_FACTOR;
-    public float selectorNoiseOffset = VANILLA_SELECTOR_NOISE_OFFSET;
-    public float selectorNoiseFrequencyX = VANILLA_SELECTOR_NOISE_FREQUENCY_XZ;
-    public float selectorNoiseFrequencyY = VANILLA_SELECTOR_NOISE_FREQUENCY_Y;
-    public float selectorNoiseFrequencyZ = VANILLA_SELECTOR_NOISE_FREQUENCY_XZ;
+    public float selectorNoiseFactor = ConversionUtils.VANILLA_SELECTOR_NOISE_FACTOR;
+    public float selectorNoiseOffset = ConversionUtils.VANILLA_SELECTOR_NOISE_OFFSET;
+    public float selectorNoiseFrequencyX = ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_XZ;
+    public float selectorNoiseFrequencyY = ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_Y;
+    public float selectorNoiseFrequencyZ = ConversionUtils.VANILLA_SELECTOR_NOISE_FREQUENCY_XZ;
     public int selectorNoiseOctaves = 8;
 
     public float lowNoiseFactor = 1;
     public float lowNoiseOffset = 0;
-    public float lowNoiseFrequencyX = VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
-    public float lowNoiseFrequencyY = VANILLA_LOWHIGH_NOISE_FREQUENCY_Y;
-    public float lowNoiseFrequencyZ = VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
+    public float lowNoiseFrequencyX = ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
+    public float lowNoiseFrequencyY = ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_Y;
+    public float lowNoiseFrequencyZ = ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
     public int lowNoiseOctaves = 16;
 
     public float highNoiseFactor = 1;
     public float highNoiseOffset = 0;
-    public float highNoiseFrequencyX = VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
-    public float highNoiseFrequencyY = VANILLA_LOWHIGH_NOISE_FREQUENCY_Y;
-    public float highNoiseFrequencyZ = VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
+    public float highNoiseFrequencyX = ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
+    public float highNoiseFrequencyY = ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_Y;
+    public float highNoiseFrequencyZ = ConversionUtils.VANILLA_LOWHIGH_NOISE_FREQUENCY_XZ;
     public int highNoiseOctaves = 16;
 
     // TODO: public boolean negativeHeightVariationInvertsTerrain = true;
@@ -283,21 +269,21 @@ public class CustomGeneratorSettings {
         obj.lowNoiseFactor = 512.0f / settings.lowerLimitScale;
         obj.highNoiseFactor = 512.0f / settings.upperLimitScale;
 
-        obj.depthNoiseFrequencyX = frequencyFromVanilla(settings.depthNoiseScaleX, 16);
-        obj.depthNoiseFrequencyZ = frequencyFromVanilla(settings.depthNoiseScaleZ, 16);
+        obj.depthNoiseFrequencyX = ConversionUtils.frequencyFromVanilla(settings.depthNoiseScaleX, 16);
+        obj.depthNoiseFrequencyZ = ConversionUtils.frequencyFromVanilla(settings.depthNoiseScaleZ, 16);
         // settings.depthNoiseScaleExponent is ignored by vanilla
 
-        obj.selectorNoiseFrequencyX = frequencyFromVanilla(settings.coordinateScale / settings.mainNoiseScaleX, 8);
-        obj.selectorNoiseFrequencyY = frequencyFromVanilla(settings.heightScale / settings.mainNoiseScaleY, 8);
-        obj.selectorNoiseFrequencyZ = frequencyFromVanilla(settings.coordinateScale / settings.mainNoiseScaleZ, 8);
+        obj.selectorNoiseFrequencyX = ConversionUtils.frequencyFromVanilla(settings.coordinateScale / settings.mainNoiseScaleX, 8);
+        obj.selectorNoiseFrequencyY = ConversionUtils.frequencyFromVanilla(settings.heightScale / settings.mainNoiseScaleY, 8);
+        obj.selectorNoiseFrequencyZ = ConversionUtils.frequencyFromVanilla(settings.coordinateScale / settings.mainNoiseScaleZ, 8);
 
-        obj.lowNoiseFrequencyX = frequencyFromVanilla(settings.coordinateScale, 16);
-        obj.lowNoiseFrequencyY = frequencyFromVanilla(settings.heightScale, 16);
-        obj.lowNoiseFrequencyZ = frequencyFromVanilla(settings.coordinateScale, 16);
+        obj.lowNoiseFrequencyX = ConversionUtils.frequencyFromVanilla(settings.coordinateScale, 16);
+        obj.lowNoiseFrequencyY = ConversionUtils.frequencyFromVanilla(settings.heightScale, 16);
+        obj.lowNoiseFrequencyZ = ConversionUtils.frequencyFromVanilla(settings.coordinateScale, 16);
 
-        obj.highNoiseFrequencyX = frequencyFromVanilla(settings.coordinateScale, 16);
-        obj.highNoiseFrequencyY = frequencyFromVanilla(settings.heightScale, 16);
-        obj.highNoiseFrequencyZ = frequencyFromVanilla(settings.coordinateScale, 16);
+        obj.highNoiseFrequencyX = ConversionUtils.frequencyFromVanilla(settings.coordinateScale, 16);
+        obj.highNoiseFrequencyY = ConversionUtils.frequencyFromVanilla(settings.heightScale, 16);
+        obj.highNoiseFrequencyZ = ConversionUtils.frequencyFromVanilla(settings.coordinateScale, 16);
 
         return obj;
     }

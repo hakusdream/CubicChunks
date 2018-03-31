@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure;
+package io.github.opencubicchunks.cubicchunks.customcubic.structure;
 
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
@@ -32,14 +32,14 @@ import static net.minecraft.util.math.MathHelper.cos;
 import static net.minecraft.util.math.MathHelper.floor;
 import static net.minecraft.util.math.MathHelper.sin;
 
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.StructureGenUtil;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import java.util.Random;
@@ -159,7 +159,7 @@ public class CubicCaveGenerator extends CubicStructureGenerator {
 
 
     @Override
-    protected void generate(ICubicWorld world, ICubePrimer cube,
+    protected void generate(World world, CubePrimer cube,
             int cubeXOrigin, int cubeYOrigin, int cubeZOrigin, CubePos generatedCubePos) {
         if (this.rand.nextInt(CAVE_RARITY) != 0) {
             return;
@@ -203,7 +203,7 @@ public class CubicCaveGenerator extends CubicStructureGenerator {
     /**
      * Generates a flattened cave "room", usually more caves split off it
      */
-    private void generateLargeNode(ICubePrimer cube, long seed, CubePos generatedCubePos,
+    private void generateLargeNode(CubePrimer cube, long seed, CubePos generatedCubePos,
             double x, double y, double z) {
         float baseHorizSize = 1.0F + this.rand.nextFloat() * 6.0F;
         float horizDirAngle = 0;
@@ -235,7 +235,7 @@ public class CubicCaveGenerator extends CubicStructureGenerator {
      * @param vertDirAngle changes vertical size of the cave, values < 1 result in flattened caves, > 1 result in
      * vertically stretched caves
      */
-    private void generateNode(ICubePrimer cube, long seed,
+    private void generateNode(CubePrimer cube, long seed,
             CubePos generatedCubePos,
             double caveX, double caveY, double caveZ,
             float baseCaveSize, float horizDirAngle, float vertDirAngle,
@@ -348,7 +348,7 @@ public class CubicCaveGenerator extends CubicStructureGenerator {
     }
 
     //returns true if cave generation should be continued
-    private void tryCarveBlocks(@Nonnull ICubePrimer cube, @Nonnull CubePos generatedCubePos,
+    private void tryCarveBlocks(@Nonnull CubePrimer cube, @Nonnull CubePos generatedCubePos,
             double caveX, double caveY, double caveZ,
             double caveSizeHoriz, double caveSizeVert) {
         double genCubeCenterX = generatedCubePos.getXCenter();
@@ -390,7 +390,7 @@ public class CubicCaveGenerator extends CubicStructureGenerator {
         }
     }
 
-    private void carveBlocks(ICubePrimer cube,
+    private void carveBlocks(CubePrimer cube,
             CubePos generatedCubePos,
             double caveX, double caveY, double caveZ,
             double caveSizeHoriz, double caveSizeVert,

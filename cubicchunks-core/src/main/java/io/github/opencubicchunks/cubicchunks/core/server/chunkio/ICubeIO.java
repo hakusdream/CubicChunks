@@ -25,6 +25,7 @@ package io.github.opencubicchunks.cubicchunks.core.server.chunkio;
 
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.IThreadedFileIO;
 
 import java.io.IOException;
@@ -36,13 +37,13 @@ import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 public interface ICubeIO extends IThreadedFileIO {
 	void flush() throws IOException;
 
-	@Nullable IColumn loadColumn(int chunkX, int chunkZ) throws IOException;
+	@Nullable Chunk loadColumn(int chunkX, int chunkZ) throws IOException;
 
-	@Nullable PartialCubeData loadCubeAsyncPart(IColumn column, int cubeY) throws IOException;
+	@Nullable PartialCubeData loadCubeAsyncPart(Chunk column, int cubeY) throws IOException;
 
 	void loadCubeSyncPart(PartialCubeData info);
 
-	void saveColumn(IColumn column);
+	void saveColumn(Chunk column);
 
 	void saveCube(Cube cube);
 

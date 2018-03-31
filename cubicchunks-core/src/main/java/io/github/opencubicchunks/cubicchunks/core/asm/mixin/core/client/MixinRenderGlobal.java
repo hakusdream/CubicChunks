@@ -29,7 +29,7 @@ import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_CLIE
 
 import io.github.opencubicchunks.cubicchunks.core.util.ClassInheritanceMultiMapFactory;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
@@ -57,7 +57,6 @@ import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.List;
 

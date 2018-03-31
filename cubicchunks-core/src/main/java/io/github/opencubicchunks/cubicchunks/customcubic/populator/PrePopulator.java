@@ -21,14 +21,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -46,7 +45,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class PrePopulator implements ICubicPopulator {
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome cubicBiome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome cubicBiome) {
         CustomGeneratorSettings cfg = CustomGeneratorSettings.fromJson(world.getWorldInfo().getGeneratorOptions());
 
         Biome biome = cubicBiome.getBiome();

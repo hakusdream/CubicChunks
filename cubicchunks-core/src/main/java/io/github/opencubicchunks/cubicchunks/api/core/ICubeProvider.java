@@ -21,12 +21,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.world;
+package io.github.opencubicchunks.cubicchunks.api.core;
 
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.chunk.Chunk;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -53,8 +54,9 @@ public interface ICubeProvider {
      *
      * @return The column, if loaded. Null, otherwise.
      */
+    // TODO remove, use vanilla methods
     @Nullable
-    IColumn getLoadedColumn(int x, int z); // more strictly define the return type
+    Chunk getLoadedColumn(int x, int z); // more strictly define the return type
 
-    IColumn provideColumn(int x, int z);   // more strictly define the return type
+    Chunk provideColumn(int x, int z);   // more strictly define the return type
 }

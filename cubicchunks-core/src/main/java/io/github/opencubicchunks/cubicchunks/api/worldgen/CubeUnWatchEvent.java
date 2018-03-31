@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 
 import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;

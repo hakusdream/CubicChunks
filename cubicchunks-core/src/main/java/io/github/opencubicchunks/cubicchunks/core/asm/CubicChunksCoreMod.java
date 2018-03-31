@@ -102,6 +102,7 @@ public class CubicChunksCoreMod implements IFMLLoadingPlugin {
         Mixins.addConfiguration("cubicchunks.mixins.fixes.json");
         Mixins.addConfiguration("cubicchunks.mixins.selectable.json");
         Mixins.addConfiguration("cubicchunks.mixins.noncritical.json");
-        MixinEnvironment.getDefaultEnvironment().registerTokenProviderClass("cubicchunks.asm.CubicChunksCoreMod$TokenProvider");
+        MixinEnvironment.getDefaultEnvironment().registerTokenProviderClass(
+                "io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksCoreMod$TokenProvider");
     }
 }

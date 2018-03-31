@@ -39,7 +39,7 @@ import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubi
 import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
 
 import com.google.common.eventbus.Subscribe;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UISplitLayout;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UITerrainPreview;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIVerticalTableLayout;

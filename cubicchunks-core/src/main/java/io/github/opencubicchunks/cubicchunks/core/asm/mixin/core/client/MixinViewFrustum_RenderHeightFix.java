@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;

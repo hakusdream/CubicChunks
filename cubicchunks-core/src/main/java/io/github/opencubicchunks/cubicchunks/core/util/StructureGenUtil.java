@@ -23,8 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.util;
 
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -37,7 +37,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class StructureGenUtil {
 
-    public static boolean scanWallsForBlock(ICubePrimer cube,
+    public static boolean scanWallsForBlock(CubePrimer cube,
             StructureBoundingBox boundingBox,
             Predicate<IBlockState> predicate) {
         int minX = boundingBox.minX;
@@ -85,7 +85,7 @@ public class StructureGenUtil {
     }
 
     /**
-     * Modifies boundingBox so that max coordinates are less than or equal to {@link cubicchunks.world.cube.Cube#SIZE}
+     * Modifies boundingBox so that max coordinates are less than or equal to {@link Cube#SIZE}
      * and min coords are greater than or equal to 0
      */
     public static void clampBoundingBoxToLocalCube(StructureBoundingBox boundingBox) {

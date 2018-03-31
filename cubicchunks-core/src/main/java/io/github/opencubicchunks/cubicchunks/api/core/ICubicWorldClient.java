@@ -21,8 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.world;
+package io.github.opencubicchunks.cubicchunks.api.core;
 
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
 import mcp.MethodsReturnNonnullByDefault;
@@ -35,17 +36,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public interface ICubicWorldClient extends ICubicWorld {
 
-    /**
-     * Initializes the world to be a CubicChunks world. Must be done before any players are online and before any chunks
-     * are loaded. Cannot be used more than once.
-     * @param heightRange
-     * @param generationRange
-     */
-    void initCubicWorldClient(IntRange heightRange, IntRange generationRange);
-
     CubeProviderClient getCubeCache();
-
-    boolean invalidateRegionAndSetBlock(BlockPos pos, IBlockState blockState);
 
     void setHeightBounds(int minHeight, int maxHeight);
 }

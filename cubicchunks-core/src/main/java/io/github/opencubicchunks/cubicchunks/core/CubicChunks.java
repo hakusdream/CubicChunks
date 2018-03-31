@@ -34,24 +34,26 @@ import io.github.opencubicchunks.cubicchunks.core.world.type.FlatCubicWorldType;
 import io.github.opencubicchunks.cubicchunks.core.world.type.VanillaCubicWorldType;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubeGeneratorsRegistry;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.MesaSurfaceReplacer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.MutatedSavannaSurfaceReplacer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.SwampWaterWithLilypadReplacer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer.TaigaSurfaceReplacer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.DefaultDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.DesertDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.ForestDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.HillsDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.JungleDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.MesaDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PlainsDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.SavannaDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.SnowBiomeDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.SwampDecorator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.TaigaDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.ConversionUtils;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.MesaSurfaceReplacer;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.MutatedSavannaSurfaceReplacer;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.SwampWaterWithLilypadReplacer;
+import io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer.TaigaSurfaceReplacer;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.DefaultDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.DesertDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.ForestDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.HillsDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.JungleDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.MesaDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.PlainsDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.SavannaDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.SnowBiomeDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.SwampDecorator;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.TaigaDecorator;
 import mcp.MethodsReturnNonnullByDefault;
+import net.malisis.core.registry.Registries;
+import net.malisis.core.registry.SetBlockCallbackRegistry;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -98,7 +100,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -262,6 +266,17 @@ public class CubicChunks {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         CubicBiome.postInit();
+
+        try {
+            Field reg = Registries.class.getDeclaredField("preSetBlockRegistry");
+            reg.setAccessible(true);
+            Object r = reg.get(null);
+            Field callbacks = r.getClass().getSuperclass().getDeclaredField("callbacks");
+            callbacks.setAccessible(true);
+            ((List) callbacks.get(r)).clear();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     @EventHandler

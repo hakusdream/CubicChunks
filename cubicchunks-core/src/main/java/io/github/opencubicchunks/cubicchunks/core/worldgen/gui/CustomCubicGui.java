@@ -29,7 +29,7 @@ import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubi
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonSyntaxException;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.NoTranslationFont;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIBorderLayout;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIColoredPanel;
@@ -38,14 +38,12 @@ import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UITabbe
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIVerticalTableLayout;
 import mcp.MethodsReturnNonnullByDefault;
 import net.malisis.core.client.gui.Anchor;
-import net.malisis.core.client.gui.GuiRenderer;
 import net.malisis.core.client.gui.GuiTexture;
 import net.malisis.core.client.gui.MalisisGui;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.malisis.core.client.gui.component.container.UIContainer;
 import net.malisis.core.client.gui.component.interaction.UIButton;
 import net.malisis.core.client.gui.component.interaction.UITextField;
-import net.malisis.core.client.gui.element.SimpleGuiShape;
 import net.malisis.core.renderer.font.FontOptions;
 import net.minecraft.client.gui.GuiCreateWorld;
 

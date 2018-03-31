@@ -21,11 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer;
+package io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.World;
 
 import java.util.Collections;
 import java.util.Set;
@@ -42,14 +42,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public interface IBiomeBlockReplacerProvider {
 
-    IBiomeBlockReplacer create(ICubicWorld world, CubicBiome biome, BiomeBlockReplacerConfig conf);
+    IBiomeBlockReplacer create(World world, CubicBiome biome, BiomeBlockReplacerConfig conf);
 
     Set<ConfigOptionInfo> getPossibleConfigOptions();
 
     static IBiomeBlockReplacerProvider of(SimpleReplacerProvider supplier) {
         return new IBiomeBlockReplacerProvider() {
             @Override
-            public IBiomeBlockReplacer create(ICubicWorld world, CubicBiome biome, BiomeBlockReplacerConfig conf) {
+            public IBiomeBlockReplacer create(World world, CubicBiome biome, BiomeBlockReplacerConfig conf) {
                 return supplier.create(world, biome, conf);
             }
 
@@ -66,6 +66,6 @@ public interface IBiomeBlockReplacerProvider {
     @FunctionalInterface
     interface SimpleReplacerProvider {
 
-        IBiomeBlockReplacer create(ICubicWorld world, CubicBiome biome, BiomeBlockReplacerConfig conf);
+        IBiomeBlockReplacer create(World world, CubicBiome biome, BiomeBlockReplacerConfig conf);
     }
 }

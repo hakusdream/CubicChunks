@@ -21,22 +21,22 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer;
+package io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer;
 
 import static java.lang.Math.abs;
 
 import com.google.common.collect.Sets;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.ConversionUtils;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.IBuilder;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.NoiseSource;
+import io.github.opencubicchunks.cubicchunks.customcubic.builder.IBuilder;
+import io.github.opencubicchunks.cubicchunks.customcubic.builder.NoiseSource;
+import io.github.opencubicchunks.cubicchunks.customcubic.ConversionUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 import java.util.Set;
@@ -128,7 +128,7 @@ public class SurfaceDefaultReplacer implements IBiomeBlockReplacer {
             private final ResourceLocation OCEAN_LEVEL = CubicChunks.location("water_level");
 
             @Override
-            public IBiomeBlockReplacer create(ICubicWorld world, CubicBiome cubicBiome, BiomeBlockReplacerConfig conf) {
+            public IBiomeBlockReplacer create(World world, CubicBiome cubicBiome, BiomeBlockReplacerConfig conf) {
                 double gradientDec = conf.getDouble(HORIZONTAL_GRADIENT_DEC);
                 double oceanY = conf.getDouble(OCEAN_LEVEL);
                 Biome biome = cubicBiome.getBiome();

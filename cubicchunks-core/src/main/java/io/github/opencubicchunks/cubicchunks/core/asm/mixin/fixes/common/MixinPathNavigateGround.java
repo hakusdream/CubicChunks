@@ -23,7 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.IMinMaxHeight;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
@@ -53,25 +54,24 @@ public abstract class MixinPathNavigateGround extends PathNavigate {
     @Overwrite
     public Path getPathToPos(BlockPos posIn) {
         BlockPos posOriginal = posIn;
-        ICubicWorld world = (ICubicWorld) this.world;
         if (world.getBlockState(posIn).getMaterial() == Material.AIR) {
             BlockPos pos = posIn.down();
 
             // CubicChunks: instead of going down until it reaches zero, go down until unloaded block is reached
-            while (pos.getY() > world.getMinHeight()
+            while (pos.getY() > ((IMinMaxHeight) world).getMinHeight()
                     && world.isBlockLoaded(pos)
                     && world.getBlockState(pos).getMaterial() == Material.AIR) {
                 pos = pos.down();
             }
 
             // CubicChunks check for min world height and block loaded check
-            if (pos.getY() > world.getMinHeight() && world.isBlockLoaded(pos)) {
+            if (pos.getY() > ((IMinMaxHeight) world).getMinHeight() && world.isBlockLoaded(pos)) {
                 return super.getPathToPos(pos.up());
             }
 
             // CubicChunks do isBlockLoaded check. If we ended up here, it's not loaded at the beginning so go 1 block up first
             pos = pos.up();
-            while (pos.getY() < world.getMaxHeight()
+            while (pos.getY() < ((IMinMaxHeight) world).getMaxHeight()
                     && world.isBlockLoaded(pos)
                     && world.getBlockState(pos).getMaterial() == Material.AIR) {
                 pos = pos.up();
@@ -87,14 +87,14 @@ public abstract class MixinPathNavigateGround extends PathNavigate {
 
             // found solid block... so now find block that isn't solid?
             // CubicChunks: add is block loaded check
-            while (pos.getY() < world.getMaxHeight()
+            while (pos.getY() < ((IMinMaxHeight) world).getMaxHeight()
                     && world.isBlockLoaded(pos)
                     && this.world.getBlockState(pos).getMaterial().isSolid()) {
                 pos = pos.up();
             }
 
             // CubicChunks: check if actually found something, if hit unloaded area - go to where we are already
-            if(pos.getY() >= world.getMaxHeight() || !world.isBlockLoaded(pos)) {
+            if(pos.getY() >= ((IMinMaxHeight) world).getMaxHeight() || !world.isBlockLoaded(pos)) {
                 return super.getPathToPos(posOriginal);
             }
 

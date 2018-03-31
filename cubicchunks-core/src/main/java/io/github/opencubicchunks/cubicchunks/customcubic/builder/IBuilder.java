@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder;
+package io.github.opencubicchunks.cubicchunks.customcubic.builder;
 
 import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
 import io.github.opencubicchunks.cubicchunks.core.util.cache.HashCacheDoubles;

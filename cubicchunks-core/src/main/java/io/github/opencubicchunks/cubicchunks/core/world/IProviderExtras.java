@@ -26,6 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core.world;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.chunk.Chunk;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -44,7 +45,7 @@ public interface IProviderExtras {
      * @return the column, or <code>null</code> if no column could be created with the specified requirement level
      */
     @Nullable
-    IColumn getColumn(int columnX, int columnZ, Requirement req);
+    Chunk getColumn(int columnX, int columnZ, Requirement req);
 
     /**
      * Retrieve a cube. The work done to retrieve the cube is specified by {@link Requirement} <code>req</code>

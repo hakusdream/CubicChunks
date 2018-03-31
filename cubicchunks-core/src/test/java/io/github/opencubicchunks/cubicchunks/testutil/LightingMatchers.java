@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.testutil;
+package io.github.opencubicchunks.cubicchunks.testutil;
 
 import io.github.opencubicchunks.cubicchunks.core.lighting.ILightBlockAccess;
 import mcp.MethodsReturnNonnullByDefault;

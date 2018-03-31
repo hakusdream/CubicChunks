@@ -23,6 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
@@ -43,7 +44,7 @@ public class SpawnPlaceFinder {
 
     private static final int MIN_FREE_SPACE_SPAWN = 32;
 
-    public BlockPos getRandomizedSpawnPoint(ICubicWorld world) {
+    public BlockPos getRandomizedSpawnPoint(World world) {
         //TODO: uses getTopSolidOrLiquidBlock() ... not good
         BlockPos ret = world.getSpawnPoint();
 
@@ -59,22 +60,22 @@ public class SpawnPlaceFinder {
             spawnFuzz = border;
         }
 
-        if (!world.getProvider().isNether() && !isAdventure && spawnFuzz != 0) {
+        if (!world.provider.isNether() && !isAdventure && spawnFuzz != 0) {
             if (spawnFuzz < 2) {
                 spawnFuzz = 2;
             }
             int spawnFuzzHalf = spawnFuzz / 2;
             ret = getTopBlockBisect(world, ret.add(
-                    world.getRand().nextInt(spawnFuzzHalf) - spawnFuzz,
+                    world.rand.nextInt(spawnFuzzHalf) - spawnFuzz,
                     0,
-                    world.getRand().nextInt(spawnFuzzHalf) - spawnFuzz
+                    world.rand.nextInt(spawnFuzzHalf) - spawnFuzz
             ));
         }
 
         return ret;
     }
 
-    private BlockPos getTopBlockBisect(ICubicWorld world, BlockPos pos) {
+    private BlockPos getTopBlockBisect(World world, BlockPos pos) {
         Chunk chunk = ((World) world).getChunkFromBlockCoords(pos);
         BlockPos minPos, maxPos;
         if (findEmpty(chunk, pos) != null) {

@@ -21,48 +21,23 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.world;
+package io.github.opencubicchunks.cubicchunks.api.core;
 
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.world.IMinMaxHeight;
+import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.profiler.Profiler;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.EnumSkyBlock;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProvider;
-import net.minecraft.world.border.WorldBorder;
-import net.minecraft.world.storage.ISaveHandler;
-import net.minecraft.world.storage.WorldInfo;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public interface ICubicWorld extends IMinMaxHeight {
-
-    /**
-     * Updates the world
-     */
-    void tickCubicWorld();
 
     boolean isCubicWorld();
 
@@ -126,98 +101,6 @@ public interface ICubicWorld extends IMinMaxHeight {
     boolean isBlockColumnLoaded(BlockPos pos);
 
     boolean isBlockColumnLoaded(BlockPos pos, boolean allowEmpty);
-
-    //vanilla part
-
-    //field accessors
-    WorldProvider getProvider();
-
-    Random getRand();
-
-    List<EntityPlayer> getPlayerEntities();
-
-    //true if it's clientside
-    boolean isRemote();
-
-    Profiler getProfiler();
-
-    //methods
-
-    boolean isValid(BlockPos pos);
-
-    boolean isBlockLoaded(BlockPos pos);
-
-    boolean isBlockLoaded(BlockPos pos, boolean allowEmpty);
-
-    void loadEntities(Collection<Entity> entities);
-
-    void addTileEntities(Collection<TileEntity> values);
-
-    void unloadEntities(Collection<Entity> entities);
-
-    void removeTileEntity(BlockPos pos);
-
-    void markTileEntityForRemoval(TileEntity pos);
-
-    long getTotalWorldTime();
-
-    void setTileEntity(BlockPos blockpos, @Nullable TileEntity tileentity);
-
-    void markBlockRangeForRenderUpdate(BlockPos blockpos, BlockPos blockpos1);
-
-    boolean addTileEntity(TileEntity tileEntity);
-
-    void markBlockRangeForRenderUpdate(int minBlockX, int minBlockY, int minBlockZ, int maxBlockX, int maxBlockY, int maxBlockZ);
-
-    long getSeed();
-
-    boolean checkLightFor(EnumSkyBlock sky, BlockPos pos);
-
-    ISaveHandler getSaveHandler();
-
-    MinecraftServer getMinecraftServer();
-
-    void addBlockEvent(BlockPos blockPos, Block i, int t, int p);
-
-    void scheduleBlockUpdate(BlockPos blockPos, Block i, int t, int p);
-
-    GameRules getGameRules();
-
-    WorldInfo getWorldInfo();
-
-    @Nullable TileEntity getTileEntity(BlockPos pos);
-
-    boolean setBlockState(BlockPos blockPos, IBlockState blockState, int i);
-
-    IBlockState getBlockState(BlockPos pos);
-
-    boolean isAirBlock(BlockPos randomPos);
-
-    Biome getBiome(BlockPos blockPos);
-
-    BiomeProvider getBiomeProvider();
-
-    BlockPos getSpawnPoint();
-
-    WorldBorder getWorldBorder();
-
-    int countEntities(EnumCreatureType type, boolean flag);
-
-    boolean isAnyPlayerWithinRangeAt(double f, double i3, double f1, double v);
-
-    DifficultyInstance getDifficultyForLocation(BlockPos pos);
-
-    boolean spawnEntity(Entity entityliving);
-
-    boolean isAreaLoaded(BlockPos startPos, BlockPos endPos);
-
-    void notifyLightSet(BlockPos pos);
-
-    WorldType getWorldType();
-
-    boolean canBlockFreezeWater(BlockPos topBlock);
-
-    boolean canSnowAt(BlockPos aboveTop, boolean flag);
 
     int getMinGenerationHeight();
 

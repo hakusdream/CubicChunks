@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer;
+package io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import mcp.MethodsReturnNonnullByDefault;

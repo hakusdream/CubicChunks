@@ -27,10 +27,11 @@ import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.PacketUtils;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -132,8 +133,8 @@ public class PacketCubes implements IMessage {
         public IMessage handleClientMessage(EntityPlayer player, PacketCubes message, MessageContext ctx) {
             PacketUtils.ensureMainThread(this, player, message, ctx);
 
-            ICubicWorldClient worldClient = (ICubicWorldClient) player.getEntityWorld();
-            CubeProviderClient cubeCache = worldClient.getCubeCache();
+            WorldClient worldClient = (WorldClient) player.getEntityWorld();
+            CubeProviderClient cubeCache = ((ICubicWorldClient) worldClient).getCubeCache();
 
             CubePos[] cubePos = message.getCubePos();
             List<Cube> cubes = new ArrayList<>();

@@ -27,6 +27,7 @@ import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_ADD;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_CONSTR_ENTITY;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_DOWN;
+import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.ENTITY;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_SERVER_GET_ACTUAL_HEIGHT;
 
 import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
@@ -55,10 +56,10 @@ public class MixinTeleporter {
     // placeInExistingPortal fixes
 
     @Redirect(method = "placeInExistingPortal",
-              at = @At(value = "INVOKE", target = BLOCK_POS_ADD),
+              at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;add(III)Lnet/minecraft/util/math/BlockPos;"),
               slice = @Slice(
-                      from = @At(value = "NEW", target = BLOCK_POS_CONSTR_ENTITY),
-                      to = @At(value = "INVOKE", target = BLOCK_POS_DOWN)
+                      from = @At(value = "NEW", target = "(Lnet/minecraft/entity/Entity;)Lnet/minecraft/util/math/BlockPos;"),
+                      to = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;down()Lnet/minecraft/util/math/BlockPos;")
               ))
     private BlockPos makeTopStartPos(BlockPos orig, int dx, int dy, int dz, Entity entity, float rotationYaw) {
         return orig.add(dx, 128, dz);

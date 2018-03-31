@@ -24,16 +24,14 @@
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_GETY;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.chunk.Chunk;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

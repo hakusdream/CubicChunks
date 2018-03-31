@@ -21,16 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
-
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.getSurfaceForCube;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.SurfaceType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -44,11 +40,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class DesertDecorator implements ICubicPopulator {
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
         if (random.nextInt(1000) == 0) {
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-            BlockPos blockpos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+            BlockPos blockpos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
             if (blockpos != null) {
                 (new WorldGenDesertWells()).generate((World) world, random, blockpos.up());
             }

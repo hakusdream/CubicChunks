@@ -21,12 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.world.World;
@@ -42,7 +42,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class PlainsDecorator implements ICubicPopulator {
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
         double randomValue = Biome.GRASS_COLOR_NOISE.getValue((double) (pos.getX() + 8) / 200.0D, (double) (pos.getZ() + 8) / 200.0D);
 
         BiomeDecorator dec = biome.getBiome().decorator;

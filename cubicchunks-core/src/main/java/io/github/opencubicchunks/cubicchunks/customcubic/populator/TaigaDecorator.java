@@ -21,14 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
-
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.getSurfaceForCube;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDoublePlant;
@@ -44,7 +41,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class TaigaDecorator implements ICubicPopulator {
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
         BiomeTaiga taiga = (BiomeTaiga) biome.getBiome();
         if ((taiga.type == BiomeTaiga.Type.MEGA || taiga.type == BiomeTaiga.Type.MEGA_SPRUCE)) {
             int count = random.nextInt(3);
@@ -52,7 +49,7 @@ public class TaigaDecorator implements ICubicPopulator {
             for (int i = 0; i < count; ++i) {
                 int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
                 int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-                BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
+                BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
                 if (blockPos != null) {
                     taiga.FOREST_ROCK_GENERATOR.generate((World) world, random, blockPos);
                 }

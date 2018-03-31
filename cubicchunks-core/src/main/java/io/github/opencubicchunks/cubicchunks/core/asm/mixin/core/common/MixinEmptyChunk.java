@@ -23,11 +23,12 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.EmptyChunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -49,7 +50,7 @@ public abstract class MixinEmptyChunk extends MixinChunk_Column {
     @Inject(method = "<init>", at = @At(value = "RETURN"))
     private void cubicChunkColumn_construct(World worldIn, int x, int z, CallbackInfo cbi) {
         if (((ICubicWorld) worldIn).isCubicWorld()) {
-            blankCube = new BlankCube(this);
+            blankCube = new BlankCube((Chunk) (Object) this);
         }
     }
 
@@ -65,10 +66,6 @@ public abstract class MixinEmptyChunk extends MixinChunk_Column {
 
     @Override
     public void addCube(Cube cube) {
-    }
-
-    @Override
-    public void markSaved() {
     }
 
     @Override

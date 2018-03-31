@@ -29,11 +29,12 @@ import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMaxBl
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.getCubeCenter;
 
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.util.FastCubeBlockAccess;
 import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
@@ -120,7 +121,7 @@ public class FirstLightProcessor {
      * @param cube the cube whose skylight is to be initialized
      */
     public void initializeSkylight(Cube cube) {
-        if (!cube.getCubicWorld().getProvider().hasSkyLight()) {
+        if (!cube.getWorld().provider.hasSkyLight()) {
             return;
         }
 
@@ -153,11 +154,11 @@ public class FirstLightProcessor {
         if (LightingManager.NO_SUNLIGHT_PROPAGATION) {
             return;
         }
-        if (!cube.getCubicWorld().getProvider().hasSkyLight()) {
+        if (!cube.getWorld().provider.hasSkyLight()) {
             cube.setInitialLightingDone(true);
             return;
         }
-        ICubicWorld world = cube.getCubicWorld();
+        ICubicWorld world = cube.getWorld();
 
         // Cache min/max Y, generating them may be expensive
         int[][] minBlockYArr = new int[Cube.SIZE][Cube.SIZE];
@@ -328,7 +329,7 @@ public class FirstLightProcessor {
      */
     private static boolean canUpdateCube(@Nonnull Cube cube) {
         BlockPos cubeCenter = getCubeCenter(cube);
-        return cube.getCubicWorld().testForCubes(cubeCenter, UPDATE_RADIUS, Objects::nonNull);
+        return cube.getWorld().testForCubes(cubeCenter, UPDATE_RADIUS, Objects::nonNull);
     }
 
     /**
@@ -354,14 +355,14 @@ public class FirstLightProcessor {
 
     /**
      * Returns the y-coordinate of the highest occluding block in the specified block column. If there exists no such
-     * block {@link cubicchunks.util.Coords#NO_HEIGHT} will be returned instead.
+     * block {@link Coords#NO_HEIGHT} will be returned instead.
      *
      * @param IColumn the column containing the block column
      * @param localX the block column's local x-coordinate
      * @param localZ the block column's local z-coordinate
      *
      * @return the y-coordinate of the highest occluding block in the specified block column or {@link
-     * cubicchunks.util.Coords#NO_HEIGHT} if no such block exists
+     * Coords#NO_HEIGHT} if no such block exists
      */
     private static int getOcclusionHeight(@Nonnull IColumn IColumn, int localX, int localZ) {
         return IColumn.getOpacityIndex().getTopBlockY(localX, localZ);
@@ -369,7 +370,7 @@ public class FirstLightProcessor {
 
     /**
      * Returns the y-coordinate of the highest occluding block in the specified block column, that is underneath the
-     * cube at the given y-coordinate. If there exists no such block {@link cubicchunks.util.Coords#NO_HEIGHT} will be
+     * cube at the given y-coordinate. If there exists no such block {@link Coords#NO_HEIGHT} will be
      * returned instead.
      *
      * @param IColumn the column containing the block column
@@ -378,7 +379,7 @@ public class FirstLightProcessor {
      * @param cubeY the y-coordinate of the cube underneath which the highest occluding block is to be found
      *
      * @return the y-coordinate of the highest occluding block underneath the given cube in the specified block column
-     * or {@link cubicchunks.util.Coords#NO_HEIGHT} if no such block exists
+     * or {@link Coords#NO_HEIGHT} if no such block exists
      */
     private static int getOcclusionHeightBelowCubeY(@Nonnull IColumn IColumn, int blockX, int blockZ, int cubeY) {
         IHeightMap index = IColumn.getOpacityIndex();

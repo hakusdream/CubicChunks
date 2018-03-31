@@ -66,7 +66,7 @@ class IONbtWriter {
         return buf.toByteArray();
     }
 
-    static NBTTagCompound write(IColumn column) {
+    static NBTTagCompound write(Chunk column) {
         NBTTagCompound columnNbt = new NBTTagCompound();
         NBTTagCompound level = new NBTTagCompound();
         columnNbt.setTag("Level", level);
@@ -95,21 +95,21 @@ class IONbtWriter {
         return cubeNbt;
     }
 
-    private static void writeBaseColumn(IColumn column, NBTTagCompound nbt) {// coords
-        nbt.setInteger("x", column.getX());
-        nbt.setInteger("z", column.getZ());
+    private static void writeBaseColumn(Chunk column, NBTTagCompound nbt) {// coords
+        nbt.setInteger("x", column.x);
+        nbt.setInteger("z", column.z);
 
         // column properties
         nbt.setByte("v", (byte) 1);
         nbt.setLong("InhabitedTime", column.getInhabitedTime());
     }
 
-    private static void writeBiomes(IColumn column, NBTTagCompound nbt) {// biomes
+    private static void writeBiomes(Chunk column, NBTTagCompound nbt) {// biomes
         nbt.setByteArray("Biomes", column.getBiomeArray());
     }
 
-    private static void writeOpacityIndex(IColumn IColumn, NBTTagCompound nbt) {// light index
-        nbt.setByteArray("OpacityIndex", ((ServerHeightMap) IColumn.getOpacityIndex()).getData());
+    private static void writeOpacityIndex(Chunk column, NBTTagCompound nbt) {// light index
+        nbt.setByteArray("OpacityIndex", ((ServerHeightMap) ((IColumn) column).getOpacityIndex()).getData());
     }
 
     private static void writeBaseCube(Cube cube, NBTTagCompound cubeNbt) {
@@ -150,7 +150,7 @@ class IONbtWriter {
 
         section.setByteArray("BlockLight", ebs.getBlockLight().getData());
 
-        if (cube.getCubicWorld().getProvider().hasSkyLight()) {
+        if (cube.getWorld().provider.hasSkyLight()) {
             section.setByteArray("SkyLight", ebs.getSkyLight().getData());
         }
     }
@@ -184,7 +184,7 @@ class IONbtWriter {
 
     private static void writeScheduledTicks(Cube cube, NBTTagCompound cubeNbt) {// scheduled block ticks
         Iterable<NextTickListEntry> scheduledTicks = getScheduledTicks(cube);
-        long time = cube.getCubicWorld().getTotalWorldTime();
+        long time = cube.getWorld().getTotalWorldTime();
 
         NBTTagList nbtTicks = new NBTTagList();
         cubeNbt.setTag("TileTicks", nbtTicks);
@@ -219,10 +219,10 @@ class IONbtWriter {
         ArrayList<NextTickListEntry> out = new ArrayList<>();
 
         // make sure this is a server
-        if (!(cube.getCubicWorld() instanceof WorldServer)) {
+        if (!(cube.getWorld() instanceof WorldServer)) {
             throw new Error("Column is not on the server!");
         }
-        WorldServer worldServer = (WorldServer) cube.getCubicWorld();
+        WorldServer worldServer = (WorldServer) cube.getWorld();
 
         // copy the ticks for this cube
         copyScheduledTicks(out, getPendingTickListEntriesHashSet(worldServer), cube);

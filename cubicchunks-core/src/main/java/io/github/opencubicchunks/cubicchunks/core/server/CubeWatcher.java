@@ -36,7 +36,7 @@ import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
 import io.github.opencubicchunks.cubicchunks.core.util.ticket.ITicket;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.list.TShortList;
@@ -50,6 +50,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -83,7 +84,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
     // CHECKED: 1.10.2-12.18.1.2092
     CubeWatcher(PlayerCubeMap playerCubeMap, CubePos cubePos) {
         this.playerCubeMap = playerCubeMap;
-        this.cubeCache = playerCubeMap.getWorld().getCubeCache();
+        this.cubeCache = ((ICubicWorldServer) playerCubeMap.getWorldServer()).getCubeCache();
         this.cubeCache.asyncGetCube(
                 cubePos.getX(), cubePos.getY(), cubePos.getZ(),
                 IProviderExtras.Requirement.LOAD,
@@ -94,7 +95,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
     // CHECKED: 1.10.2-12.18.1.2092
     void addPlayer(EntityPlayerMP player) {
         if (this.players.containsKey(player.getEntityId())) {
-            CubicChunks.LOGGER.debug("Failed to add player. {} already is in cube at {}", player, cubePos);
+            CubicChunks.LOGGER.debug("Failed to expand player. {} already is in cube at {}", player, cubePos);
             return;
         }
         if (this.players.isEmpty()) {
@@ -104,7 +105,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
 
         if (this.sentToPlayers) {
             this.sendToPlayer(player);
-            playerCubeMap.getWorld()
+            ((ICubicWorldServer) playerCubeMap.getWorldServer())
                     .getCubicEntityTracker()
                     .sendLeashedEntitiesInCube(player, this.getCube());
         }
@@ -121,7 +122,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
 
             if (this.players.isEmpty()) {
                 if (loading) {
-                    AsyncWorldIOExecutor.dropQueuedCubeLoad(this.playerCubeMap.getWorld(),
+                    AsyncWorldIOExecutor.dropQueuedCubeLoad(this.playerCubeMap.getWorldServer(),
                             cubePos.getX(), cubePos.getY(), cubePos.getZ(),
                             c -> this.cube = c);
                 }
@@ -154,7 +155,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
         int cubeY = cubePos.getY();
         int cubeZ = cubePos.getZ();
 
-        playerCubeMap.getWorld().getProfiler().startSection("getCube");
+        playerCubeMap.getWorldServer().profiler.startSection("getCube");
         if (canGenerate) {
             this.cube = this.cubeCache.getCube(cubeX, cubeY, cubeZ, IProviderExtras.Requirement.LIGHT);
         } else {
@@ -163,7 +164,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
         if (this.cube != null) {
             this.cube.getTickets().add(this);
         }
-        playerCubeMap.getWorld().getProfiler().endStartSection("light");
+        playerCubeMap.getWorldServer().profiler.endStartSection("light");
         if (this.cube != null) {
             LightingManager.CubeLightUpdateInfo info = this.cube.getCubeLightUpdateInfo();
             if (info != null) {
@@ -171,7 +172,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
             }
             assert !this.cube.hasLightUpdates();
         }
-        playerCubeMap.getWorld().getProfiler().endSection();
+        playerCubeMap.getWorldServer().profiler.endSection();
 
         return this.cube != null;
     }
@@ -257,7 +258,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
             return;
         }
 
-        ICubicWorld world = this.cube.getCubicWorld();
+        World world = this.cube.getWorld();
 
         if (this.dirtyBlocks.size() >= ForgeModContainer.clumpingThreshold) {
             // send whole cube

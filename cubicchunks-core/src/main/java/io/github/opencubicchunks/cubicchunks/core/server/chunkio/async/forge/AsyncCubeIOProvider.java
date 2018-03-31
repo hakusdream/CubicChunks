@@ -24,6 +24,7 @@ import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.chunk.Chunk;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -43,7 +44,7 @@ class AsyncCubeIOProvider extends AsyncIOProvider<Cube> {
     @Nonnull private final QueuedCube cubeInfo;
     @Nonnull private final ICubeIO loader;
 
-    @Nonnull private CompletableFuture<IColumn> futureColumn = new CompletableFuture<>();
+    @Nonnull private CompletableFuture<Chunk> futureColumn = new CompletableFuture<>();
     @Nullable private ICubeIO.PartialCubeData cubeData;
 
     AsyncCubeIOProvider(QueuedCube cube, ICubeIO loader) {
@@ -86,7 +87,7 @@ class AsyncCubeIOProvider extends AsyncIOProvider<Cube> {
         return cubeData == null ? null : cubeData.getCube();
     }
 
-    public void setColumn(@Nullable IColumn IColumn) {
-        this.futureColumn.complete(IColumn);
+    public void setColumn(@Nullable Chunk chunk) {
+        this.futureColumn.complete(chunk);
     }
 }

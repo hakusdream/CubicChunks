@@ -25,9 +25,8 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldg
 
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.MATERIAL_WATER;
 
-import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.PopulatorUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +38,6 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;

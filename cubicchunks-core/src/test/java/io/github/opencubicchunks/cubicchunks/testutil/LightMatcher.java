@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.testutil;
+package io.github.opencubicchunks.cubicchunks.testutil;
 
 import static io.github.opencubicchunks.cubicchunks.core.util.MathUtil.max;
 import static net.minecraft.world.EnumSkyBlock.BLOCK;

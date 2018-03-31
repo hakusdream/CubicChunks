@@ -23,18 +23,19 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world.cube;
 
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.debug.Dbg;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
+import io.github.opencubicchunks.cubicchunks.core.util.ticket.ITicket;
 import io.github.opencubicchunks.cubicchunks.core.util.ticket.TicketList;
 import io.github.opencubicchunks.cubicchunks.core.world.EntityContainer;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -50,7 +51,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
-import scala.actors.threadpool.Arrays;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -67,8 +67,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.apache.logging.log4j.LogManager;
-
-import com.google.common.collect.Sets;
 
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.*;
 
@@ -93,14 +91,14 @@ public class Cube implements XYZAddressable {
 
 
     /**
-     * Tickets keep this chunk loaded and ticking. See the docs of {@link TicketList} and {@link
-     * cubicchunks.util.ticket.ITicket} for additional information.
+     * Tickets keep this chunk loaded and ticking. See the docs of {@link TicketList} and {@link ITicket} for additional information.
      */
     @Nonnull private final TicketList tickets; // tickets prevent this Cube from being unloaded
     /**
      * Has anything within the cube changed since it was loaded from disk?
      */
     private boolean isModified = false;
+
     /**
      * Has the cube generator's populate() method been called for this cube?
      */
@@ -121,11 +119,11 @@ public class Cube implements XYZAddressable {
     /**
      * The world of this cube
      */
-    @Nonnull private final ICubicWorld world;
+    @Nonnull private final World world;
     /**
      * The column of this cube
      */
-    @Nonnull private final IColumn column;
+    @Nonnull private final Chunk column;
     /**
      * The position of this cube, in cube space
      */
@@ -173,10 +171,10 @@ public class Cube implements XYZAddressable {
      * @param column column of this cube
      * @param cubeY cube y position
      */
-    public Cube(IColumn column, int cubeY) {
-        this.world = column.getCubicWorld();
+    public Cube(Chunk column, int cubeY) {
+        this.world = column.getWorld();
         this.column = column;
-        this.coords = new CubePos(column.getX(), cubeY, column.getZ());
+        this.coords = new CubePos(column.x, cubeY, column.z);
 
         this.tickets = new TicketList();
 
@@ -184,7 +182,7 @@ public class Cube implements XYZAddressable {
         this.tileEntityMap = new HashMap<>();
         this.tileEntityPosQueue = new ConcurrentLinkedQueue<>();
 
-        this.cubeLightUpdateInfo = world.getLightingManager().createCubeLightUpdateInfo(this);
+        this.cubeLightUpdateInfo = ((ICubicWorld) world).getLightingManager().createCubeLightUpdateInfo(this);
 
         this.storage = NULL_STORAGE;
     }
@@ -198,11 +196,11 @@ public class Cube implements XYZAddressable {
      */
     @SuppressWarnings("deprecation") // when a block is generated, does it really have any extra
     // information it could give us about its opacity by knowing its location?
-    public Cube(IColumn column, int cubeY, ICubePrimer primer) {
+    public Cube(Chunk column, int cubeY, CubePrimer primer) {
         this(column, cubeY);
 
         int miny = cubeToMinBlock(cubeY);
-        IHeightMap opindex = column.getOpacityIndex();
+        IHeightMap opindex = ((IColumn) column).getOpacityIndex();
 
         for (int x = 0; x < Cube.SIZE; x++) {
             for (int z = 0; z < Cube.SIZE; z++) {
@@ -232,7 +230,7 @@ public class Cube implements XYZAddressable {
     /**
      * Constructor to be used from subclasses to provide all field values
      */
-    protected Cube(TicketList tickers, ICubicWorld world, IColumn column, CubePos coords, ExtendedBlockStorage storage,
+    protected Cube(TicketList tickers, World world, Chunk column, CubePos coords, ExtendedBlockStorage storage,
             EntityContainer entities, Map<BlockPos, TileEntity> tileEntityMap,
             ConcurrentLinkedQueue<BlockPos> tileEntityPosQueue, LightingManager.CubeLightUpdateInfo lightInfo) {
         this.tickets = tickers;
@@ -271,7 +269,7 @@ public class Cube implements XYZAddressable {
      *
      * @return The the old state of the block at the position, or null if there was no change
      *
-     * @see IColumn#setBlockState(BlockPos, IBlockState)
+     * @see Chunk#setBlockState(BlockPos, IBlockState)
      */
     @Nullable public IBlockState setBlockState(BlockPos pos, IBlockState newstate) {
         return column.setBlockState(pos, newstate);
@@ -442,7 +440,7 @@ public class Cube implements XYZAddressable {
             LogManager.getLogger().warn((String) "Tried to assign a mutable BlockPos to tick data...",
                     (Throwable) (new Error(pos.getClass().toString())));
         }
-        if (world.getCubeCache().getLoadedCube(CubePos.fromBlockCoords(pos)) != null) {
+        if (((ICubicWorld) world).getCubeCache().getLoadedCube(CubePos.fromBlockCoords(pos)) != null) {
             NextTickListEntry nextticklistentry = new NextTickListEntry(pos, blockIn);
             nextticklistentry.setScheduledTime((long) delay + world.getTotalWorldTime());
             nextticklistentry.setPriority(priority);
@@ -480,15 +478,15 @@ public class Cube implements XYZAddressable {
     /**
      * @return this cube's world
      */
-    public ICubicWorld getCubicWorld() {
-        return this.world;
+    public <T extends World & ICubicWorld> T getWorld() {
+        return (T) this.world;
     }
 
     /**
      * @return this cube's column
      */
-    public IColumn getColumn() {
-        return this.column;
+    public <T extends Chunk & IColumn> T getColumn() {
+        return (T) this.column;
     }
 
     /**
@@ -548,7 +546,7 @@ public class Cube implements XYZAddressable {
     }
 
     private void newStorage() {
-        storage = new ExtendedBlockStorage(cubeToMinBlock(getY()), world.getProvider().hasSkyLight());
+        storage = new ExtendedBlockStorage(cubeToMinBlock(getY()), world.provider.hasSkyLight());
     }
 
     /**
@@ -587,7 +585,7 @@ public class Cube implements XYZAddressable {
     }
 
     private void trackSurface() {
-        IHeightMap opindex = column.getOpacityIndex();
+        IHeightMap opindex = ((IColumn) column).getOpacityIndex();
         int miny = getCoords().getMinBlockY();
 
         for (int x = 0; x < Cube.SIZE; x++) {
@@ -704,19 +702,19 @@ public class Cube implements XYZAddressable {
     }
 
     /**
-     * Check whether this cube was populated, i.e. if this cube was passed as argument to {@link
-     * cubicchunks.worldgen.generator.ICubeGenerator#populate(Cube)}. Check there for more information regarding
+     * Check whether this cube was populated, i.e. if this cube was passed as argument to
+     * {@link ICubeGenerator#populate(Cube)}. Check there for more information regarding
      * population.
      *
-     * @return <code>true</code> if this cube has been populated, <code>false</code> otherwise
+     * @return {@code true} if this cube has been populated, {@code false} otherwise
      */
     public boolean isPopulated() {
         return isPopulated;
     }
 
     /**
-     * Mark this cube as populated. This means that this cube was passed as argument to {@link
-     * cubicchunks.worldgen.generator.ICubeGenerator#populate(Cube)}. Check there for more information regarding
+     * Mark this cube as populated. This means that this cube was passed as argument to
+     * {@link ICubeGenerator#populate(Cube)}. Check there for more information regarding
      * population.
      *
      * @param populated whether this cube was populated
@@ -728,7 +726,7 @@ public class Cube implements XYZAddressable {
 
     /**
      * Check whether this cube was fully populated, i.e. if any cube potentially writing to this cube was passed as an
-     * argument to {@link cubicchunks.worldgen.generator.ICubeGenerator#populate(Cube)}. Check there for more
+     * argument to {@link ICubeGenerator#populate(Cube)}. Check there for more
      * information regarding population
      *
      * @return <code>true</code> if this cube has been populated, <code>false</code> otherwise
@@ -739,7 +737,7 @@ public class Cube implements XYZAddressable {
 
     /**
      * Mark this cube as fully populated. This means that any cube potentially writing to this cube was passed as an
-     * argument to {@link cubicchunks.worldgen.generator.ICubeGenerator#populate(Cube)}. Check there for more
+     * argument to {@link ICubeGenerator#populate(Cube)}. Check there for more
      * information regarding population
      *
      * @param populated whether this cube was fully populated

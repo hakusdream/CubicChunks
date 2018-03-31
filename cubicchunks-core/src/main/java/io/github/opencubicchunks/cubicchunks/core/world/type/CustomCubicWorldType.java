@@ -24,17 +24,10 @@
 package io.github.opencubicchunks.cubicchunks.core.world.type;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.util.Box;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.BasicCubeGenerator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubePrimer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomTerrainGenerator;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomTerrainGenerator;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGui;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
@@ -42,7 +35,6 @@ import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraft.client.gui.GuiErrorScreen;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
@@ -88,7 +80,7 @@ public class CustomCubicWorldType extends WorldType implements ICubicWorldType {
     }
 
     @Override
-    public ICubeGenerator createCubeGenerator(ICubicWorld world) {
+    public ICubeGenerator createCubeGenerator(World world) {
         return new CustomTerrainGenerator(world, world.getSeed());
     }
 

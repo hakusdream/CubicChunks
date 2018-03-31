@@ -23,12 +23,14 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
+import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.PopulatorUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -58,19 +60,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
 
     @Override
-    public int findChunksForSpawning(WorldServer worldOrig, boolean hostileEnable, boolean peacefulEnable, boolean spawnOnSetTickRate) {
+    public int findChunksForSpawning(WorldServer world, boolean hostileEnable, boolean peacefulEnable, boolean spawnOnSetTickRate) {
         if (!hostileEnable && !peacefulEnable)
             return 0;
-        ICubicWorldServer world = (ICubicWorldServer) worldOrig;
         int spawned = 0;
         next_mob_type: for (EnumCreatureType mobType : EnumCreatureType.values()) {
             if (!shouldSpawnType(mobType, hostileEnable, peacefulEnable, spawnOnSetTickRate)) {
                 continue;
             }
             int worldEntityCount = 0;
-            int maxEntityCount = mobType.getMaxNumberOfCreature() * world.getPlayerEntities().size();
+            int maxEntityCount = mobType.getMaxNumberOfCreature() * world.playerEntities.size();
             Class<? extends IAnimals> mobTypeClass = mobType.getCreatureClass();
-            for (Entity entity : worldOrig.loadedEntityList) {
+            for (Entity entity : world.loadedEntityList) {
                 // Here we check if there is already loaded entity of a same
                 // type.
                 // 'world.countEntities' do a same thing, by contain a lot
@@ -85,11 +86,12 @@ public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
         return spawned;
     }
 
-    private int spawnCreatureTypeInAllChunks(EnumCreatureType mobType, ICubicWorldServer world) {
-        Random rand = world.getRand();
+    private int spawnCreatureTypeInAllChunks(EnumCreatureType mobType, WorldServer world) {
+        Random rand = world.rand;
         BlockPos spawnPoint = world.getSpawnPoint();
         int spawned = 0;
-        Iterator<CubeWatcher> cwi = world.getPlayerCubeMap().getRandomWrappedCubeWatcherIterator(rand.nextInt());
+        PlayerCubeMap playerCubeMap = ((ICubicWorldServer) world).getPlayerCubeMap();
+        Iterator<CubeWatcher> cwi = playerCubeMap.getRandomWrappedCubeWatcherIterator(rand.nextInt());
         while (cwi.hasNext()) {
             CubeWatcher chunkInfo = cwi.next();
             if (chunkInfo.isSentToPlayers()) {
@@ -107,12 +109,12 @@ public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
                     int blockX = minBlockX + rand.nextInt(Cube.SIZE);
                     int blockY = minBlockY + rand.nextInt(Cube.SIZE);
                     int blockZ = minBlockZ + rand.nextInt(Cube.SIZE);
-                    int height = world.getEffectiveHeight(blockX, blockZ) + 1;
+                    int height = world.getHeight(blockX, blockZ) + 1;
                     if (minBlockY > height) {
                         blockY = height;
                         int newCubeY = Coords.blockToCube(blockY);
                         if (newCubeY != chunkInfo.getY()) {
-                            CubeWatcher cw = world.getPlayerCubeMap().getCubeWatcher(new CubePos(chunkInfo.getX(), newCubeY, chunkInfo.getZ()));
+                            CubeWatcher cw = playerCubeMap.getCubeWatcher(new CubePos(chunkInfo.getX(), newCubeY, chunkInfo.getZ()));
                             if (cw == null || !cw.isSentToPlayers())
                                 continue;
                         }
@@ -190,7 +192,7 @@ public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
                 (type.getAnimal() && !spawnOnSetTickRate));
     }
 
-    public static void initialWorldGenSpawn(ICubicWorld world, CubicBiome biome, int blockX, int blockY, int blockZ,
+    public static void initialWorldGenSpawn(World world, CubicBiome biome, int blockX, int blockY, int blockZ,
             int sizeX, int sizeY, int sizeZ, Random random) {
         List<Biome.SpawnListEntry> spawnList = biome.getBiome().getSpawnableList(EnumCreatureType.CREATURE);
 
@@ -198,7 +200,7 @@ public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
             return;
         }
         while (random.nextFloat() < biome.getBiome().getSpawningChance()) {
-            Biome.SpawnListEntry currEntry = WeightedRandom.getRandomItem(world.getRand(), spawnList);
+            Biome.SpawnListEntry currEntry = WeightedRandom.getRandomItem(world.rand, spawnList);
             int groupCount = MathHelper.getInt(random, currEntry.minGroupCount, currEntry.maxGroupCount);
             IEntityLivingData data = null;
             int randX = blockX + random.nextInt(sizeX);

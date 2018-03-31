@@ -21,29 +21,46 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator;
+package io.github.opencubicchunks.cubicchunks.api.core;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CubePrimer implements ICubePrimer {
+public class CubePrimer {
+    public static final IBlockState DEFAULT_STATE = Blocks.AIR.getDefaultState();
 
     private final char[] data = new char[4096];
 
-    @Override
+    /**
+     * Get the block state at the given location
+     *
+     * @param x cube local x
+     * @param y cube local y
+     * @param z cube local z
+     *
+     * @return the block state
+     */
     public IBlockState getBlockState(int x, int y, int z) {
         @SuppressWarnings("deprecation")
         IBlockState iblockstate = Block.BLOCK_STATE_IDS.getByValue(this.data[getBlockIndex(x, y, z)]);
         return iblockstate == null ? DEFAULT_STATE : iblockstate;
     }
 
-    @Override
+    /**
+     * Set the block state at the given location
+     *
+     * @param x cube local x
+     * @param y cube local y
+     * @param z cube local z
+     * @param state the block state
+     */
     public void setBlockState(int x, int y, int z, @Nonnull IBlockState state) {
         @SuppressWarnings("deprecation")
         char value = (char) Block.BLOCK_STATE_IDS.get(state);

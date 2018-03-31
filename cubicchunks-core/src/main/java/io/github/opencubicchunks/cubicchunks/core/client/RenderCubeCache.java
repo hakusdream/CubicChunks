@@ -26,7 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core.client;
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
 
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -53,10 +53,10 @@ public class RenderCubeCache extends ChunkCache {
     @Nonnull private final ExtendedBlockStorage[][][] cubeArrays;
     @Nonnull private final Map<BlockPos, TileEntity>[][][] tileEntities;
 
-    @Nonnull private final ICubicWorld world;
+    @Nonnull private final World world;
 
-    public RenderCubeCache(ICubicWorld world, BlockPos from, BlockPos to, int subtract) {
-        super((World) world, from, to, subtract);
+    public RenderCubeCache(World world, BlockPos from, BlockPos to, int subtract) {
+        super(world, from, to, subtract);
         this.world = world;
         this.cubeY = Coords.blockToCube(from.getY() - subtract);
         int cubeXEnd = Coords.blockToCube(to.getX() + subtract);
@@ -77,7 +77,7 @@ public class RenderCubeCache extends ChunkCache {
                     ExtendedBlockStorage ebs;
                     Map<BlockPos, TileEntity> teMap;
 
-                    Cube cube = world.getCubeFromCubeCoords(currentCubeX, currentCubeY, currentCubeZ);
+                    Cube cube = ((ICubicWorld) world).getCubeFromCubeCoords(currentCubeX, currentCubeY, currentCubeZ);
                     ebs = cube.getStorage();
 
                     teMap = cube.getTileEntityMap();
@@ -119,7 +119,7 @@ public class RenderCubeCache extends ChunkCache {
 
     @Override
     public IBlockState getBlockState(BlockPos pos) {
-        if (pos.getY() < world.getMinHeight() | pos.getY() >= world.getMaxHeight()) {
+        if (world.isOutsideBuildHeight(pos)) {
             return Blocks.AIR.getDefaultState();
         }
         int arrayX = Coords.blockToCube(pos.getX()) - this.chunkX;
@@ -135,10 +135,10 @@ public class RenderCubeCache extends ChunkCache {
     }
 
     private int getLightForExt(EnumSkyBlock type, BlockPos pos) {
-        if (type == EnumSkyBlock.SKY && !this.world.getProvider().hasSkyLight()) {
+        if (type == EnumSkyBlock.SKY && !this.world.provider.hasSkyLight()) {
             return 0;
         }
-        if (pos.getY() < world.getMinHeight() && pos.getY() >= world.getMaxHeight()) {
+        if (world.isOutsideBuildHeight(pos)) {
             return type.defaultLightValue;
         }
         if (this.getBlockState(pos).useNeighborBrightness()) {
@@ -169,7 +169,7 @@ public class RenderCubeCache extends ChunkCache {
 
     @Override
     public int getLightFor(EnumSkyBlock type, BlockPos pos) {
-        if (pos.getY() < world.getMinHeight() && pos.getY() >= world.getMaxHeight()) {
+        if (world.isOutsideBuildHeight(pos)) {
             return type.defaultLightValue;
         }
         int arrayX = Coords.blockToCube(pos.getX()) - this.chunkX;
@@ -194,7 +194,7 @@ public class RenderCubeCache extends ChunkCache {
 
     @Override
     public boolean isSideSolid(BlockPos pos, EnumFacing side, boolean defaultValue) {
-        if (pos.getY() < world.getMinHeight() || pos.getY() >= world.getMaxHeight()) {
+        if (world.isOutsideBuildHeight(pos)) {
             return defaultValue;
         }
         int arrayX = Coords.blockToCube(pos.getX()) - this.chunkX;

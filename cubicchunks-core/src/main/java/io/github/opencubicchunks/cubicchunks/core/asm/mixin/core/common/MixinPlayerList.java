@@ -23,11 +23,9 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_SET_CHUNK_MODIFIED;
-
 import io.github.opencubicchunks.cubicchunks.core.server.ICubicPlayerList;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;

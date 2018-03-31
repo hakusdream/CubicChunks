@@ -23,6 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
 import mcp.MethodsReturnNonnullByDefault;
@@ -37,7 +38,6 @@ import net.minecraft.world.storage.WorldInfo;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

@@ -29,17 +29,13 @@ import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLoca
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.core.lighting.ILightBlockAccess;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ReportedException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
@@ -64,13 +60,13 @@ public class FastCubeBlockAccess implements ILightBlockAccess {
     @SidedProxy private static GetLoadedChunksProxy getLoadedChunksProxy;
     @Nonnull private final ExtendedBlockStorage[][][] cache;
     @Nonnull private final Cube[][][] cubes;
-    @Nonnull private final IColumn[][] columns;
+    @Nonnull private final Chunk[][] columns;
     private final int originX, originY, originZ;
     private final int dx, dy, dz;
     @Nonnull private final ICubicWorld world;
 
     public FastCubeBlockAccess(ICubeProvider cache, Cube cube, int radius) {
-        this(cube.getCubicWorld(), cache,
+        this(cube.getWorld(), cache,
                 cube.getCoords().sub(radius, radius, radius), cube.getCoords().add(radius, radius, radius));
     }
 
@@ -82,7 +78,7 @@ public class FastCubeBlockAccess implements ILightBlockAccess {
         this.world = world;
         this.cache = new ExtendedBlockStorage[dx][dy][dz];
         this.cubes = new Cube[dx][dy][dz];
-        this.columns = new IColumn[dx][dz];
+        this.columns = new Chunk[dx][dz];
         this.originX = Math.min(start.getX(), end.getX());
         this.originY = Math.min(start.getY(), end.getY());
         this.originZ = Math.min(start.getZ(), end.getZ());
@@ -212,7 +208,7 @@ public class FastCubeBlockAccess implements ILightBlockAccess {
         cubeZ -= originZ;
         if (cubeX >= dx || cubeZ >= dz)
             return false;
-        IColumn column = columns[cubeX][cubeZ];
+        Chunk column = columns[cubeX][cubeZ];
         if (column == null)
             return false;
         int height = column.getHeightValue(blockToLocal(blockX), blockToLocal(blockZ));
@@ -234,7 +230,7 @@ public class FastCubeBlockAccess implements ILightBlockAccess {
         //TODO: fix it
         BlockPos midPos = Coords.midPos(startPos, endPos);
         Cube center = prov.getCube(CubePos.fromBlockCoords(midPos));
-        return new FastCubeBlockAccess(center.getCubicWorld(), prov,
+        return new FastCubeBlockAccess(center.getWorld(), prov,
                 CubePos.fromBlockCoords(startPos), CubePos.fromBlockCoords(endPos));
     }
 

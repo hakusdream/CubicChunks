@@ -27,7 +27,7 @@ import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_GET_
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AREA_LOADED;
 
 import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
@@ -51,6 +51,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @Mixin(World.class)
 public abstract class MixinWorld_Tick implements ICubicWorld {
+
+    @Shadow public boolean isRemote;
 
     private int updateEntity_entityPosY;
     private int updateEntity_entityPosX;
@@ -79,8 +81,8 @@ public abstract class MixinWorld_Tick implements ICubicWorld {
 
         BlockPos entityPos = new BlockPos(updateEntity_entityPosX, updateEntity_entityPosY, updateEntity_entityPosZ);
 
-        return this.isRemote() ||
-                MixinUtils.canTickPosition(this, entityPos, cube -> cube.getTickets().shouldTick());
+        return this.isRemote ||
+                MixinUtils.canTickPosition((World) (Object) this, entityPos, cube -> cube.getTickets().shouldTick());
     }
 
     /**

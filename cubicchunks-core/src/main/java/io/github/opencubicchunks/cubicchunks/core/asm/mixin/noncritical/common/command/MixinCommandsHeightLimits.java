@@ -23,11 +23,10 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandClone;
 import net.minecraft.command.CommandCompare;
-import net.minecraft.command.CommandFill;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

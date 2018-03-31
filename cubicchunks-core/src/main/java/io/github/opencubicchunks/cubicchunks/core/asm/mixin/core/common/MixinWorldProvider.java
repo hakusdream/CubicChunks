@@ -23,12 +23,12 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
 import io.github.opencubicchunks.cubicchunks.core.world.SpawnPlaceFinder;
 import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
 import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.vanilla.VanillaCompatibilityGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
@@ -68,7 +68,7 @@ public abstract class MixinWorldProvider implements ICubicWorldProvider {
      */
     // @Overwrite() - overwrite doesn't support unobfuscated methods
     public int getHeight() {
-        return cubicWorld().getMaxHeight();
+        return ((ICubicWorld) world).getMaxHeight();
     }
 
     @Inject(method = "getActualHeight", at = @At("HEAD"), cancellable = true, remap = false)
@@ -89,39 +89,20 @@ public abstract class MixinWorldProvider implements ICubicWorldProvider {
     }
 
     @Nullable @Override public ICubeGenerator createCubeGenerator() {
-        if (!cubicWorld().isCubicWorld()) {
+        if (!((ICubicWorld) world).isCubicWorld()) {
             throw new NotCubicChunksWorldException();
         }
-        if (this.getDimensionType() == DimensionType.OVERWORLD && cubicWorld().getWorldType() instanceof ICubicWorldType) {
-            return ((ICubicWorldType) cubicWorld().getWorldType()).createCubeGenerator(cubicWorld());
+        if (this.getDimensionType() == DimensionType.OVERWORLD && world.getWorldType() instanceof ICubicWorldType) {
+            return ((ICubicWorldType) world.getWorldType()).createCubeGenerator(world);
         }
-        return new VanillaCompatibilityGenerator(this.createChunkGenerator(), cubicWorld());
+        return new VanillaCompatibilityGenerator(this.createChunkGenerator(), world);
     }
 
     @Inject(method = "getRandomizedSpawnPoint", at = @At(value = "HEAD"), cancellable = true, remap = false)
     private void findRandomizedSpawnPoint(CallbackInfoReturnable<BlockPos> cir) {
-        if (cubicWorld().isCubicWorld()) {
-            cir.setReturnValue(new SpawnPlaceFinder().getRandomizedSpawnPoint(cubicWorld()));
+        if (((ICubicWorld) world).isCubicWorld()) {
+            cir.setReturnValue(new SpawnPlaceFinder().getRandomizedSpawnPoint(world));
             cir.cancel();
         }
-    }
-
-/*
-    @Override
-    @Deprecated
-    public boolean canDropChunk(int x, int z) {
-        return true;
-    }
-
-    @Override
-    public boolean canCoordinateBeSpawn(int x, int z) {
-        //TODO: DONT USE WORLD.getGroundAboveSeaLevel()
-        BlockPos blockpos = new BlockPos(x, 0, z);
-        return this.world.getBiome(blockpos).ignorePlayerSpawnSuitability() ||
-                this.world.getGroundAboveSeaLevel(blockpos).getBlock() == Blocks.GRASS;
-    }
-*/
-    private ICubicWorld cubicWorld() {
-        return (ICubicWorld) world;
     }
 }

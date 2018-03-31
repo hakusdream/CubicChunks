@@ -21,14 +21,14 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer;
+package io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 import java.util.Set;
 
@@ -65,7 +65,7 @@ public class MutatedSavannaSurfaceReplacer implements IBiomeBlockReplacer {
         return new IBiomeBlockReplacerProvider() {
             private final IBiomeBlockReplacerProvider parent = SurfaceDefaultReplacer.provider();
 
-            @Override public IBiomeBlockReplacer create(ICubicWorld world, CubicBiome biome, BiomeBlockReplacerConfig conf) {
+            @Override public IBiomeBlockReplacer create(World world, CubicBiome biome, BiomeBlockReplacerConfig conf) {
                 return new MutatedSavannaSurfaceReplacer((SurfaceDefaultReplacer) parent.create(world, biome, conf));
             }
 

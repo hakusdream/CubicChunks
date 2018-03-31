@@ -21,19 +21,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
-
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.genOreBellCurve;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.genOreUniform;
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.getSurfaceForCube;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.SurfaceType;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
@@ -58,25 +52,25 @@ public final class DefaultDecorator implements ICubicPopulator {
 
     public static class Ores implements ICubicPopulator {
 
-        @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+        @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
             CustomGeneratorSettings cfg = CustomGeneratorSettings.fromJson(world.getWorldInfo().getGeneratorOptions());
             generateOres(world, cfg, random, pos);
         }
 
-        private void generateOres(ICubicWorld world, CustomGeneratorSettings cfg, Random random, CubePos pos) {
+        private void generateOres(World world, CustomGeneratorSettings cfg, Random random, CubePos pos) {
             // TODO: allow interleaved order
             for (CustomGeneratorSettings.StandardOreConfig c : cfg.standardOres) {
-                genOreUniform(world, cfg, random, pos, c.spawnTries, c.spawnProbability, new WorldGenMinable(c.blockstate, c.spawnSize),
+                PopulatorUtils.genOreUniform(world, cfg, random, pos, c.spawnTries, c.spawnProbability, new WorldGenMinable(c.blockstate, c.spawnSize),
                         c.minHeight, c.maxHeight);
             }
             for (CustomGeneratorSettings.PeriodicGaussianOreConfig c : cfg.periodicGaussianOres) {
-                genOreBellCurve(world, cfg, random, pos, c.spawnTries, c.spawnProbability, new WorldGenMinable(c.blockstate, c.spawnSize),
+                PopulatorUtils.genOreBellCurve(world, cfg, random, pos, c.spawnTries, c.spawnProbability, new WorldGenMinable(c.blockstate, c.spawnSize),
                         c.heightMean, c.heightStdDeviation, c.heightSpacing, c.minHeight, c.maxHeight);
             }
         }
     }
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
         CustomGeneratorSettings cfg = CustomGeneratorSettings.fromJson(world.getWorldInfo().getGeneratorOptions());
 
         // TODO: Biome decoration events?
@@ -91,7 +85,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             int zOffset1 = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             WorldGenAbstractTree treeGen = biome.getBiome().getRandomTreeFeature(random);
             treeGen.setDecorationDefaults();
-            BlockPos top1 = getSurfaceForCube(world, pos, xOffset1, zOffset1, 0, SurfaceType.OPAQUE);
+            BlockPos top1 = PopulatorUtils.getSurfaceForCube(world, pos, xOffset1, zOffset1, 0, PopulatorUtils.SurfaceType.OPAQUE);
             if (top1 != null && treeGen.generate((World) world, random, top1)) {
                 treeGen.generateSaplings((World) world, random, top1);
             }
@@ -100,7 +94,7 @@ public final class DefaultDecorator implements ICubicPopulator {
         for (int i = 0; i < dec.bigMushroomsPerChunk; ++i) {
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-            BlockPos top = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+            BlockPos top = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
             if (top != null) {
                 dec.bigMushroomGen.generate((World) world, random, top);
             }
@@ -137,7 +131,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             // make sure there actually is one
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-            BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.SOLID);
+            BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
             if (blockPos != null) {
                 biome.getBiome().getRandomWorldGenForGrass(random).generate((World) world, random, blockPos);
             }
@@ -150,7 +144,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             }
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-            BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.SOLID);
+            BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
             if (blockPos != null) {
                 (new WorldGenDeadBush()).generate((World) world, random, blockPos);
             }
@@ -163,7 +157,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             }
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-            BlockPos top = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+            BlockPos top = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
             if (top != null) {
                 dec.waterlilyGen.generate((World) world, random, top);
             }
@@ -174,7 +168,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             if (random.nextInt(4) == 0) {
                 int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
                 int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-                BlockPos top = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+                BlockPos top = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
                 if (top != null) {
                     dec.mushroomBrownGen.generate((World) world, random, top);
                 }
@@ -191,7 +185,7 @@ public final class DefaultDecorator implements ICubicPopulator {
                 }
                 int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
                 int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-                BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+                BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
                 if (blockPos != null) {
                     dec.mushroomRedGen.generate((World) world, random, blockPos);
                 }
@@ -207,7 +201,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
 
-            BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+            BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
             if (blockPos != null) {
                 dec.reedGen.generate((World) world, random, blockPos);
             }
@@ -218,7 +212,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
 
-            BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+            BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
             if (blockPos != null) {
                 (new WorldGenPumpkin()).generate((World) world, random, blockPos);
             }
@@ -233,7 +227,7 @@ public final class DefaultDecorator implements ICubicPopulator {
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
 
-            BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+            BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
             if (blockPos != null) {
                 dec.cactusGen.generate((World) world, random, blockPos);
             }
@@ -302,11 +296,11 @@ public final class DefaultDecorator implements ICubicPopulator {
         return (Math.atan(vanillaY * yScale + yOffset) + Math.PI / 2) * valueScale;
     }
 
-    private void generateOnTop(ICubicWorld world, Random random, CubePos pos, int count, WorldGenerator generator) {
+    private void generateOnTop(World world, Random random, CubePos pos, int count, WorldGenerator generator) {
         for (int i = 0; i < count; ++i) {
             int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
             int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-            BlockPos top = getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.SOLID);
+            BlockPos top = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
             if (top != null) {
                 generator.generate((World) world, random, top);
             }

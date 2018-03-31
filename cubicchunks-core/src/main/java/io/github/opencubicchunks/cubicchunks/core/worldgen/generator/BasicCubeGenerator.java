@@ -23,15 +23,17 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.worldgen.generator;
 
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.core.util.Box;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.chunk.Chunk;
 
 import java.util.List;
 
@@ -47,19 +49,19 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public abstract class BasicCubeGenerator implements ICubeGenerator {
 
-    protected ICubicWorld world;
+    protected World world;
     private Biome[] columnBiomes;
 
-    public BasicCubeGenerator(ICubicWorld world) {
+    public BasicCubeGenerator(World world) {
         this.world = world;
     }
 
     @Override
-    public void generateColumn(IColumn column) {
+    public void generateColumn(Chunk column) {
         this.columnBiomes = this.world.getBiomeProvider()
                 .getBiomes(this.columnBiomes,
-                        Coords.cubeToMinBlock(column.getX()),
-                        Coords.cubeToMinBlock(column.getZ()),
+                        Coords.cubeToMinBlock(column.x),
+                        Coords.cubeToMinBlock(column.z),
                         Cube.SIZE, Cube.SIZE);
 
         // Copy ids to column internal biome array
@@ -74,7 +76,7 @@ public abstract class BasicCubeGenerator implements ICubeGenerator {
     }
 
     @Override
-    public void recreateStructures(IColumn column) {
+    public void recreateStructures(Chunk column) {
     }
 
     @Override
@@ -86,4 +88,15 @@ public abstract class BasicCubeGenerator implements ICubeGenerator {
     public BlockPos getClosestStructure(String name, BlockPos pos, boolean findUnexplored) {
         return null;
     }
+
+    @Override
+    public Box getFullPopulationRequirements(Cube cube) {
+        return RECOMMENDED_FULL_POPULATOR_REQUIREMENT;
+    }
+
+    @Override
+    public Box getPopulationPregenerationRequirements(Cube cube) {
+        return RECOMMENDED_GENERATE_POPULATOR_REQUIREMENT;
+    }
+
 }

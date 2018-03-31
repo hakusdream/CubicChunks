@@ -21,8 +21,7 @@ package io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.chunk.Chunk;
 
@@ -37,10 +36,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-class AsyncColumnIOProvider extends AsyncIOProvider<IColumn> {
+class AsyncColumnIOProvider extends AsyncIOProvider<Chunk> {
 
     @Nonnull private final ICubeIO loader;
-    @Nullable private IColumn column; // The target
+    @Nullable private Chunk column; // The target
     @Nonnull private final QueuedColumn colInfo;
     private ICubeGenerator generator;
 
@@ -61,7 +60,7 @@ class AsyncColumnIOProvider extends AsyncIOProvider<IColumn> {
         runCallbacks();
     }
 
-    @Nullable @Override IColumn get() {
+    @Nullable @Override Chunk get() {
         return column;
     }
 

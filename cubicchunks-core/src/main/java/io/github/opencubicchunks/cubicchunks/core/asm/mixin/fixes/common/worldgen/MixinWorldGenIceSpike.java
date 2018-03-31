@@ -26,9 +26,8 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldg
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.customcubic.populator.PopulatorUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

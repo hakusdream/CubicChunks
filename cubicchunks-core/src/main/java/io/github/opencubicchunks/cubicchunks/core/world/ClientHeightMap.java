@@ -31,6 +31,7 @@ import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.chunk.Chunk;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -43,11 +44,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class ClientHeightMap implements IHeightMap {
 
-    private final IColumn column;
+    private final Chunk column;
     private final HeightMap hmap;
     private int heightMapLowest = Coords.NO_HEIGHT;
 
-    public ClientHeightMap(IColumn column, int[] heightmap) {
+    public ClientHeightMap(Chunk column, int[] heightmap) {
         this.column = column;
         this.hmap = new HeightMap(heightmap);
     }
@@ -80,7 +81,7 @@ public class ClientHeightMap implements IHeightMap {
 
         //changed the top block
         int newTop = oldTopY - 1;
-        while (column.getBlockLightOpacity(new BlockPos(localX, newTop, localZ)) == 0 && newTop > oldTopY - MAX_CLIENT_LIGHT_SCAN_DEPTH) {
+        while (column.getBlockLightOpacity(new BlockPos(localX, newTop, localZ)) == 0 && newTop > oldTopY - MAX_CLIENT_LIGHT_SCAN_DEPTH){
             newTop--;
         }
         //update the heightmap. If this update it not accurate - it will be corrected when server sends block update

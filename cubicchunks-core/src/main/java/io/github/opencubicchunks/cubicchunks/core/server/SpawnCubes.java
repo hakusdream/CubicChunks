@@ -26,8 +26,9 @@ package io.github.opencubicchunks.cubicchunks.core.server;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.util.ticket.ITicket;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,10 +44,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class SpawnCubes {
 
-    private static final int DEFAULT_SPAWN_RADIUS = 12; // highest render distance is 32
+    private static final int DEFAULT_SPAWN_RADIUS = 12 - 1; // highest render distance is 32
+    private static final int DEFAULT_VERTICAL_SPAWN_RADIUS = 8 - 1;
 
-    public static void update(ICubicWorld world) {
-        if (world.getProvider().canRespawnHere()) {
+    public static void update(World world) {
+        if (world.provider.canRespawnHere()) {
             SpawnArea.get(world).update(world);
         }
     }
@@ -66,11 +68,11 @@ public class SpawnCubes {
             super(storage);
         }
 
-        public void update(ICubicWorld world) {
+        public void update(World world) {
             update(world, radius); // radius did not change
         }
 
-        public void update(ICubicWorld world, int newRadius) {
+        public void update(World world, int newRadius) {
             if (!world.getSpawnPoint().equals(spawnPoint) || radius != newRadius) { // check if something changed
                 removeTickets(world);
                 radius = newRadius;
@@ -79,15 +81,15 @@ public class SpawnCubes {
             }
         }
 
-        private void removeTickets(ICubicWorld world) {
+        private void removeTickets(World world) {
             if (radius < 0 || spawnPoint == null) {
                 return; // no spawn chunks OR nothing to remove
             }
 
-            ICubeProvider serverCubeCache = world.getCubeCache();
+            ICubeProvider serverCubeCache = ((ICubicWorld) world).getCubeCache();
 
             int spawnCubeX = Coords.blockToCube(spawnPoint.getX());
-            int spawnCubeY = Coords.blockToCube(spawnPoint.getY());
+            int spawnCubeY = 128;//Coords.blockToCube(spawnPoint.getY()); // TODO: auto-find better value. This matches height range in vanilla
             int spawnCubeZ = Coords.blockToCube(spawnPoint.getZ());
 
             for (int cubeX = spawnCubeX - radius; cubeX <= spawnCubeX + radius; cubeX++) {
@@ -99,12 +101,12 @@ public class SpawnCubes {
             }
         }
 
-        private void addTickets(ICubicWorld world) {
+        private void addTickets(World world) {
             if (radius < 0) {
                 return; // no spawn cubes
             }
 
-            CubeProviderServer serverCubeCache = (CubeProviderServer) world.getCubeCache();
+            CubeProviderServer serverCubeCache = ((ICubicWorldServer) world).getCubeCache();
 
             // load the cubes around the spawn point
             CubicChunks.LOGGER.info("Loading cubes for spawn...");
@@ -147,8 +149,8 @@ public class SpawnCubes {
             return nbt;
         }
 
-        public static SpawnArea get(ICubicWorld world) {
-            MapStorage storage = ((World) world).getPerWorldStorage();
+        public static SpawnArea get(World world) {
+            MapStorage storage = world.getPerWorldStorage();
             SpawnArea area = (SpawnArea) storage.getOrLoadData(SpawnArea.class, STORAGE);
 
             if (area == null) {

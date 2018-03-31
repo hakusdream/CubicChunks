@@ -23,8 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldgen.tree;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -32,8 +31,6 @@ import net.minecraft.world.gen.feature.WorldGenHugeTrees;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-
-import java.util.Random;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

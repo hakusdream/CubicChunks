@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.util;
+package io.github.opencubicchunks.cubicchunks.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

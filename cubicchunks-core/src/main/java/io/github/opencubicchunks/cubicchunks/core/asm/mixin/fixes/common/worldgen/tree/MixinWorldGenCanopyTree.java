@@ -23,11 +23,10 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldgen.tree;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenBirchTree;
 import net.minecraft.world.gen.feature.WorldGenCanopyTree;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;

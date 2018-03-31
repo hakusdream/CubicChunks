@@ -25,15 +25,14 @@ package io.github.opencubicchunks.cubicchunks.core.world.type;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.flat.FlatTerrainProcessor;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.FlatCubicGui;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraft.client.gui.GuiErrorScreen;
-import net.minecraft.world.WorldProvider;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.fml.common.Loader;
@@ -55,7 +54,7 @@ public class FlatCubicWorldType extends WorldType implements ICubicWorldType {
     }
 
     @Override
-    public ICubeGenerator createCubeGenerator(ICubicWorld world) {
+    public ICubeGenerator createCubeGenerator(World world) {
         return new FlatTerrainProcessor(world);
     }
 

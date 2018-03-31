@@ -27,10 +27,10 @@ import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBloc
 
 import com.google.common.base.Preconditions;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature.ICubicStructureStart;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.structure.feature.ICubicStructureStart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;

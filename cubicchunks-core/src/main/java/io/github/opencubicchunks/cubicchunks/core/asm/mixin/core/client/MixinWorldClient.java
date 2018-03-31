@@ -26,15 +26,13 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 import io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common.MixinWorld;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.ChunkProviderClient;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
-import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -44,11 +42,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @Mixin(WorldClient.class)
 @Implements(@Interface(iface = ICubicWorldClient.class, prefix = "world$"))
-public abstract class MixinWorldClient extends MixinWorld implements ICubicWorldClient {
+public abstract class MixinWorldClient extends MixinWorld implements ICubicWorldInternal.Client {
 
     @Shadow private ChunkProviderClient clientChunkProvider;
-
-    @Shadow public abstract boolean invalidateRegionAndSetBlock(BlockPos pos, IBlockState blockState);
 
     @Override public void initCubicWorldClient(IntRange heightRange, IntRange generationRange) {
         super.initCubicWorld(heightRange, generationRange);
@@ -68,9 +64,5 @@ public abstract class MixinWorldClient extends MixinWorld implements ICubicWorld
     @Override public void setHeightBounds(int minHeight1, int maxHeight1) {
         this.minHeight = minHeight1;
         this.maxHeight = maxHeight1;
-    }
-
-    @Intrinsic public boolean world$invalidateRegionAndSetBlock(BlockPos pos, IBlockState blockState) {
-        return this.invalidateRegionAndSetBlock(pos, blockState);
     }
 }

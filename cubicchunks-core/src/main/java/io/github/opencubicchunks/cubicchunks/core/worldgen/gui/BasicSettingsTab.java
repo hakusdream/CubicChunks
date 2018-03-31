@@ -33,7 +33,7 @@ import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubi
 import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.makeIntSlider;
 import static io.github.opencubicchunks.cubicchunks.core.worldgen.gui.CustomCubicGuiUtils.malisisText;
 
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.gui.component.UIVerticalTableLayout;
 import net.malisis.core.client.gui.component.UIComponent;
 import net.malisis.core.client.gui.component.interaction.UICheckBox;

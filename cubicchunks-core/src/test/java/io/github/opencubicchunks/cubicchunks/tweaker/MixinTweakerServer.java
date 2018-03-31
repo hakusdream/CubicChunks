@@ -21,10 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.tweaker;
+package io.github.opencubicchunks.cubicchunks.tweaker;
 
 import io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksCoreMod;
-import io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;

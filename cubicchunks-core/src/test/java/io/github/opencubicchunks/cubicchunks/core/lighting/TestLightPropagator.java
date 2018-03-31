@@ -21,16 +21,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.lighting;
+package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static io.github.opencubicchunks.cubicchunks.core.testutil.LightingMatchers.hasCorrectLight;
-import static io.github.opencubicchunks.cubicchunks.core.testutil.LightingMatchers.range;
+import static io.github.opencubicchunks.cubicchunks.testutil.LightingMatchers.hasCorrectLight;
+import static io.github.opencubicchunks.cubicchunks.testutil.LightingMatchers.range;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import com.google.common.collect.Lists;
-import io.github.opencubicchunks.cubicchunks.core.testutil.TestLightBlockAccessImpl;
+import io.github.opencubicchunks.cubicchunks.testutil.TestLightBlockAccessImpl;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ReportedException;

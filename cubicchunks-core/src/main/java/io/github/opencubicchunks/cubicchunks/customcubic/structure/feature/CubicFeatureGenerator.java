@@ -21,16 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.feature;
+package io.github.opencubicchunks.cubicchunks.customcubic.structure.feature;
 
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToCenterBlock;
 
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.structure.CubicStructureGenerator;
+import io.github.opencubicchunks.cubicchunks.customcubic.structure.CubicStructureGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -73,12 +72,12 @@ public abstract class CubicFeatureGenerator extends CubicStructureGenerator {
     public abstract String getStructureName();
 
     @SuppressWarnings("ConstantConditions")
-    @Override public void generate(ICubicWorld world, @Nullable ICubePrimer cube, CubePos cubePos) {
+    @Override public void generate(World world, @Nullable CubePrimer cube, CubePos cubePos) {
         super.generate(world, cube, cubePos);
     }
 
     @Override
-    protected synchronized void generate(ICubicWorld world, @Nullable ICubePrimer cube, int structureX, int structureY, int structureZ,
+    protected synchronized void generate(World world, @Nullable CubePrimer cube, int structureX, int structureY, int structureZ,
             CubePos generatedCubePos) {
         this.initializeStructureData((World) world);
 

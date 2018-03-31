@@ -21,18 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks;
+package io.github.opencubicchunks.cubicchunks;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import io.github.opencubicchunks.cubicchunks.core.testutil.MinecraftEnvironment;
-import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.testutil.MinecraftEnvironment;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.type.FlatCubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.profiler.Profiler;

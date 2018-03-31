@@ -26,12 +26,10 @@ package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.vanilla;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.util.Box;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubePrimer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubeGenerator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.WorldGenUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -67,7 +65,7 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
     private int worldHeightBlocks;
     private int worldHeightCubes;
     @Nonnull private IChunkGenerator vanilla;
-    @Nonnull private ICubicWorld world;
+    @Nonnull private World world;
     /**
      * Last chunk that was generated from the vanilla world gen
      */
@@ -92,13 +90,13 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
      * @param vanilla The vanilla generator to mirror
      * @param world The world in which cubes are being generated
      */
-    public VanillaCompatibilityGenerator(IChunkGenerator vanilla, ICubicWorld world) {
+    public VanillaCompatibilityGenerator(IChunkGenerator vanilla, World world) {
         this.vanilla = vanilla;
         this.world = world;
     }
 
     // lazy initialization to avoid circular dependencies
-    private void tryInit(IChunkGenerator vanilla, ICubicWorld world) {
+    private void tryInit(IChunkGenerator vanilla, World world) {
         if (isInit) {
             return;
         }
@@ -106,7 +104,7 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
         // heuristics TODO: add a config that overrides this
         lastChunk = vanilla.generateChunk(0, 0); // lets scan the chunk at 0, 0
 
-        worldHeightBlocks = world.getMaxGenerationHeight();
+        worldHeightBlocks = ((ICubicWorld) world).getMaxGenerationHeight();
         worldHeightCubes = worldHeightBlocks / Cube.SIZE;
         Map<IBlockState, Integer> blockHistogramBottom = new HashMap<>();
         Map<IBlockState, Integer> blockHistogramTop = new HashMap<>();
@@ -160,12 +158,12 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
     }
 
     @Override
-    public void generateColumn(IColumn column) {
+    public void generateColumn(Chunk column) {
 
         this.biomes = this.world.getBiomeProvider()
                 .getBiomes(this.biomes,
-                        Coords.cubeToMinBlock(column.getX()),
-                        Coords.cubeToMinBlock(column.getZ()),
+                        Coords.cubeToMinBlock(column.x),
+                        Coords.cubeToMinBlock(column.z),
                         Cube.SIZE, Cube.SIZE);
 
         byte[] abyte = column.getBiomeArray();
@@ -175,12 +173,12 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
     }
 
     @Override
-    public void recreateStructures(IColumn column) {
-        vanilla.recreateStructures((Chunk) column, column.getX(), column.getZ());
+    public void recreateStructures(Chunk column) {
+        vanilla.recreateStructures(column, column.x, column.z);
     }
 
     @Override
-    public ICubePrimer generateCube(int cubeX, int cubeY, int cubeZ) {
+    public CubePrimer generateCube(int cubeX, int cubeY, int cubeZ) {
         tryInit(vanilla, world);
         CubePrimer primer = new CubePrimer();
 
@@ -223,7 +221,7 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
                     if (y == cubeY) {
                         continue;
                     }
-                    world.getCubeFromCubeCoords(cubeX, y, cubeZ);
+                    ((ICubicWorld) world).getCubeFromCubeCoords(cubeX, y, cubeZ);
                 }
                 optimizationHack = false;
             }
@@ -259,33 +257,38 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
         // Cubes outside this range are only filled with their respective block
         // No population takes place
         if (cube.getY() >= 0 && cube.getY() < worldHeightCubes) {
-            for (int x = 0; x < 2; x++) {
-                for (int z = 0; z < 2; z++) {
-                    for (int y = worldHeightCubes - 1; y >= 0; y--) {
-                        // Vanilla populators break the rules! They need to find the ground!
-                        world.getCubeFromCubeCoords(cube.getX() + x, y, cube.getZ() + z);
-                    }
-                }
-            }
             for (int y = worldHeightCubes - 1; y >= 0; y--) {
                 // normal populators would not do this... but we are populating more than one cube!
-                world.getCubeFromCubeCoords(cube.getX(), y, cube.getZ()).setPopulated(true);
+                ((ICubicWorld) world).getCubeFromCubeCoords(cube.getX(), y, cube.getZ()).setPopulated(true);
             }
 
             vanilla.populate(cube.getX(), cube.getZ());
-            GameRegistry.generateWorld(cube.getX(), cube.getZ(), (World) world, vanilla, ((World) world).getChunkProvider());
+            if (CubicChunks.Config.BoolOptions.USE_VANILLA_CHUNK_WORLD_GENERATORS.getValue()) {
+                GameRegistry.generateWorld(cube.getX(), cube.getZ(), (World) world, vanilla, ((World) world).getChunkProvider());
+            }
         }
     }
 
     @Override
-    public Box getPopulationRequirement(Cube cube) {
+    public Box getFullPopulationRequirements(Cube cube) {
         if (cube.getY() >= 0 && cube.getY() < worldHeightCubes) {
             return new Box(
-                    -1, 0 - cube.getY(), -1,
+                    -1, -cube.getY(), -1,
                     0, worldHeightCubes - cube.getY() - 1, 0
             );
         }
-        return NO_POPULATOR_REQUIREMENT;
+        return NO_REQUIREMENT;
+    }
+
+    @Override
+    public Box getPopulationPregenerationRequirements(Cube cube) {
+        if (cube.getY() >= 0 && cube.getY() < worldHeightCubes) {
+            return new Box(
+                    0, -cube.getY(), 0,
+                    1, worldHeightCubes - cube.getY() - 1, 1
+            );
+        }
+        return NO_REQUIREMENT;
     }
 
     @Override
@@ -301,5 +304,4 @@ public class VanillaCompatibilityGenerator implements ICubeGenerator {
     public BlockPos getClosestStructure(String name, BlockPos pos, boolean findUnexplored) {
         return vanilla.getNearestStructurePos((World) world, name, pos, findUnexplored);
     }
-
 }

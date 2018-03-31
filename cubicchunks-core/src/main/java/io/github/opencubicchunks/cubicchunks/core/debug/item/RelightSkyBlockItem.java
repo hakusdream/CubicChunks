@@ -27,8 +27,8 @@ import io.github.opencubicchunks.cubicchunks.core.debug.ItemRegistered;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketCubes;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,10 +55,9 @@ public class RelightSkyBlockItem extends ItemRegistered {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing faceHit, float hitX, float hitY,
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World world, BlockPos pos, EnumHand hand, EnumFacing faceHit, float hitX, float hitY,
             float hitZ) {
-        ICubicWorld world = (ICubicWorld) worldIn;
-        if (!world.isCubicWorld() || world.isRemote()) {
+        if (!((ICubicWorld) world).isCubicWorld() || world.isRemote) {
             return EnumActionResult.PASS;
         }
         //serverside
@@ -66,7 +65,7 @@ public class RelightSkyBlockItem extends ItemRegistered {
         if (world.checkLightFor(EnumSkyBlock.SKY, placePos)) {
             playerIn.sendMessage(new TextComponentString("Successfully updated lighting at " + placePos));
             CubePos cubePos = CubePos.fromBlockCoords(placePos);
-            ICubeProvider cubeCache = world.getCubeCache();
+            ICubeProvider cubeCache = ((ICubicWorld) world).getCubeCache();
             //re-send them to player
             List<Cube> cubes = new ArrayList<>();
             cubePos.forEachWithinRange(1, (p) -> cubes.add(cubeCache.getCube(p)));

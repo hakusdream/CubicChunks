@@ -21,14 +21,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
-
-import static io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.getSurfaceForCube;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
@@ -43,13 +40,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class SnowBiomeDecorator implements ICubicPopulator {
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
         BiomeSnow snow = (BiomeSnow) biome.getBiome();
         if (snow.superIcy) {
             for (int i = 0; i < 3; ++i) {
                 int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
                 int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-                BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
+                BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
                 if (blockPos != null) {
                     snow.iceSpike.generate((World) world, random, blockPos);
                 }
@@ -58,7 +55,7 @@ public class SnowBiomeDecorator implements ICubicPopulator {
             for (int l = 0; l < 2; ++l) {
                 int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
                 int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
-                BlockPos blockPos = getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
+                BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.SOLID);
                 if (blockPos != null) {
                     snow.icePatch.generate((World) world, random, blockPos);
                 }

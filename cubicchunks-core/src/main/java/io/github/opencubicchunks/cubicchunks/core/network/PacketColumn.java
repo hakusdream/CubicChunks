@@ -29,6 +29,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
@@ -45,7 +46,7 @@ public class PacketColumn implements IMessage {
     public PacketColumn() {
     }
 
-    public PacketColumn(IColumn column) {
+    public PacketColumn(Chunk column) {
         this.chunkPos = column.getPos();
         this.data = new byte[WorldEncoder.getEncodedSize(column)];
         PacketBuffer out = new PacketBuffer(WorldEncoder.createByteBufForWrite(this.data));

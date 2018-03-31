@@ -29,14 +29,14 @@ import cubicchunks.regionlib.impl.EntryLocation2D;
 import cubicchunks.regionlib.impl.EntryLocation3D;
 import cubicchunks.regionlib.impl.SaveCubeColumns;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.ThreadedFileIOBase;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.logging.log4j.Logger;
@@ -59,14 +59,14 @@ public class RegionCubeIO implements ICubeIO {
     private static final long MB = kB * 1024;
     private static final Logger LOGGER = CubicChunks.LOGGER;
 
-    @Nonnull private ICubicWorldServer world;
+    @Nonnull private WorldServer world;
     @Nonnull private SaveCubeColumns save;
     @Nonnull private ConcurrentMap<ChunkPos, SaveEntry<EntryLocation2D>> columnsToSave;
     @Nonnull private ConcurrentMap<CubePos, SaveEntry<EntryLocation3D>> cubesToSave;
     
-    public RegionCubeIO(ICubicWorldServer world) throws IOException {
+    public RegionCubeIO(WorldServer world) throws IOException {
         this.world = world;
-        WorldProvider prov = world.getProvider();
+        WorldProvider prov = world.provider;
         
         Path path = this.world.getSaveHandler().getWorldDirectory().toPath();
         if (prov.getSaveFolder() != null) {
@@ -95,7 +95,7 @@ public class RegionCubeIO implements ICubeIO {
         //}
     }
 
-    @Override @Nullable public IColumn loadColumn(int chunkX, int chunkZ) throws IOException {
+    @Override @Nullable public Chunk loadColumn(int chunkX, int chunkZ) throws IOException {
         NBTTagCompound nbt;
         SaveEntry<EntryLocation2D> saveEntry;
         if ((saveEntry = columnsToSave.get(new ChunkPos(chunkX, chunkZ))) != null) {
@@ -111,15 +111,15 @@ public class RegionCubeIO implements ICubeIO {
         return IONbtReader.readColumn(world, chunkX, chunkZ, nbt);
     }
 
-    @Override @Nullable public ICubeIO.PartialCubeData loadCubeAsyncPart(IColumn column, int cubeY) throws IOException {
+    @Override @Nullable public ICubeIO.PartialCubeData loadCubeAsyncPart(Chunk column, int cubeY) throws IOException {
 
         NBTTagCompound nbt;
         SaveEntry<EntryLocation3D> saveEntry;
-        if ((saveEntry = this.cubesToSave.get(new CubePos(column.getX(), cubeY, column.getZ()))) != null) {
+        if ((saveEntry = this.cubesToSave.get(new CubePos(column.x, cubeY, column.z))) != null) {
             nbt = saveEntry.nbt;
         } else {
             // does the database have the cube?
-            Optional<ByteBuffer> buf = this.save.load(new EntryLocation3D(column.getX(), cubeY, column.getZ()));
+            Optional<ByteBuffer> buf = this.save.load(new EntryLocation3D(column.x, cubeY, column.z));
             if (!buf.isPresent()) {
                 return null;
             }
@@ -127,7 +127,7 @@ public class RegionCubeIO implements ICubeIO {
         }
 
         // restore the cube - async part
-        Cube cube = IONbtReader.readCubeAsyncPart(column, column.getX(), cubeY, column.getZ(), nbt);
+        Cube cube = IONbtReader.readCubeAsyncPart(column, column.x, cubeY, column.z, nbt);
         if (cube == null) {
             return null;
         }
@@ -138,7 +138,7 @@ public class RegionCubeIO implements ICubeIO {
         IONbtReader.readCubeSyncPart(info.cube, world, info.nbt);
     }
 
-    @Override public void saveColumn(IColumn column) {
+    @Override public void saveColumn(Chunk column) {
         // NOTE: this function blocks the world thread
         // make it as fast as possible by offloading processing to the IO thread
         // except we have to write the NBT in this thread to avoid problems
@@ -146,8 +146,8 @@ public class RegionCubeIO implements ICubeIO {
 
         // add the column to the save queue
         this.columnsToSave
-                .put(column.getPos(), new SaveEntry<>(new EntryLocation2D(column.getX(), column.getZ()), IONbtWriter.write(column)));
-        column.markSaved();
+                .put(column.getPos(), new SaveEntry<>(new EntryLocation2D(column.x, column.z), IONbtWriter.write(column)));
+        column.setModified(false);
 
         // signal the IO thread to process the save queue
         ThreadedFileIOBase.getThreadedIOInstance().queueIO(this);

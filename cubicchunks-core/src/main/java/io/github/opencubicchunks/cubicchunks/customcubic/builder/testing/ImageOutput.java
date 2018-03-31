@@ -21,9 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.testing;
+package io.github.opencubicchunks.cubicchunks.customcubic.builder.testing;
 
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.builder.NoiseSource;
+import io.github.opencubicchunks.cubicchunks.customcubic.builder.NoiseSource;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.Vec3i;
 

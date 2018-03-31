@@ -27,12 +27,11 @@ import com.google.common.base.Preconditions;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.PacketUtils;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 

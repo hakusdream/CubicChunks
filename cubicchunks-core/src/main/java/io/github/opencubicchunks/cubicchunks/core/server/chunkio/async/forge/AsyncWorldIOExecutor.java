@@ -26,13 +26,13 @@ import com.google.common.collect.Sets;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -111,8 +111,8 @@ public class AsyncWorldIOExecutor {
      * @return The loaded cube, or null if either not present or the load failed
      */
     @Nullable
-    public static Cube syncCubeLoad(ICubicWorld world, ICubeIO loader, CubeProviderServer cache, int cubeX, int cubeY, int cubeZ) {
-        IColumn column = (IColumn) cache.loadChunk(cubeX, cubeZ);
+    public static Cube syncCubeLoad(World world, ICubeIO loader, CubeProviderServer cache, int cubeX, int cubeY, int cubeZ) {
+        Chunk column = cache.loadChunk(cubeX, cubeZ);
         QueuedCube key = new QueuedCube(cubeX, cubeY, cubeZ, world);
         AsyncCubeIOProvider task = cubeTasks.remove(key); // Remove task because we will call the sync callbacks directly
         if (task != null) {
@@ -136,13 +136,13 @@ public class AsyncWorldIOExecutor {
      *
      * @return The loaded column
      */
-    @Nullable public static IColumn syncColumnLoad(ICubicWorld world, ICubeIO loader, int x, int z) {
+    @Nullable public static Chunk syncColumnLoad(World world, ICubeIO loader, int x, int z) {
         QueuedColumn key = new QueuedColumn(x, z, world);
         AsyncColumnIOProvider task = columnTasks.remove(key); // Remove task because we will call the sync callbacks directly
         if (task != null) {
             runTask(task);
         } else {
-            task = new AsyncColumnIOProvider(key, loader, ((CubeProviderServer) world.getCubeCache()).getCubeGenerator());
+            task = new AsyncColumnIOProvider(key, loader, ((ICubicWorldServer) world).getCubeCache().getCubeGenerator());
             task.run();
         }
         task.runSynchronousPart();
@@ -204,7 +204,7 @@ public class AsyncWorldIOExecutor {
      * @param z cube z position
      * @param runnable The callback
      */
-    public static void queueCubeLoad(ICubicWorld world, ICubeIO loader, CubeProviderServer cache, int x, int y, int z, Consumer<Cube> runnable) {
+    public static void queueCubeLoad(World world, ICubeIO loader, CubeProviderServer cache, int x, int y, int z, Consumer<Cube> runnable) {
 
         QueuedCube key = new QueuedCube(x, y, z, world);
         QueuedColumn columnKey = new QueuedColumn(x, z, world);
@@ -222,7 +222,7 @@ public class AsyncWorldIOExecutor {
             task.addCallback(runnable);
         }
 
-        IColumn loadedIColumn;
+        Chunk loadedIColumn;
         if ((loadedIColumn = cache.getLoadedColumn(x, z)) == null) {
             cache.asyncGetColumn(x, z, IProviderExtras.Requirement.LIGHT, task::setColumn);
         } else {
@@ -241,11 +241,11 @@ public class AsyncWorldIOExecutor {
      * @param z column z position
      * @param runnable The callback
      */
-    public static void queueColumnLoad(ICubicWorld world, ICubeIO loader, int x, int z, Consumer<IColumn> runnable) {
+    public static void queueColumnLoad(World world, ICubeIO loader, int x, int z, Consumer<Chunk> runnable) {
         QueuedColumn key = new QueuedColumn(x, z, world);
         AsyncColumnIOProvider task = columnTasks.get(key);
         if (task == null) {
-            task = new AsyncColumnIOProvider(key, loader, ((CubeProviderServer) world.getCubeCache()).getCubeGenerator());
+            task = new AsyncColumnIOProvider(key, loader, ((ICubicWorldServer) world).getCubeCache().getCubeGenerator());
             task.addCallback(runnable); // Add before calling execute for thread safety
             columnTasks.put(key, task);
             columnThreadPool.execute(task);
@@ -263,7 +263,7 @@ public class AsyncWorldIOExecutor {
      * @param z cube z position
      * @param runnable The runnable that should be dropped
      */
-    public static void dropQueuedCubeLoad(ICubicWorld world, int x, int y, int z, Consumer<Cube> runnable) {
+    public static void dropQueuedCubeLoad(World world, int x, int y, int z, Consumer<Cube> runnable) {
         QueuedCube key = new QueuedCube(x, y, z, world);
         AsyncCubeIOProvider task = cubeTasks.get(key);
         if (task == null) {
@@ -288,7 +288,7 @@ public class AsyncWorldIOExecutor {
      * @param z column z postion
      * @param runnable The runnable that should be dropped
      */
-    public static void dropQueuedColumnLoad(ICubicWorld world, int x, int z, Consumer<IColumn> runnable) {
+    public static void dropQueuedColumnLoad(World world, int x, int z, Consumer<Chunk> runnable) {
         QueuedColumn key = new QueuedColumn(x, z, world);
         AsyncColumnIOProvider task = columnTasks.get(key);
         if (task == null) {
@@ -340,7 +340,7 @@ public class AsyncWorldIOExecutor {
         cubeThreadPool.setCorePoolSize(Math.max(BASE_THREADS, players / PLAYERS_PER_THREAD));
     }
 
-    public static boolean canDropColumn(ICubicWorld world, int x, int z) {
+    public static boolean canDropColumn(World world, int x, int z) {
         return !loadingCubesColumnMap.containsKey(new QueuedColumn(x, z, world));
     }
 

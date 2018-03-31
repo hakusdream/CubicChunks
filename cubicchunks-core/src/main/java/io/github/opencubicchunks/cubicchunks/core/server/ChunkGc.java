@@ -29,6 +29,7 @@ import io.github.opencubicchunks.cubicchunks.core.IConfigUpdateListener;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.world.chunk.Chunk;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -70,7 +71,7 @@ public class ChunkGc implements IConfigUpdateListener {
         while (cubeIt.hasNext()) {
             Cube cube = cubeIt.next();
             IColumn cubeCol = cube.getColumn();
-            IColumn storedCol = cubeCache.getLoadedColumn(cube.getX(), cube.getZ());
+            Chunk storedCol = cubeCache.getLoadedColumn(cube.getX(), cube.getZ());
             if (storedCol == null) {
                 throw new RuntimeException("Cube with no stored column!");
             }
@@ -79,11 +80,11 @@ public class ChunkGc implements IConfigUpdateListener {
             }
         }
 
-        Iterator<IColumn> columnIt = cubeCache.columnsIterator();
+        Iterator<Chunk> columnIt = cubeCache.columnsIterator();
         int totalCubes = 0;
         while (columnIt.hasNext()) {
-            IColumn storedCol = columnIt.next();
-            Collection<Cube> storedColumnCubes = storedCol.getLoadedCubes();
+            Chunk storedCol = columnIt.next();
+            Collection<Cube> storedColumnCubes = ((IColumn) storedCol).getLoadedCubes();
             for (Cube c : storedColumnCubes) {
                 if (cubeCache.getLoadedCube(c.getCoords()) != c) {
                     throw new RuntimeException("Cube in column not the same as stored cube!");
@@ -104,7 +105,7 @@ public class ChunkGc implements IConfigUpdateListener {
             }
         }
 
-        Iterator<IColumn> columnIt = cubeCache.columnsIterator();
+        Iterator<Chunk> columnIt = cubeCache.columnsIterator();
         while (columnIt.hasNext()) {
             if (cubeCache.tryUnloadColumn(columnIt.next())) {
                 columnIt.remove();

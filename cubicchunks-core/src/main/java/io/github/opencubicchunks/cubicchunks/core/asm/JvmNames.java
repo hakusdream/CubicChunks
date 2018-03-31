@@ -61,7 +61,7 @@ public class JvmNames {
     // Sorted as above
     public static final String
         BLOCK_FALLING_CAN_FALL_THROUGH = BLOCK_FALLING + "canFallThrough("+IBLOCK_STATE+")Z",
-        BLOCK_POS_ADD = BLOCK_POS + "add(III)" + BLOCK_POS,
+        BLOCK_POS_ADD = BLOCK_POS + "expand(III)" + BLOCK_POS,
         BLOCK_POS_CONSTR_ENTITY = "(" + ENTITY + ")" + BLOCK_POS,
         BLOCK_POS_DOWN = BLOCK_POS + "down()" + BLOCK_POS,
         BLOCK_POS_GETY = BLOCK_POS + "getY()I",

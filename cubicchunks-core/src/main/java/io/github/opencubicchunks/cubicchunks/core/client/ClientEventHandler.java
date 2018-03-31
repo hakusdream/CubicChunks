@@ -23,13 +23,11 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.client;
 
-import io.github.opencubicchunks.cubicchunks.core.CommonEventHandler;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks.Config.IntOptions;
-import io.github.opencubicchunks.cubicchunks.core.event.CreateNewWorldEvent;
 import io.github.opencubicchunks.cubicchunks.core.server.ICubicPlayerList;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldSettings;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
@@ -40,7 +38,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiVideoSettings;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -64,7 +61,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onWorldClientTickEvent(TickEvent.ClientTickEvent evt) {
-        ICubicWorld world = (ICubicWorld) FMLClientHandler.instance().getWorldClient();
+        ICubicWorldInternal world = (ICubicWorldInternal) FMLClientHandler.instance().getWorldClient();
         //does the world exist? Is the game paused?
         if (world == null || Minecraft.getMinecraft().isGamePaused()) {
             return;
@@ -99,8 +96,8 @@ public class ClientEventHandler {
             } catch (NoSuchFieldError err) {
                 int idx = 3;
                 int btnSpacing = 20;
-                CubicChunks.LOGGER.error("Couldn't add vertical view distance options, maybe optifine is installed? Attempting optifine-specific "
-                        + "option add", err.toString());
+                CubicChunks.LOGGER.error("Couldn't expand vertical view distance options, maybe optifine is installed? Attempting optifine-specific "
+                        + "option expand", err.toString());
                 gvs.buttonList.add(idx, new GuiCustomSlider(100, gvs.width / 2 - 155 + 160, gvs.height / 6 + btnSpacing * (idx / 2) - 12,
                         CubicChunks.Config.IntOptions.VERTICAL_CUBE_LOAD_DISTANCE));
                 // reposition all buttons except the last 4 (last 3 and done)

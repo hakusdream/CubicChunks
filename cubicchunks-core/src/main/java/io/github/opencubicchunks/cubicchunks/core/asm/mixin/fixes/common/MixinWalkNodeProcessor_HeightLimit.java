@@ -25,7 +25,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.IBLOCK_ACCESS_GET_BLOCK_STATE;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.IMinMaxHeight;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;

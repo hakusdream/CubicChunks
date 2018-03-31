@@ -28,7 +28,7 @@ import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBl
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
 
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.set.TIntSet;
@@ -37,6 +37,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -60,20 +61,20 @@ class SkyLightUpdateCubeSelector {
      *
      * @return set of affected cube Y positions
      */
-    static TIntSet getCubesY(IColumn column, int localX, int localZ, int minBlockY, int maxBlockY) {
+    static TIntSet getCubesY(Chunk column, int localX, int localZ, int minBlockY, int maxBlockY) {
         // NOTE: maxBlockY is always the air block above the top block that was added or removed
-        ICubicWorld world = column.getCubicWorld();
+        World world = column.getWorld();
 
         TIntSet cubesToDiffuse = new TIntHashSet();
 
-        if (!world.getProvider().hasSkyLight()) {
+        if (!world.provider.hasSkyLight()) {
             return cubesToDiffuse;
         }
 
         BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos(
-                localToBlock(column.getX(), localX),
+                localToBlock(column.x, localX),
                 maxBlockY - 1,
-                localToBlock(column.getZ(), localZ)
+                localToBlock(column.z, localZ)
         );
 
         int newMaxBlockY = column.getHeightValue(localX, localZ);
@@ -83,7 +84,7 @@ class SkyLightUpdateCubeSelector {
         int maxCubeY = Coords.blockToCube(newMaxBlockY);
 
         //attempt to update lighting only in loaded cubes
-        for (Cube cube : column.getLoadedCubes()) {
+        for (Cube cube : ((IColumn) column).getLoadedCubes()) {
             int cubeY = cube.getY();
             int minCubeBlockY = cubeY * Cube.SIZE;
 
@@ -103,7 +104,7 @@ class SkyLightUpdateCubeSelector {
                 //so cube that contains it needs update
                 cubesToDiffuse.add(cube.getY());
                 //light can propagate to cube below too
-                if ((cube = column.getLoadedCube(maxCubeY - 1)) != null) {
+                if ((cube = ((IColumn) column).getLoadedCube(maxCubeY - 1)) != null) {
                     cubesToDiffuse.add(cube.getY());
                 }
             } else if (cubeY == maxCubeY - 1) {

@@ -23,12 +23,10 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_GETY;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.ICOMMAND_SENDER_GET_ENTITY_WORLD;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_BLOCK_LOADED;
 
-import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;

@@ -31,7 +31,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -44,8 +44,13 @@ import net.minecraft.world.border.WorldBorder;
 @Mixin(World.class)
 public abstract class MixinWorld_SlowCollisionCheck implements ICubicWorld {
 
-    @Shadow
-    public abstract boolean isInsideWorldBorder(Entity p_191503_1_);
+    @Shadow public abstract boolean isInsideWorldBorder(Entity p_191503_1_);
+
+    @Shadow public abstract WorldBorder getWorldBorder();
+
+    @Shadow protected abstract boolean isBlockLoaded(BlockPos pos);
+
+    @Shadow protected abstract IBlockState getBlockState(BlockPos pos);
 
     /**
      * @author Barteks2x

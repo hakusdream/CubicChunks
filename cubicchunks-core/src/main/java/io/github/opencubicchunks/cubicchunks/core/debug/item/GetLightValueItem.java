@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import io.github.opencubicchunks.cubicchunks.core.debug.ItemRegistered;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
@@ -47,14 +47,13 @@ public class GetLightValueItem extends ItemRegistered {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing faceHit, float hitX, float hitY,
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World world, BlockPos pos, EnumHand hand, EnumFacing faceHit, float hitX, float hitY,
             float hitZ) {
-        ICubicWorld world = (ICubicWorld) worldIn;
         BlockPos placePos = pos.offset(faceHit);
-        playerIn.sendMessage(new TextComponentString("Total light level at " + placePos + " is " + worldIn.getLight(placePos) + " \n Side is "
-                + (world.isRemote() ? "client" : "server")));
-        playerIn.sendMessage(new TextComponentString("Sky light level at " + placePos + " is " + worldIn.getLightFor(EnumSkyBlock.SKY, placePos)
-                + " \n Side is " + (world.isRemote() ? "client" : "server")));
+        playerIn.sendMessage(new TextComponentString("Total light level at " + placePos + " is " + world.getLight(placePos) + " \n Side is "
+                + (world.isRemote ? "client" : "server")));
+        playerIn.sendMessage(new TextComponentString("Sky light level at " + placePos + " is " + world.getLightFor(EnumSkyBlock.SKY, placePos)
+                + " \n Side is " + (world.isRemote ? "client" : "server")));
         return EnumActionResult.PASS;
     }
 }

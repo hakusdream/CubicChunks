@@ -21,14 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator.PopulatorUtils.SurfaceType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.util.math.BlockPos;
@@ -45,7 +43,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class ForestDecorator implements ICubicPopulator {
 
-    @Override public void generate(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    @Override public void generate(World world, Random random, CubePos pos, CubicBiome biome) {
 
         if (((BiomeForest) biome.getBiome()).type == BiomeForest.Type.ROOFED) {
             this.addMushrooms(world, random, pos, biome);
@@ -61,13 +59,13 @@ public class ForestDecorator implements ICubicPopulator {
     }
 
 
-    public void addMushrooms(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    public void addMushrooms(World world, Random random, CubePos pos, CubicBiome biome) {
         final int gridSize = 4;
         for (int xGrid = 0; xGrid < Cube.SIZE / gridSize; ++xGrid) {
             for (int zGrid = 0; zGrid < Cube.SIZE / gridSize; ++zGrid) {
                 int xOffset = xGrid * gridSize + 1 + Cube.SIZE / 2 + random.nextInt(gridSize / 2 + 1);
                 int zOffset = zGrid * gridSize + 1 + Cube.SIZE / 2 + random.nextInt(gridSize / 2 + 1);
-                BlockPos blockpos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+                BlockPos blockpos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
                 if (blockpos == null) {
                     continue;
                 }
@@ -85,7 +83,7 @@ public class ForestDecorator implements ICubicPopulator {
         }
     }
 
-    public void addDoublePlants(ICubicWorld world, Random random, CubePos pos, CubicBiome biome, int amount) {
+    public void addDoublePlants(World world, Random random, CubePos pos, CubicBiome biome, int amount) {
         for (int i = 0; i < amount; ++i) {
             int type = random.nextInt(3);
 
@@ -105,7 +103,7 @@ public class ForestDecorator implements ICubicPopulator {
                 int xOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
                 int zOffset = random.nextInt(Cube.SIZE) + Cube.SIZE / 2;
 
-                BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, SurfaceType.OPAQUE);
+                BlockPos blockPos = PopulatorUtils.getSurfaceForCube(world, pos, xOffset, zOffset, 0, PopulatorUtils.SurfaceType.OPAQUE);
 
                 if (blockPos != null && biome.getBiome().DOUBLE_PLANT_GENERATOR.generate((World) world, random, blockPos)) {
                     break;

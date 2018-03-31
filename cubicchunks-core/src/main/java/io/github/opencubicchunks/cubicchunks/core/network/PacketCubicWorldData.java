@@ -25,16 +25,14 @@ package io.github.opencubicchunks.cubicchunks.core.network;
 
 import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
 import io.github.opencubicchunks.cubicchunks.core.util.PacketUtils;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.IThreadListener;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -122,7 +120,7 @@ public class PacketCubicWorldData implements IMessage {
                 WorldClient world = Minecraft.getMinecraft().getConnection().clientWorldController;
                 // initialize only if sending packet about cubic world, but not when already initialized
                 if (message.isCubicWorld() && !((ICubicWorld) world).isCubicWorld()) {
-                    ((ICubicWorldClient) world).initCubicWorldClient(
+                    ((ICubicWorldInternal.Client) world).initCubicWorldClient(
                             new IntRange(message.getMinHeight(), message.getMaxHeight()),
                             new IntRange(message.getMinGenerationHeight(), message.getMaxGenerationHeight())
                     );

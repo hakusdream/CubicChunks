@@ -26,12 +26,11 @@ package io.github.opencubicchunks.cubicchunks.core.client;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
 import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import jline.internal.Preconditions;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.multiplayer.ChunkProviderClient;
 import net.minecraft.util.math.ChunkPos;
@@ -54,17 +53,17 @@ public class CubeProviderClient extends ChunkProviderClient implements ICubeProv
     public CubeProviderClient(ICubicWorldClient world) {
         super((World) world);
         this.world = world;
-        this.blankCube = new BlankCube((IColumn) blankChunk);
+        this.blankCube = new BlankCube(blankChunk);
     }
 
     @Nullable @Override
-    public IColumn getLoadedColumn(int x, int z) {
-        return (IColumn) getLoadedChunk(x, z);
+    public Chunk getLoadedColumn(int x, int z) {
+        return getLoadedChunk(x, z);
     }
 
     @Override
-    public IColumn provideColumn(int x, int z) {
-        return (IColumn) provideChunk(x, z);
+    public Chunk provideColumn(int x, int z) {
+        return provideChunk(x, z);
     }
 
     @Override
@@ -120,13 +119,13 @@ public class CubeProviderClient extends ChunkProviderClient implements ICubeProv
         if (cube != null) {
             return cube;
         }
-        IColumn column = getLoadedColumn(pos.getX(), pos.getZ());
+        Chunk column = getLoadedColumn(pos.getX(), pos.getZ());
         if (column == null) {
             return null;
         }
         cube = new Cube(column, pos.getY()); // auto added to column
         cube.setCubeLoaded();
-        column.addCube(cube);
+        ((IColumn) column).addCube(cube);
         this.cubeMap.put(cube);
 
         return cube;
@@ -138,9 +137,9 @@ public class CubeProviderClient extends ChunkProviderClient implements ICubeProv
      */
     public void unloadCube(CubePos pos) {
         cubeMap.remove(pos.getX(), pos.getY(), pos.getZ());
-        IColumn IColumn = getLoadedColumn(pos.getX(), pos.getZ());
-        if (IColumn != null) {
-            IColumn.removeCube(pos.getY());
+        Chunk column = getLoadedColumn(pos.getX(), pos.getZ());
+        if (column != null) {
+            ((IColumn) column).removeCube(pos.getY());
         }
     }
 

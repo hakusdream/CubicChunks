@@ -29,7 +29,6 @@ import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;
 import io.github.opencubicchunks.cubicchunks.core.server.ChunkGc;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
-import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
 import io.github.opencubicchunks.cubicchunks.core.util.Bits;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
@@ -37,32 +36,28 @@ import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
 import io.github.opencubicchunks.cubicchunks.core.world.CubeWorldEntitySpawner;
 import io.github.opencubicchunks.cubicchunks.core.world.CubicSaveHandler;
 import io.github.opencubicchunks.cubicchunks.core.world.FastCubeWorldEntitySpawner;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras.Requirement;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityTracker;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
 import net.minecraft.server.management.PlayerChunkMap;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 
+import net.minecraft.world.storage.ISaveHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
-import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
@@ -71,7 +66,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -83,7 +77,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @Mixin(WorldServer.class)
 @Implements(@Interface(iface = ICubicWorldServer.class, prefix = "world$"))
-public abstract class MixinWorldServer extends MixinWorld implements ICubicWorldServer {
+public abstract class MixinWorldServer extends MixinWorld implements ICubicWorldInternal.Server {
 
     @Shadow @Mutable @Final private PlayerChunkMap playerChunkMap;
     @Shadow @Mutable @Final private WorldEntitySpawner entitySpawner;
@@ -98,10 +92,10 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
         this.isCubicWorld = true;
         this.entitySpawner = new CubeWorldEntitySpawner();
 
-        this.chunkProvider = new CubeProviderServer(this,
+        this.chunkProvider = new CubeProviderServer((WorldServer) (Object)this,
                 ((ICubicWorldProvider) this.provider).createCubeGenerator());
 
-        this.playerChunkMap = new PlayerCubeMap(this);
+        this.playerChunkMap = new PlayerCubeMap((WorldServer) (Object)this);
         this.chunkGc = new ChunkGc(getCubeCache());
 
         this.saveHandler = new CubicSaveHandler(this, this.getSaveHandler());
@@ -148,11 +142,6 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
         }
         assert this.firstLightProcessor != null;
         return this.firstLightProcessor;
-    }
-    //vanilla field accessors
-
-    @Override public boolean getDisableLevelSaving() {
-        return this.disableLevelSaving;
     }
 
     @Override public PlayerCubeMap getPlayerCubeMap() {
@@ -204,7 +193,7 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
     public void adjustPosToNearbyEntityCubicChunks(BlockPos strikeTarget, CallbackInfoReturnable<BlockPos> ci) {
         if (this.isCubicWorld()) {
             ci.cancel();
-            IColumn column = this.getCubeCache().getColumn(Coords.blockToCube(strikeTarget.getX()), Coords.blockToCube(strikeTarget.getZ()),
+            Chunk column = this.getCubeCache().getColumn(Coords.blockToCube(strikeTarget.getX()), Coords.blockToCube(strikeTarget.getZ()),
                     Requirement.GET_CACHED);
             strikeTarget = column.getPrecipitationHeight(strikeTarget);
             ci.setReturnValue(strikeTarget);
@@ -245,24 +234,4 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
             return false;
         return canDoRainSnowIce;
     }
-
-    //vanilla methods
-    //==============================================
-    @Nullable @Shadow
-    public abstract Biome.SpawnListEntry getSpawnListEntryForTypeAt(EnumCreatureType type, BlockPos pos);
-
-    @Nullable @Intrinsic
-    public Biome.SpawnListEntry world$getSpawnListEntryForTypeAt(EnumCreatureType type, BlockPos pos) {
-        return this.getSpawnListEntryForTypeAt(type, pos);
-    }
-
-    //==============================================
-    @Shadow
-    public abstract boolean canCreatureTypeSpawnHere(EnumCreatureType type, Biome.SpawnListEntry entry, BlockPos pos);
-
-    @Intrinsic
-    public boolean world$canCreatureTypeSpawnHere(EnumCreatureType type, Biome.SpawnListEntry entry, BlockPos pos) {
-        return this.canCreatureTypeSpawnHere(type, entry, pos);
-    }
-    //==============================================
 }

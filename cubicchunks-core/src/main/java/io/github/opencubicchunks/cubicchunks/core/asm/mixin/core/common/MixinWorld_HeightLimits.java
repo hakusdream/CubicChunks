@@ -23,15 +23,13 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_GET_LIGHT_WITH_FLAG;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AREA_LOADED;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_BLOCK_LOADED_Z;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_CHUNK_LOADED;
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 
-import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
@@ -72,6 +70,8 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
 
     @Shadow private int skylightSubtracted;
 
+    @Shadow public boolean isRemote;
+
     @Shadow @Final public WorldProvider provider;
 
     @Shadow public abstract Chunk getChunkFromBlockCoords(BlockPos pos);
@@ -79,6 +79,8 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
     @Shadow public abstract IBlockState getBlockState(BlockPos pos);
 
     @Shadow public abstract boolean isBlockLoaded(BlockPos pos);
+
+    @Shadow public abstract boolean isBlockLoaded(BlockPos blockPos, boolean allowEmpty);
 
     @Shadow protected abstract boolean isChunkLoaded(int x, int z, boolean allowEmpty);
 
@@ -177,7 +179,7 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
             return;
         }
 
-        boolean ret = (this.isRemote() && allowEmpty) || // on the client all cubes count as loaded if allowEmpty
+        boolean ret = (this.isRemote && allowEmpty) || // on the client all cubes count as loaded if allowEmpty
                 this.testForCubes(
                         xStart, yStart, zStart,
                         xEnd, yEnd, zEnd,

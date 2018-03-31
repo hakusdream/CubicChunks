@@ -32,17 +32,16 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import io.github.opencubicchunks.cubicchunks.api.worldgen.ICubicWorldGenerator;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import net.minecraft.world.World;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Ints;
 
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -60,7 +59,7 @@ public class CubeGeneratorsRegistry {
      * @param world The {@link ICubicWorld} we're generating for
      * @param biome The biome we are generating in
      */
-    public static void generateWorld(ICubicWorld world, Random random, CubePos pos, CubicBiome biome) {
+    public static void generateWorld(World world, Random random, CubePos pos, CubicBiome biome) {
         for (ICubicPopulator generator : sortedGeneratorList) {
             generator.generate(world, random, pos, biome);
         }
@@ -74,10 +73,6 @@ public class CubeGeneratorsRegistry {
         for (IWorldGenerator worldGenerator : forgeWorldGenerators) {
             if (worldGenerator instanceof ICubicPopulator) {
                 list.add((ICubicPopulator) worldGenerator);
-            }
-            if (worldGenerator instanceof ICubicWorldGenerator) {
-                list.add((world, random, pos, biome) ->
-                        ((ICubicWorldGenerator) worldGenerator).generate(random, pos.getMinBlockPos(), (World) world));
             }
         }
         Collections.sort(list, (o1, o2) -> Ints.compare(forgeWorldGeneratorIndex.get(o1), forgeWorldGeneratorIndex.get(o2)));

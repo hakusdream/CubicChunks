@@ -24,9 +24,7 @@
 package io.github.opencubicchunks.cubicchunks.core.world.column;
 
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
@@ -39,8 +37,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
 public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
 

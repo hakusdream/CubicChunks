@@ -32,6 +32,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 import java.util.Collection;
@@ -70,7 +71,7 @@ class WorldEncoder {
 
         // 4. sky light
         cubes.forEach(cube -> {
-            if (cube.getStorage() != null && cube.getCubicWorld().getProvider().hasSkyLight()) {
+            if (cube.getStorage() != null && cube.getWorld().provider.hasSkyLight()) {
                 out.writeBytes(cube.getStorage().getSkyLight().getData());
             }
         });
@@ -88,12 +89,12 @@ class WorldEncoder {
         });
     }
 
-    static void encodeColumn(PacketBuffer out, IColumn column) {
+    static void encodeColumn(PacketBuffer out, Chunk column) {
         // 1. biomes
         out.writeBytes(column.getBiomeArray());
     }
 
-    static void decodeColumn(PacketBuffer in, IColumn column) {
+    static void decodeColumn(PacketBuffer in, Chunk column) {
         // 1. biomes
         in.readBytes(column.getBiomeArray());
     }
@@ -114,7 +115,7 @@ class WorldEncoder {
             if (hasStorage[i]) {
                 Cube cube = cubes.get(i);
                 ExtendedBlockStorage storage = new ExtendedBlockStorage(Coords.cubeToMinBlock(cube.getY()),
-                        cube.getCubicWorld().getProvider().hasSkyLight());
+                        cube.getWorld().provider.hasSkyLight());
                 cube.setStorage(storage);
             }
         }
@@ -138,7 +139,7 @@ class WorldEncoder {
 
         // 4. sky light
         for (int i = 0; i < cubes.size(); i++) {
-            if (hasStorage[i] && cubes.get(i).getCubicWorld().getProvider().hasSkyLight()) {
+            if (hasStorage[i] && cubes.get(i).getWorld().provider.hasSkyLight()) {
                 //noinspection ConstantConditions
                 byte[] data = cubes.get(i).getStorage().getSkyLight().getData();
                 in.readBytes(data);
@@ -160,7 +161,7 @@ class WorldEncoder {
         }
     }
 
-    static int getEncodedSize(IColumn column) {
+    static int getEncodedSize(Chunk column) {
         return column.getBiomeArray().length;
     }
 
@@ -177,7 +178,7 @@ class WorldEncoder {
             }
             if (cube.getStorage() != null) {
                 size += cube.getStorage().getBlockLight().getData().length;
-                if (cube.getCubicWorld().getProvider().hasSkyLight()) {
+                if (cube.getWorld().provider.hasSkyLight()) {
                     size += cube.getStorage().getSkyLight().getData().length;
                 }
             }

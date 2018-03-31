@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldgen;
 
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

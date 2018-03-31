@@ -21,8 +21,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.world;
+package io.github.opencubicchunks.cubicchunks.api.core;
 
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.IConfigUpdateListener;
 import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
 import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;
@@ -42,27 +43,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public interface ICubicWorldServer extends ICubicWorld, IConfigUpdateListener {
 
-    /**
-     * Initializes the world to be a CubicChunks world. Must be done before any players are online and before any chunks
-     * are loaded. Cannot be used more than once.
-     * @param heightRange
-     * @param generationRange
-     */
-    void initCubicWorldServer(IntRange heightRange, IntRange generationRange);
-
     CubeProviderServer getCubeCache();
 
     PlayerCubeMap getPlayerCubeMap();
 
     FirstLightProcessor getFirstLightProcessor();
-
-    //field accessors
-    boolean getDisableLevelSaving();
-
-    //vanilla methods
-    @Nullable Biome.SpawnListEntry getSpawnListEntryForTypeAt(EnumCreatureType type, BlockPos pos);
-
-    boolean canCreatureTypeSpawnHere(EnumCreatureType type, Biome.SpawnListEntry entry, BlockPos pos);
 
     CubicEntityTracker getCubicEntityTracker();
     

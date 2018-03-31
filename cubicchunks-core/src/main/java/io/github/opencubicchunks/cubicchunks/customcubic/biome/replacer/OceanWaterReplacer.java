@@ -21,17 +21,17 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.biome.replacer;
+package io.github.opencubicchunks.cubicchunks.customcubic.biome.replacer;
 
 import com.google.common.collect.Sets;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 import java.util.Set;
 
@@ -65,7 +65,7 @@ public class OceanWaterReplacer implements IBiomeBlockReplacer {
             private final ResourceLocation OCEAN_BLOCK = CubicChunks.location("ocean_block");
             private final ResourceLocation OCEAN_LEVEL = CubicChunks.location("water_level");
 
-            @Override public IBiomeBlockReplacer create(ICubicWorld world, CubicBiome biome, BiomeBlockReplacerConfig conf) {
+            @Override public IBiomeBlockReplacer create(World world, CubicBiome biome, BiomeBlockReplacerConfig conf) {
                 IBlockState oceanBlock = Block.getBlockFromName(conf.getString(OCEAN_BLOCK)).getDefaultState();
                 int oceanHeight = (int) Math.round(conf.getDouble(OCEAN_LEVEL));
                 return new OceanWaterReplacer(oceanBlock, oceanHeight);

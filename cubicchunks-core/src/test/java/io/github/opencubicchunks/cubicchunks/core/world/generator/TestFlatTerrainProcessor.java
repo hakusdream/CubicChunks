@@ -21,23 +21,25 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package cubicchunks.world.generator;
+package io.github.opencubicchunks.cubicchunks.core.world.generator;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 import java.io.IOException;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
+import net.minecraft.world.World;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.github.opencubicchunks.cubicchunks.core.testutil.MinecraftEnvironment;
+import io.github.opencubicchunks.cubicchunks.testutil.MinecraftEnvironment;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.flat.FlatGeneratorSettings;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.flat.FlatTerrainProcessor;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.flat.Layer;
@@ -62,7 +64,7 @@ public class TestFlatTerrainProcessor {
         int checkFromY = -1;
         int checkToY = 1;
         FlatGeneratorSettings fgs = new FlatGeneratorSettings();
-        ICubicWorld world = mock(ICubicWorld.class);
+        World world = mock(World.class, withSettings().extraInterfaces(ICubicWorld.class));
         WorldInfo worldInfo = mock(WorldInfo.class);
         when(world.getWorldInfo()).thenReturn(worldInfo);
         
@@ -76,10 +78,10 @@ public class TestFlatTerrainProcessor {
         fgs.layers.clear();
         when(worldInfo.getGeneratorOptions()).thenReturn(fgs.toJson());
         ftp = new FlatTerrainProcessor(world);
-        ICubePrimer primer = null;
+        CubePrimer primer = null;
         for (int i = checkFromY; i <= checkToY; i++) {
             primer = ftp.generateCube(0, i, 0);
-            assertEquals(ICubePrimer.DEFAULT_STATE, primer.getBlockState(8, 8, 8));
+            assertEquals(CubePrimer.DEFAULT_STATE, primer.getBlockState(8, 8, 8));
         }
         
         // Single layer in a middle of every cube
@@ -99,7 +101,7 @@ public class TestFlatTerrainProcessor {
         ftp = new FlatTerrainProcessor(world);
         for (int i = checkFromY; i <= checkToY; i++) {
             primer = ftp.generateCube(0, i, 0);
-            assertEquals(ICubePrimer.DEFAULT_STATE, primer.getBlockState(8, 11, 8));
+            assertEquals(CubePrimer.DEFAULT_STATE, primer.getBlockState(8, 11, 8));
         }
     }
 }

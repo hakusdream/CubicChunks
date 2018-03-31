@@ -21,16 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.populator;
+package io.github.opencubicchunks.cubicchunks.customcubic.populator;
 
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
 
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.custom.CustomGeneratorSettings;
+import io.github.opencubicchunks.cubicchunks.customcubic.CustomGeneratorSettings;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -53,7 +52,7 @@ public class PopulatorUtils {
         return localToBlock(blockToCube(coord), Cube.SIZE / 2);
     }
 
-    public static void genOreUniform(ICubicWorld world, CustomGeneratorSettings cfg, Random random, CubePos pos,
+    public static void genOreUniform(World world, CustomGeneratorSettings cfg, Random random, CubePos pos,
             int count, double probability, WorldGenerator generator, double minY, double maxY) {
         int minBlockY = Math.round((float) (minY * cfg.heightFactor + cfg.heightOffset));
         int maxBlockY = Math.round((float) (maxY * cfg.heightFactor + cfg.heightOffset));
@@ -75,7 +74,7 @@ public class PopulatorUtils {
         }
     }
 
-    public static void genOreBellCurve(ICubicWorld world, CustomGeneratorSettings cfg, Random random, CubePos pos, int count,
+    public static void genOreBellCurve(World world, CustomGeneratorSettings cfg, Random random, CubePos pos, int count,
                                       double probability, WorldGenerator generator, double mean, double stdDevFactor, double spacing, double minY, double maxY) {
 
         int factor = (cfg.getMaxHeight() - cfg.getMinHeight()) / 2;
@@ -115,7 +114,7 @@ public class PopulatorUtils {
      * TODO: make it go up instead of down so it doesn't load unnecessary chunks when forcedAdditionalCubes is nonzero
      */
     @Nullable
-    public static BlockPos getSurfaceForCube(ICubicWorld world, CubePos pos, int xOffset, int zOffset, int forcedAdditionalCubes, SurfaceType type) {
+    public static BlockPos getSurfaceForCube(World world, CubePos pos, int xOffset, int zOffset, int forcedAdditionalCubes, SurfaceType type) {
         int maxFreeY = pos.getMaxBlockY() + Cube.SIZE / 2;
         int minFreeY = pos.getMinBlockY() + Cube.SIZE / 2;
         int startY = pos.above().getMaxBlockY() + forcedAdditionalCubes * Cube.SIZE;
@@ -129,7 +128,7 @@ public class PopulatorUtils {
     }
 
     @Nullable
-    public static BlockPos findTopBlock(ICubicWorld world, BlockPos start, int minTopY, int maxTopY, SurfaceType type) {
+    public static BlockPos findTopBlock(World world, BlockPos start, int minTopY, int maxTopY, SurfaceType type) {
         BlockPos pos = start;
         IBlockState startState = world.getBlockState(start);
         if (canBeTopBlock((World) world, pos, startState, type)) {

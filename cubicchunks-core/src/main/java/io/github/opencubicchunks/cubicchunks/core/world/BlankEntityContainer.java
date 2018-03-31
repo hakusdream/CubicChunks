@@ -23,11 +23,12 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
-import com.google.common.collect.Iterators;
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.util.ClassInheritanceMultiMapFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ClassInheritanceMultiMap;
+import net.minecraft.world.World;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -81,7 +82,7 @@ public class BlankEntityContainer extends EntityContainer {
     }
 
     @Override
-    public void readFromNbt(NBTTagCompound nbt, String name, ICubicWorld world, Consumer<Entity> listener) {
+    public void readFromNbt(NBTTagCompound nbt, String name, World world, Consumer<Entity> listener) {
     }
 
     public static final class BlankEntityMap extends ClassInheritanceMultiMap<Entity> {

@@ -27,15 +27,14 @@ import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.CubePopulatorEvent;
 import io.github.opencubicchunks.cubicchunks.core.util.Box;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.BasicCubeGenerator;
 import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubeGeneratorsRegistry;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubePrimer;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.ICubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.Map.Entry;
@@ -53,15 +52,15 @@ public class FlatTerrainProcessor extends BasicCubeGenerator {
 
     private final FlatGeneratorSettings conf;
 
-    public FlatTerrainProcessor(ICubicWorld world) {
+    public FlatTerrainProcessor(World world) {
         super(world);
         String json = world.getWorldInfo().getGeneratorOptions();
         conf = FlatGeneratorSettings.fromJson(json);
     }
 
     @Override
-    public ICubePrimer generateCube(int cubeX, int cubeY, int cubeZ) {
-        ICubePrimer primer = new CubePrimer();
+    public CubePrimer generateCube(int cubeX, int cubeY, int cubeZ) {
+        CubePrimer primer = new CubePrimer();
         int floorY = Coords.cubeToMinBlock(cubeY);
         int topY = Coords.cubeToMaxBlock(cubeY);
         int floorKeyI = floorY;
@@ -95,14 +94,19 @@ public class FlatTerrainProcessor extends BasicCubeGenerator {
          * If event is not canceled we will use cube populators from registry.
          **/
         if (!MinecraftForge.EVENT_BUS.post(new CubePopulatorEvent(world, cube))) {
-            CubeGeneratorsRegistry.generateWorld(cube.getCubicWorld(), new Random(cube.cubeRandomSeed()),
+            CubeGeneratorsRegistry.generateWorld(cube.getWorld(), new Random(cube.cubeRandomSeed()),
                     cube.getCoords(), CubicBiome.getCubic(world.getBiome(cube.getCoords().getCenterBlockPos())));
         }
     }
 
     @Override
-    public Box getPopulationRequirement(Cube cube) {
-        return NO_POPULATOR_REQUIREMENT;
+    public Box getFullPopulationRequirements(Cube cube) {
+        return NO_REQUIREMENT;
+    }
+
+    @Override
+    public Box getPopulationPregenerationRequirements(Cube cube) {
+        return NO_REQUIREMENT;
     }
 
     @Override
