@@ -25,11 +25,11 @@ package io.github.opencubicchunks.cubicchunks.api.worldgen.populator;
 
 import java.util.Random;
 
-import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -64,7 +64,7 @@ public interface ICubicPopulator extends IWorldGenerator {
      * @param biome The biome the populator is working in.
      *
      */
-    void generate(World world, Random random, CubePos pos, CubicBiome biome);
+    void generate(World world, Random random, CubePos pos, Biome biome);
 
     /**
      * Default implementation of vanilla generate method - calls cubic chunks version for all 16 sections.
@@ -74,8 +74,7 @@ public interface ICubicPopulator extends IWorldGenerator {
     default void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         for (int y = 0; y <= 16; y++) {
             CubePos pos = new CubePos(chunkX, y, chunkZ);
-            CubicBiome biome = CubicBiome.getCubic(world.getBiome(pos.getCenterBlockPos()));
-            generate(world, random, pos, biome);
+            generate(world, random, pos, world.getBiome(pos.getCenterBlockPos()));
         }
     }
 }

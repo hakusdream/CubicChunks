@@ -94,4 +94,11 @@ public class Coords {
     public static int cubeToCenterBlock(int cubeVal) {
         return localToBlock(cubeVal, Cube.SIZE / 2);
     }
+
+    /**
+     * Returns the minimum coordinate inside the population area this coordinate is in
+     */
+    public static int getMinCubePopulationPos(int coord) {
+        return localToBlock(blockToCube(coord), Cube.SIZE / 2);
+    }
 }

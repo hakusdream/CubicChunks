@@ -17,7 +17,7 @@
         "common.MixinEntity_DeathFix",
         "common.MixinWorldProvider",
         "common.MixinPlayerList",
-        "common.structuregen.MixinStructureStart",
+        //"io.github.opencubicchunks.cubicchunks.customcubic.asm.mixin.common.structuregen.MixinStructureStart",
         "common.MixinWorldInfo",
         "common.MixinWorldSettings",
         "common.MixinDerivedWorldInfo"

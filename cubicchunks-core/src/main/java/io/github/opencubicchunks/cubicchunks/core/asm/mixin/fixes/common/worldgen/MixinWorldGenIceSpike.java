@@ -27,7 +27,7 @@ import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube
 import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
 
 import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.customcubic.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -52,7 +52,7 @@ public class MixinWorldGenIceSpike {
 
     @Inject(method = "generate", at = @At("HEAD"))
     private void onGenerate(World worldIn, Random rand, BlockPos position, CallbackInfoReturnable<Boolean> cbi) {
-        this.minY = PopulatorUtils.getMinCubePopulationPos(position.getY());
+        this.minY = Coords.getMinCubePopulationPos(position.getY());
         this.minAccessY = cubeToMinBlock(blockToCube(position.getY()));
     }
 

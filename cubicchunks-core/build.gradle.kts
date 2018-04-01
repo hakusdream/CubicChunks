@@ -62,7 +62,6 @@ val deobfMcMCP: DeobfuscateJar by tasks
 
 defaultTasks = listOf("licenseFormat", "build")
 
-//it can't be named forgeVersion because ForgeExtension has property named forgeVersion
 val theForgeVersion by project
 val theMappingsVersion by project
 val malisisCoreVersion by project
@@ -100,35 +99,6 @@ java {
 
 mixin {
     token("MC_FORGE", extractForgeMinorVersion())
-}
-
-minecraft {
-    version = theForgeVersion as String
-    runDir = "run"
-    mappings = theMappingsVersion as String
-
-    isUseDepAts = true
-
-    replace("@@VERSION@@", project.version)
-    replace("\"/*@@DEPS_PLACEHOLDER@@*/", ";after:malisiscore@[$malisisCoreMinVersion,)\"")
-    replace("@@MALISIS_VERSION@@", malisisCoreMinVersion)
-    replaceIn("cubicchunks/CubicChunks.java")
-
-    val args = listOf(
-            "-Dfml.coreMods.load=cubicchunks.asm.CubicChunksCoreMod", //the core mod class, needed for mixins
-            "-Dmixin.env.compatLevel=JAVA_8", //needed to use java 8 when using mixins
-            "-Dmixin.debug.verbose=true", //verbose mixin output for easier debugging of mixins
-            "-Dmixin.debug.export=true", //export classes from mixin to runDirectory/.mixin.out
-            "-Dcubicchunks.debug=true", //various debug options of cubic chunks mod. Adds items that are not normally there!
-            "-XX:-OmitStackTraceInFastThrow", //without this sometimes you end up with exception with empty stacktrace
-            "-Dmixin.checks.interfaces=true", //check if all interface methods are overriden in mixin
-            "-Dfml.noGrab=false", //change to disable Minecraft taking control over mouse
-            "-ea", //enable assertions
-            "-da:io.netty..." //disable netty assertions because they sometimes fail
-    )
-
-    clientJvmArgs.addAll(args)
-    serverJvmArgs.addAll(args)
 }
 
 license {
@@ -170,18 +140,6 @@ signing {
     sign(configurations.archives)
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-    maven {
-        setUrl("https://oss.sonatype.org/content/repositories/public/")
-    }
-    maven {
-        setUrl("http://repo.spongepowered.org/maven")
-    }
-}
-
 // configurations, needed for extendsFrom
 val jmh by configurations
 val forgeGradleMc by configurations
@@ -194,6 +152,11 @@ val embed by configurations.creating
 val embedOnly by configurations.creating
 val coreShadow by configurations.creating
 
+// for unit test dependencies
+val testArtifacts by configurations.creating
+val deobfArtifacts by configurations.creating
+deobfArtifacts.extendsFrom(compile)
+
 jmh.extendsFrom(compile)
 jmh.extendsFrom(forgeGradleMc)
 jmh.extendsFrom(forgeGradleMcDeps)
@@ -204,18 +167,10 @@ embedOnly.extendsFrom(embed)
 testCompile.extendsFrom(embed)
 compile.extendsFrom(coreShadow)
 
-// this is needed because it.ozimov:java7-hamcrest-matchers:0.7.0 depends on guava 19, while MC needs guava 21
-configurations.all { resolutionStrategy { force("com.google.guava:guava:21.0") } }
-
 dependencies {
     embed("com.flowpowered:flow-noise:1.0.1-SNAPSHOT")
     // https://mvnrepository.com/artifact/com.typesafe/config
     embed("com.typesafe:config:1.2.0")
-    testCompile("junit:junit:4.11")
-    testCompile("org.hamcrest:hamcrest-junit:2.0.0.0")
-    testCompile("it.ozimov:java7-hamcrest-matchers:0.7.0")
-    testCompile("org.mockito:mockito-core:2.1.0-RC.2")
-    testCompile("org.spongepowered:launchwrappertestsuite:1.0-SNAPSHOT")
 
     embed("org.spongepowered:mixin:0.7.5-SNAPSHOT") {
         isTransitive = false
@@ -250,10 +205,22 @@ tasks {
         classifier = "sources"
         from(sourceSets["main"].java.srcDirs)
     }
+    // tests jar used as test dependency to use by other modules
+    val testsJar by creating(Jar::class) {
+        classifier = "tests"
+        from(sourceSets["test"].output)
+    }
+    // for project dependency to work correctly
+    val deobfJar by creating(Jar::class) {
+        classifier = "deobf"
+        from(sourceSets["main"].output)
+    }
 
     // tasks must be before artifacts, don't change the order
     artifacts {
         withGroovyBuilder {
+            "testArtifacts"(testsJar)
+            "deobfArtifacts"(deobfJar)
             "archives"(jar, sourcesJar, javadocJar)
         }
     }

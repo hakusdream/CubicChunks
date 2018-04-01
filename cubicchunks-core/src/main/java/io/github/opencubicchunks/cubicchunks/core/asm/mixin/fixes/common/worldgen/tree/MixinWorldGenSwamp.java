@@ -26,7 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldg
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.MATERIAL_WATER;
 
 import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.customcubic.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -61,7 +61,7 @@ public class MixinWorldGenSwamp {
     // as MC goes down
     @Inject(method = "generate", at = @At("HEAD"))
     private void onGenerate(World worldIn, Random rand, BlockPos position, CallbackInfoReturnable<Boolean> cbi) {
-        this.minPos = PopulatorUtils.getMinCubePopulationPos(position.getY());
+        this.minPos = Coords.getMinCubePopulationPos(position.getY());
     }
 
     // and then redirect Material.WATER access with ordinal zero,

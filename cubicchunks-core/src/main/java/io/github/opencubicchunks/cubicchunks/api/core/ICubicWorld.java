@@ -29,10 +29,13 @@ import io.github.opencubicchunks.cubicchunks.core.world.IMinMaxHeight;
 import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.function.Predicate;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
@@ -52,6 +55,68 @@ public interface ICubicWorld extends IMinMaxHeight {
      * if this is not a CubicChunks world.
      */
     LightingManager getLightingManager();
+
+    /**
+     * Finds the top block for that population cube with give offset, or null if no suitable place found.
+     * This method starts from the top of population area (or forcedAdditionalCubes*16 blocks above that)
+     * and goes down scanning for solid block. The value is used only if it's within population area.
+     *
+     * Note: forcedAdditionalCubes should be zero unless absolutely necessary.
+     * TODO: make it go up instead of down so it doesn't load unnecessary chunks when forcedAdditionalCubes is nonzero
+     */
+    @Nullable
+    public default BlockPos getSurfaceForCube(CubePos pos, int xOffset, int zOffset, int forcedAdditionalCubes, SurfaceType type) {
+        int maxFreeY = pos.getMaxBlockY() + Cube.SIZE / 2;
+        int minFreeY = pos.getMinBlockY() + Cube.SIZE / 2;
+        int startY = pos.above().getMaxBlockY() + forcedAdditionalCubes * Cube.SIZE;
+
+        BlockPos start = new BlockPos(
+                pos.getMinBlockX() + xOffset,
+                startY,
+                pos.getMinBlockZ() + zOffset
+        );
+        return findTopBlock(start, minFreeY, maxFreeY, type);
+    }
+
+    @Nullable
+    public default BlockPos findTopBlock(BlockPos start, int minTopY, int maxTopY, SurfaceType type) {
+        BlockPos pos = start;
+        IBlockState startState = ((World) this).getBlockState(start);
+        if (canBeTopBlock(pos, startState, type)) {
+            // the top tested block is solid, don't use that one
+            return null;
+        }
+        while (pos.getY() >= minTopY) {
+            BlockPos next = pos.down();
+            IBlockState state = ((World) this).getBlockState(next);
+            if (canBeTopBlock(pos, state, type)) {
+                break;
+            }
+            pos = next;
+        }
+        if (pos.getY() < minTopY || pos.getY() > maxTopY) {
+            return null;
+        }
+        return pos;
+    }
+
+    public default boolean canBeTopBlock(BlockPos pos, IBlockState state, SurfaceType type) {
+        switch (type) {
+            case SOLID: {
+                return state.getMaterial().blocksMovement()
+                        && !state.getBlock().isLeaves(state, (World) this, pos)
+                        && !state.getBlock().isFoliage((World) this, pos);
+            }
+            case OPAQUE: {
+                return state.getLightOpacity((World) this, pos) != 0;
+            }
+            case BLOCKING_MOVEMENT: {
+                return state.getMaterial().blocksMovement() || state.getMaterial().isLiquid();
+            }
+            default:
+                throw new IllegalArgumentException(type.toString());
+        }
+    }
 
     /**
      * Returns true iff the given Predicate evaluates to true for all cubes for block positions within blockRadius from
@@ -105,4 +170,8 @@ public interface ICubicWorld extends IMinMaxHeight {
     int getMinGenerationHeight();
 
     int getMaxGenerationHeight();
+
+    public enum SurfaceType {
+        SOLID, BLOCKING_MOVEMENT, OPAQUE
+    }
 }

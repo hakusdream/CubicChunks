@@ -4,7 +4,7 @@
     "refmap": "cubicchunks.mixins.refmap.json",
     "compatibilityLevel": "JAVA_8",
     "minVersion": "0.6.15-SNAPSHOT",
-    "plugin": "cubicchunks.asm.CubicChunksMixinConfig",
+    "plugin": "io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksMixinConfig",
     "mixins": [
         "common.MixinPathNavigate",
         "common.MixinWalkNodeProcessor",

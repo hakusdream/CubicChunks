@@ -24,7 +24,7 @@
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldgen;
 
 import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.customcubic.populator.PopulatorUtils;
+import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -50,7 +50,7 @@ public class MixinWorldGenDeadBush {
 
     @Inject(method = "generate", at = @At("HEAD"))
     private void onGenerate(World worldIn, Random rand, BlockPos position, CallbackInfoReturnable<Boolean> cbi) {
-        this.minPos = PopulatorUtils.getMinCubePopulationPos(position.getY());
+        this.minPos = Coords.getMinCubePopulationPos(position.getY());
     }
 
     @ModifyConstant(method = "generate", constant = @Constant(intValue = 0, expandZeroConditions = Constant.Condition.GREATER_THAN_ZERO, ordinal = 0))

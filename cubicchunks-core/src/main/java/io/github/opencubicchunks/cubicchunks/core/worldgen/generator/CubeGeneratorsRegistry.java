@@ -32,10 +32,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.google.common.collect.ImmutableList;
@@ -59,7 +59,7 @@ public class CubeGeneratorsRegistry {
      * @param world The {@link ICubicWorld} we're generating for
      * @param biome The biome we are generating in
      */
-    public static void generateWorld(World world, Random random, CubePos pos, CubicBiome biome) {
+    public static void generateWorld(World world, Random random, CubePos pos, Biome biome) {
         for (ICubicPopulator generator : sortedGeneratorList) {
             generator.generate(world, random, pos, biome);
         }

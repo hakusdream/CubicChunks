@@ -27,7 +27,7 @@ import static io.github.opencubicchunks.cubicchunks.core.util.MathUtil.lerp;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import io.github.opencubicchunks.cubicchunks.customcubic.builder.IBuilder;
+import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.builder.IBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.Vec3i;
 

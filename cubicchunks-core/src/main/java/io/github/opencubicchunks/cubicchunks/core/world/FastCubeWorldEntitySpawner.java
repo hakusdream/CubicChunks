@@ -23,14 +23,13 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
+import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.api.worldgen.biome.CubicBiome;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
 import io.github.opencubicchunks.cubicchunks.core.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.customcubic.populator.PopulatorUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -192,14 +191,14 @@ public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
                 (type.getAnimal() && !spawnOnSetTickRate));
     }
 
-    public static void initialWorldGenSpawn(World world, CubicBiome biome, int blockX, int blockY, int blockZ,
+    public static void initialWorldGenSpawn(World world, Biome biome, int blockX, int blockY, int blockZ,
             int sizeX, int sizeY, int sizeZ, Random random) {
-        List<Biome.SpawnListEntry> spawnList = biome.getBiome().getSpawnableList(EnumCreatureType.CREATURE);
+        List<Biome.SpawnListEntry> spawnList = biome.getSpawnableList(EnumCreatureType.CREATURE);
 
         if (spawnList.isEmpty()) {
             return;
         }
-        while (random.nextFloat() < biome.getBiome().getSpawningChance()) {
+        while (random.nextFloat() < biome.getSpawningChance()) {
             Biome.SpawnListEntry currEntry = WeightedRandom.getRandomItem(world.rand, spawnList);
             int groupCount = MathHelper.getInt(random, currEntry.minGroupCount, currEntry.maxGroupCount);
             IEntityLivingData data = null;
@@ -216,9 +215,8 @@ public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
                         randZ = initRandZ + random.nextInt(5) - random.nextInt(5);
                     } while (randX < blockX || randX >= blockX + sizeX || randZ < blockZ || randZ >= blockZ + sizeZ);
 
-                    BlockPos pos = PopulatorUtils.findTopBlock(
-                            world, new BlockPos(randX, blockY + sizeY + Cube.SIZE / 2, randZ),
-                            blockY, blockY + sizeY - 1, PopulatorUtils.SurfaceType.SOLID);
+                    BlockPos pos = ((ICubicWorld)world).findTopBlock(new BlockPos(randX, blockY + sizeY + Cube.SIZE / 2, randZ),
+                            blockY, blockY + sizeY - 1, ICubicWorld.SurfaceType.SOLID);
                     if (pos == null) {
                         continue;
                     }
