@@ -1,6 +1,8 @@
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgePlugin
+import nl.javadude.gradle.plugins.license.LicenseExtension
 import nl.javadude.gradle.plugins.license.LicensePlugin
+import org.gradle.api.internal.HasConvention
 import org.spongepowered.asm.gradle.plugins.MixinGradlePlugin
 import kotlin.apply
 
@@ -33,6 +35,9 @@ val theMappingsVersion by project
 val malisisCoreVersion by project
 val malisisCoreMinVersion by project
 
+val licenseYear by project
+val projectName by project
+
 allprojects {
     plugins {
         base
@@ -47,6 +52,21 @@ allprojects {
 
     val sourceSets = the<JavaPluginConvention>().sourceSets
 
+    configure<LicenseExtension> {
+        val ext = (this as HasConvention).convention.extraProperties
+        ext["project"] = projectName
+        ext["year"] = licenseYear
+        exclude("**/*.info")
+        exclude("**/package-info.java")
+        exclude("**/*.json")
+        exclude("**/*.xml")
+        exclude("assets/*")
+        exclude("io/github/opencubicchunks/cubicchunks/core/server/chunkio/async/forge/*") // Taken from forge
+        header = file("HEADER.txt")
+        ignoreFailures = false
+        strictCheck = true
+        mapping(mapOf("java" to "SLASHSTAR_STYLE"))
+    }
     configure<ForgeExtension> {
         version = theForgeVersion as String
         runDir = "run"

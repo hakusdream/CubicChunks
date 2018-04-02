@@ -57,7 +57,6 @@ val theMappingsVersion by project
 val malisisCoreVersion by project
 val malisisCoreMinVersion by project
 
-val licenseYear by project
 val projectName by project
 
 val versionSuffix by project
@@ -89,22 +88,6 @@ java {
 
 configure<MixinExtension> {
     token("MC_FORGE", extractForgeMinorVersion())
-}
-
-configure<LicenseExtension> {
-    val ext = (this as HasConvention).convention.extraProperties
-    ext["project"] = projectName
-    ext["year"] = licenseYear
-    exclude("**/*.info")
-    exclude("**/package-info.java")
-    exclude("**/*.json")
-    exclude("**/*.xml")
-    exclude("assets/*")
-    exclude("io/github/opencubicchunks/cubicchunks/core/server/chunkio/async/forge/*") // Taken from forge
-    header = file("HEADER.txt")
-    ignoreFailures = false
-    strictCheck = true
-    mapping(mapOf("java" to "SLASHSTAR_STYLE"))
 }
 
 signing {
