@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.IBLOCK_ACCESS_GET_BLOCK_STATE;
-
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.api.IMinMaxHeight;
 import mcp.MethodsReturnNonnullByDefault;
@@ -53,7 +51,8 @@ public abstract class MixinWalkNodeProcessor_HeightLimit extends NodeProcessor {
     }
 
     // redirect getBlockState and check if the block is loaded
-    @Redirect(method = "getStart", at = @At(value = "INVOKE", target = IBLOCK_ACCESS_GET_BLOCK_STATE))
+    @Redirect(method = "getStart", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/IBlockAccess;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/state/IBlockState;"))
     private IBlockState getLoadedBlockState_getStart(IBlockAccess access, BlockPos pos) {
         if (!entity.world.isBlockLoaded(pos)) {
             return Blocks.BEDROCK.getDefaultState();

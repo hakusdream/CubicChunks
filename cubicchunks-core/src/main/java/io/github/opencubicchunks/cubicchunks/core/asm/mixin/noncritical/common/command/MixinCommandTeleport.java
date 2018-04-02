@@ -23,7 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.COMMAND_TELEPORT_GET_ENTITY;
 import static net.minecraft.command.CommandBase.getEntity;
 
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
@@ -52,7 +51,10 @@ public class MixinCommandTeleport {
     @Nullable private WeakReference<ICubicWorld> commandWorld;
 
     @Inject(method = "execute",
-            at = @At(value = "INVOKE", target = COMMAND_TELEPORT_GET_ENTITY, ordinal = 0))
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/command/server/CommandTeleport;getEntity(Lnet/minecraft/server/MinecraftServer;"
+                            + "Lnet/minecraft/command/ICommandSender;Ljava/lang/String;)Lnet/minecraft/entity/Entity;",
+                    ordinal = 0))
     private void postGetEntityInject(MinecraftServer server, ICommandSender sender, String args[], CallbackInfo ci) {
         try {
             commandWorld = new WeakReference<>((ICubicWorld) getEntity(server, sender, args[0]).getEntityWorld());

@@ -23,9 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_FALLING_CAN_FALL_THROUGH;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AIR_BLOCK;
-
 import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
@@ -86,16 +83,19 @@ public abstract class MixinBlockFalling_HeightLimits extends Block {
     private int checkFallable_getMinY2(int orig, World worldIn, BlockPos pos) {
         return ((ICubicWorld) worldIn).getMinHeight();
     }
-    
-    @Redirect(method = "checkFallable", at = @At(value = "INVOKE", target = BLOCK_FALLING_CAN_FALL_THROUGH), require = 2)
+
+    @Redirect(method = "checkFallable",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockFalling;canFallThrough(Lnet/minecraft/block/state/IBlockState;)Z"),
+            require = 2)
     private boolean checkCanFallThrough(IBlockState blockState, World worldIn, BlockPos pos) {
         if(!((ICubicWorld)worldIn).isCubicWorld() || ((ICubicWorld)worldIn).getCubeCache().getLoadedCube(CubePos.fromBlockCoords(pos.down()))!=null) {
             return BlockFalling.canFallThrough(blockState);
         }
         return false;
     }
-    
-    @Redirect(method = "checkFallable", at = @At(value = "INVOKE", target = WORLD_IS_AIR_BLOCK), require = 2)
+
+    @Redirect(method = "checkFallable",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isAirBlock(Lnet/minecraft/util/math/BlockPos;)Z"), require = 2)
     private boolean checkIsAirBlock(World worldIn, BlockPos pos) {
         if(!((ICubicWorld)worldIn).isCubicWorld() || ((ICubicWorld)worldIn).getCubeCache().getLoadedCube(CubePos.fromBlockCoords(pos))!=null) {
             return worldIn.isAirBlock(pos);

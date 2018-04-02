@@ -23,10 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_GETY;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_GET_ENTITY_LISTS;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_CLIENT_GET_CHUNK_FROM_BLOCK_COORDS;
-
 import io.github.opencubicchunks.cubicchunks.api.ICube;
 import io.github.opencubicchunks.cubicchunks.core.util.ClassInheritanceMultiMapFactory;
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
@@ -87,7 +83,9 @@ public class MixinRenderGlobal {
      */
     @Group(name = "renderEntitiesFix")//, min = 3, max = 3)
     @Inject(method = "renderEntities",
-            at = @At(value = "INVOKE", target = WORLD_CLIENT_GET_CHUNK_FROM_BLOCK_COORDS),
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/client/multiplayer/WorldClient;getChunkFromBlockCoords(Lnet/minecraft/util/math/BlockPos;)"
+                            + "Lnet/minecraft/world/chunk/Chunk;"),
             locals = LocalCapture.CAPTURE_FAILHARD)
     public void onGetPosition(Entity renderViewEntity, ICamera camera, float partialTicks,
             CallbackInfo ci, int pass, double d0, double d1, double d2,
@@ -156,7 +154,7 @@ public class MixinRenderGlobal {
      * Then chunk.getEntityLists is redirected to a method that returns a 1-element array.
      */
     @Group(name = "renderEntitiesFix")
-    @Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = BLOCK_POS_GETY), require = 1)
+    @Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;getY()I"), require = 1)
     public int getRenderChunkYPos(BlockPos pos) {
         //position is null when it's not cubic chunks renderer
         if (this.position != null) {
@@ -171,7 +169,9 @@ public class MixinRenderGlobal {
      */
     @SuppressWarnings("unchecked")
     @Group(name = "renderEntitiesFix")
-    @Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = CHUNK_GET_ENTITY_LISTS), require = 1)
+    @Redirect(method = "renderEntities",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/Chunk;getEntityLists()[Lnet/minecraft/util/ClassInheritanceMultiMap;"),
+            require = 1)
     public ClassInheritanceMultiMap<Entity>[] getEntityList(Chunk chunk) {
         if (position == null) {
             return chunk.getEntityLists(); //TODO: is this right?

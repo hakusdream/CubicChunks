@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldgen.tree;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.MATERIAL_WATER;
-
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import mcp.MethodsReturnNonnullByDefault;
@@ -66,7 +64,8 @@ public class MixinWorldGenSwamp {
 
     // and then redirect Material.WATER access with ordinal zero,
     // return null to make sure it never succeeds for any block when below minPos
-    @Redirect(method = "generate", at = @At(value = "FIELD", target = MATERIAL_WATER, ordinal = 0))
+    @Redirect(method = "generate",
+            at = @At(value = "FIELD", target = "Lnet/minecraft/block/material/Material;WATER:Lnet/minecraft/block/material/Material;", ordinal = 0))
     @Nullable private Material getReplaceMaterial_HeightCheckHack(World worldIn, Random rand, BlockPos position) {
         if (((ICubicWorld) worldIn).isCubicWorld() && position.getY() < minPos) {
             return null;

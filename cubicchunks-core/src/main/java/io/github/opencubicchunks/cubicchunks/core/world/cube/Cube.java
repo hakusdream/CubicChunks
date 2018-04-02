@@ -480,6 +480,7 @@ public class Cube implements ICube {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void trackSurface() {
         IHeightMap opindex = ((IColumn) column).getOpacityIndex();
         int miny = getCoords().getMinBlockY();

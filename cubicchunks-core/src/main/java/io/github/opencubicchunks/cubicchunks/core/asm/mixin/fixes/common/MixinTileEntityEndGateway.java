@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_GET_TOP_FILLED_SEGMENT;
-
 import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
@@ -46,7 +44,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @Mixin(TileEntityEndGateway.class)
 public class MixinTileEntityEndGateway {
 
-    @Redirect(method = "findExitPortal", at = @At(value = "INVOKE", target = CHUNK_GET_TOP_FILLED_SEGMENT))
+    @Redirect(method = "findExitPortal", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/chunk/Chunk;getTopFilledSegment()I"))
     private int getChunkTopFilledSegmentExitFromPortal(Chunk chunk) {
         int top = chunk.getTopFilledSegment();
         if (top < 0) {
@@ -55,7 +54,8 @@ public class MixinTileEntityEndGateway {
         return top;
     }
 
-    @Redirect(method = "findSpawnpointInChunk", at = @At(value = "INVOKE", target = CHUNK_GET_TOP_FILLED_SEGMENT))
+    @Redirect(method = "findSpawnpointInChunk", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/chunk/Chunk;getTopFilledSegment()I"))
     private static int getChunkTopFilledSegmentFindSpawnpoint(Chunk chunk) {
         int top = chunk.getTopFilledSegment();
         if (top < 0) {

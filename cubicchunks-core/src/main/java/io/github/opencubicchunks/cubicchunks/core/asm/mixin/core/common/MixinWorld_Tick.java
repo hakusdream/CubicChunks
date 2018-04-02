@@ -23,9 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_GET_PERSISTENT_CHUNKS;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AREA_LOADED;
-
 import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
@@ -71,7 +68,7 @@ public abstract class MixinWorld_Tick implements ICubicWorld {
      */
     @Group(name = "updateEntity", max = 2, min = 2)
     @Redirect(method = "updateEntityWithOptionalForce",
-              at = @At(value = "INVOKE", target = WORLD_IS_AREA_LOADED),
+              at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isAreaLoaded(IIIIIIZ)Z"),
               require = 1)
     private boolean canUpdateEntity(World _this, int startBlockX, int oldStartBlockY, int startBlockZ, int endBlockX, int oldEndBlockY, int endBlockZ,
             boolean allowEmpty) {
@@ -90,7 +87,7 @@ public abstract class MixinWorld_Tick implements ICubicWorld {
      */
     @Group(name = "updateEntity")
     @Inject(method = "updateEntityWithOptionalForce",
-            at = @At(value = "INVOKE", target = WORLD_GET_PERSISTENT_CHUNKS, remap = false),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getPersistentChunks()Lcom/google/common/collect/ImmutableSetMultimap;", remap = false),
             locals = LocalCapture.CAPTURE_FAILHARD,
             require = 1)
     public void onIsAreaLoadedForUpdateEntityWithOptionalForce(Entity entity, boolean force, CallbackInfo ci, int i, int j) {

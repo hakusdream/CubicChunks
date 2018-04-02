@@ -41,7 +41,7 @@ public class WorldProviderAccess {
         try {
             return (String) wp_generatorSettings.invoke(wp);
         } catch (Throwable throwable) {
-            throw Throwables.propagate(throwable);
+            throw new RuntimeException(throwable);
         }
     }
 }

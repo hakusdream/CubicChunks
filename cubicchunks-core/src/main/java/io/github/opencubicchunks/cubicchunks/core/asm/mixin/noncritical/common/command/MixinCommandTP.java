@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.COMMAND_TP_GET_COMMAND_SENDER_AS_PLAYER;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.COMMAND_TP_GET_ENTITY;
 import static net.minecraft.command.CommandBase.getCommandSenderAsPlayer;
 import static net.minecraft.command.CommandBase.getEntity;
 
@@ -55,7 +53,12 @@ public class MixinCommandTP {
     @Nullable private WeakReference<ICubicWorld> commandWorld;
 
     @Inject(method = "execute",
-            at = @At(value = "INVOKE", target = COMMAND_TP_GET_ENTITY, ordinal = 0))
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/command/CommandTP;getEntity(Lnet/minecraft/server/MinecraftServer;"
+                            + "Lnet/minecraft/command/ICommandSender;Ljava/lang/String;)Lnet/minecraft/entity/Entity;",
+                    ordinal = 0)
+    )
     private void postGetEntityInject(MinecraftServer server, ICommandSender sender, String args[], CallbackInfo ci) {
         try {
             commandWorld = new WeakReference<>((ICubicWorld) getEntity(server, sender, args[0]).getEntityWorld());
@@ -65,7 +68,10 @@ public class MixinCommandTP {
     }
 
     @Inject(method = "execute",
-            at = @At(value = "INVOKE", target = COMMAND_TP_GET_COMMAND_SENDER_AS_PLAYER, ordinal = 0))
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/command/CommandTP;getCommandSenderAsPlayer(Lnet/minecraft/command/ICommandSender;)"
+                            + "Lnet/minecraft/entity/player/EntityPlayerMP;",
+                    ordinal = 0))
     private void postGetEntityPlayerInject(MinecraftServer server, ICommandSender sender, String args[], CallbackInfo ci) {
         try {
             commandWorld = new WeakReference<>((ICubicWorld) getCommandSenderAsPlayer(sender).getEntityWorld());

@@ -24,7 +24,6 @@
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.client;
 
 import com.mojang.authlib.GameProfile;
-import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
 import io.github.opencubicchunks.cubicchunks.core.asm.MixinUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -53,7 +52,8 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
         return this.posY;
     }
 
-    @Redirect(method = "onUpdate", at = @At(target = JvmNames.WORLD_IS_BLOCK_LOADED, value = "INVOKE"))
+    @Redirect(method = "onUpdate",
+            at = @At(target = "Lnet/minecraft/world/World;isBlockLoaded(Lnet/minecraft/util/math/BlockPos;)Z", value = "INVOKE"))
     public boolean canEntityUpdate_isBlockLoadedRedirect(World world, BlockPos pos) {
         return MixinUtils.canTickPosition(world, pos);
     }

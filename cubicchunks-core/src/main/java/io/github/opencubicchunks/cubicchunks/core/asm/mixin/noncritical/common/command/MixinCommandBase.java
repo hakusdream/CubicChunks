@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.COMMAND_BASE_PARSE_DOUBLE;
-
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandBase;
@@ -56,7 +54,7 @@ public class MixinCommandBase {
 
     //modify parseDouble min argument
     @ModifyArg(method = "parseBlockPos",
-            at = @At(value = "INVOKE", target = COMMAND_BASE_PARSE_DOUBLE, ordinal = 1),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/command/CommandBase;parseDouble(DLjava/lang/String;IIZ)D", ordinal = 1),
             index = 2)
     private static int getMinY(int original) {
         ICubicWorld world = commandWorld.get();
@@ -68,7 +66,7 @@ public class MixinCommandBase {
 
     //modify parseDouble max argument
     @ModifyArg(method = "parseBlockPos",
-            at = @At(value = "INVOKE", target = COMMAND_BASE_PARSE_DOUBLE, ordinal = 1),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/command/CommandBase;parseDouble(DLjava/lang/String;IIZ)D", ordinal = 1),
             index = 3)
     private static int getMaxY(int original) {
         ICubicWorld world = commandWorld.get();

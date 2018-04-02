@@ -23,14 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_ADD;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_CONSTR_ENTITY;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_DOWN;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.ENTITY;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_SERVER_GET_ACTUAL_HEIGHT;
-
-import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
@@ -76,7 +68,7 @@ public class MixinTeleporter {
 
     // makePortal fixes
 
-    @Redirect(method = "makePortal", at = @At(value = "INVOKE", target = WORLD_SERVER_GET_ACTUAL_HEIGHT))
+    @Redirect(method = "makePortal", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/WorldServer;getActualHeight()I"))
     private int makePortalScanTopY(WorldServer world, Entity entity) {
         return MathHelper.floor(entity.posY + 128);
     }

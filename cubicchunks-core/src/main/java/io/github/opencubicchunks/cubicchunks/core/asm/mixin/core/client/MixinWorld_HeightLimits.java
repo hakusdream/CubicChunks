@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS;
-
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -84,7 +82,7 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
 
     @Group(name = "getLightFromNeighborsFor")
     @ModifyArg(method = "getLightFromNeighborsFor",
-            at = @At(value = "INVOKE", target = BLOCK_POS + "<init>(III)V"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;<init>(III)V"),
             index = 1,
             require = 1)
     private int getLightFromNeighborsForGetMinHeight(int origY) {

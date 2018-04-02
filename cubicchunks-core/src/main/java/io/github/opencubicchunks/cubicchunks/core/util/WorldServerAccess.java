@@ -45,7 +45,7 @@ public class WorldServerAccess {
         try {
             return (List<NextTickListEntry>) ws_pendingTickListEntriesThisTick.invoke(ws);
         } catch (Throwable throwable) {
-            throw Throwables.propagate(throwable);
+            throw new RuntimeException(throwable);
         }
     }
 
@@ -53,7 +53,7 @@ public class WorldServerAccess {
         try {
             return (HashSet<NextTickListEntry>) ws_pendingTickListEntriesHashSet.invoke(ws);
         } catch (Throwable throwable) {
-            throw Throwables.propagate(throwable);
+            throw new RuntimeException(throwable);
         }
     }
 }

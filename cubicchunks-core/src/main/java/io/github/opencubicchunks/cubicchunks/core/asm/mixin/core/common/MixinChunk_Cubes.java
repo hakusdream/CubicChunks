@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_CONSTRUCT_1;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_STORAGE_ARRAYS;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 
@@ -181,7 +179,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
 
     // modify vanilla:
 
-    @Inject(method = CHUNK_CONSTRUCT_1, at = @At(value = "RETURN"))
+    @Inject(method = "<init>(Lnet/minecraft/world/World;II)V", at = @At(value = "RETURN"))
     private void cubicChunkColumn_construct(World world, int x, int z, CallbackInfo cbi) {
         if (!((ICubicWorld) world).isCubicWorld()) {
             return;
@@ -406,7 +404,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
 
     @Redirect(method = "setBlockState", at = @At(
             value = "FIELD",
-            target = CHUNK_STORAGE_ARRAYS,
+            target = "Lnet/minecraft/world/chunk/Chunk;storageArrays:[Lnet/minecraft/world/chunk/storage/ExtendedBlockStorage;",
             args = "array=get"
     ))
     private ExtendedBlockStorage setBlockState_CubicChunks_EBSGetRedirect(ExtendedBlockStorage[] array, int index) {
@@ -415,7 +413,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
 
     @Redirect(method = "setBlockState", at = @At(
             value = "FIELD",
-            target = CHUNK_STORAGE_ARRAYS,
+            target = "Lnet/minecraft/world/chunk/Chunk;storageArrays:[Lnet/minecraft/world/chunk/storage/ExtendedBlockStorage;",
             args = "array=set"
     ))
     private void setBlockState_CubicChunks_EBSSetRedirect(ExtendedBlockStorage[] array, int index, ExtendedBlockStorage val) {
@@ -437,7 +435,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
 
     @Redirect(method = "getLightFor", at = @At(
             value = "FIELD",
-            target = CHUNK_STORAGE_ARRAYS,
+            target = "Lnet/minecraft/world/chunk/Chunk;storageArrays:[Lnet/minecraft/world/chunk/storage/ExtendedBlockStorage;",
             args = "array=get"
     ))
     private ExtendedBlockStorage getLightFor_CubicChunks_EBSGetRedirect(ExtendedBlockStorage[] array, int index) {
@@ -450,7 +448,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
 
     @Redirect(method = "setLightFor", at = @At(
             value = "FIELD",
-            target = CHUNK_STORAGE_ARRAYS,
+            target = "Lnet/minecraft/world/chunk/Chunk;storageArrays:[Lnet/minecraft/world/chunk/storage/ExtendedBlockStorage;",
             args = "array=get"
     ))
     private ExtendedBlockStorage setLightFor_CubicChunks_EBSGetRedirect(ExtendedBlockStorage[] array, int index) {
@@ -459,7 +457,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
 
     @Redirect(method = "setLightFor", at = @At(
             value = "FIELD",
-            target = CHUNK_STORAGE_ARRAYS,
+            target = "Lnet/minecraft/world/chunk/Chunk;storageArrays:[Lnet/minecraft/world/chunk/storage/ExtendedBlockStorage;",
             args = "array=set"
     ))
     private void setLightFor_CubicChunks_EBSSetRedirect(ExtendedBlockStorage[] array, int index, ExtendedBlockStorage ebs) {
@@ -481,7 +479,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
 
     @Redirect(method = "getLightSubtracted", at = @At(
             value = "FIELD",
-            target = CHUNK_STORAGE_ARRAYS,
+            target = "Lnet/minecraft/world/chunk/Chunk;storageArrays:[Lnet/minecraft/world/chunk/storage/ExtendedBlockStorage;",
             args = "array=get"
     ))
     private ExtendedBlockStorage getLightSubtracted_CubicChunks_EBSGetRedirect(ExtendedBlockStorage[] array, int index) {

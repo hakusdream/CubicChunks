@@ -65,7 +65,7 @@ public class Mappings {
                 parseLine(line);
             }
         } catch (FileNotFoundException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 

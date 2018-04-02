@@ -23,8 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_IS_POPULATED;
-
 import io.github.opencubicchunks.cubicchunks.api.ICube;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -54,7 +52,7 @@ public abstract class MixinWorld implements ICubicWorld {
 
     // note: markAndNotifyBlock has @Nullable on chunk, this will never be null here,
     // because this isgit lo the chunk on which isPopulated is called
-    @Redirect(method = "markAndNotifyBlock", at = @At(value = "INVOKE", target = CHUNK_IS_POPULATED))
+    @Redirect(method = "markAndNotifyBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/Chunk;isPopulated()Z"))
     public boolean markNotifyBlock_CubeCheck(Chunk _this,
             BlockPos pos, Chunk chunk, IBlockState oldstate,
             IBlockState newState, int flags) {

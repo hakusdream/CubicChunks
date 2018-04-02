@@ -134,7 +134,7 @@ class ColumnWatcher extends PlayerChunkMapEntry implements XZAddressable {
         try {
             return (List<EntityPlayerMP>) getPlayers.invoke(this);
         } catch (Throwable throwable) {
-            throw Throwables.propagate(throwable);
+            throw new RuntimeException(throwable);
         }
     }
 
@@ -142,7 +142,7 @@ class ColumnWatcher extends PlayerChunkMapEntry implements XZAddressable {
         try {
             setLastUpdateInhabitedTime.invoke(this, time);
         } catch (Throwable throwable) {
-            throw Throwables.propagate(throwable);
+            throw new RuntimeException(throwable);
         }
     }
 

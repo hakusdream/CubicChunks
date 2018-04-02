@@ -86,7 +86,7 @@ public class ReflectionUtil {
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (IllegalAccessException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 

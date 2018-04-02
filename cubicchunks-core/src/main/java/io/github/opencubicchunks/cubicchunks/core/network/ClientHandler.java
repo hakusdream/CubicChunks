@@ -130,7 +130,8 @@ public class ClientHandler implements INetHandler {
         // apply the update
         for (int i = 0; i < packet.localAddresses.length; i++) {
             BlockPos pos = cube.localAddressToBlockPos(packet.localAddresses[i]);
-            worldClient.invalidateRegionAndSetBlock(pos, packet.blockStates[i]);
+            worldClient.invalidateBlockReceiveRegion(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
+            worldClient.setBlockState(pos, packet.blockStates[i], 3);
         }
         cube.getTileEntityMap().values().forEach(TileEntity::updateContainingBlockInfo);
     }

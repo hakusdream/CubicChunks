@@ -23,9 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.command;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.ICOMMAND_SENDER_GET_ENTITY_WORLD;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_BLOCK_LOADED;
-
 import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
@@ -85,14 +82,17 @@ public class MixinCommandFill {
     // fix that strange vanilla logic for isBlockLoaded
     private Integer minY, maxY;
 
-    @Inject(method = "execute", at = @At(value = "INVOKE", target = ICOMMAND_SENDER_GET_ENTITY_WORLD), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "execute",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/command/ICommandSender;getEntityWorld()Lnet/minecraft/world/World;"),
+            locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onGetEntityWorld(MinecraftServer server, ICommandSender sender, String[] args, CallbackInfo c,
             BlockPos blockpos, BlockPos blockpos1, Block block, IBlockState iblockstate, BlockPos minPos, BlockPos maxPos, int i) {
         minY = minPos.getY();
         maxY = maxPos.getY();
     }
 
-    @Redirect(method = "execute", at = @At(value = "INVOKE", target = WORLD_IS_BLOCK_LOADED))
+    @Redirect(method = "execute",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isBlockLoaded(Lnet/minecraft/util/math/BlockPos;)Z"))
     private boolean isBlockLoadedCheckForHeightRangeRedirect(World world, BlockPos pos) {
         if (!((ICubicWorld) world).isCubicWorld()) {
             return world.isBlockLoaded(pos);

@@ -23,9 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AREA_LOADED;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_BLOCK_LOADED_Z;
-import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_CHUNK_LOADED;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
 
@@ -173,7 +170,7 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
      * @author Barteks2x
      */
     @Group(name = "isLoaded", max = 1)
-    @Inject(method = WORLD_IS_AREA_LOADED, at = @At(value = "HEAD"), cancellable = true, require = 1)
+    @Inject(method = "isAreaLoaded(IIIIIIZ)Z", at = @At(value = "HEAD"), cancellable = true, require = 1)
     private void isAreaLoadedInject(int xStart, int yStart, int zStart, int xEnd, int yEnd, int zEnd, boolean allowEmpty,
             @Nonnull CallbackInfoReturnable<Boolean> cbi) {
         if (!this.isCubicWorld()) {
@@ -196,7 +193,7 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
      * @author Barteks2x
      * @reason CubicChunks needs to check if cube is loaded instead of chunk
      */
-    @Inject(method = WORLD_IS_BLOCK_LOADED_Z, cancellable = true, at = @At(value = "HEAD"))
+    @Inject(method = "isBlockLoaded(Lnet/minecraft/util/math/BlockPos;Z)Z", cancellable = true, at = @At(value = "HEAD"))
     public void isBlockLoaded(BlockPos pos, boolean allowEmpty, CallbackInfoReturnable<Boolean> cbi) {
         if (!isCubicWorld()) {
             return;
@@ -209,7 +206,7 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
         }
     }
 
-    @Redirect(method = "spawnEntity", at = @At(value = "INVOKE", target = WORLD_IS_CHUNK_LOADED))
+    @Redirect(method = "spawnEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isChunkLoaded(IIZ)Z"))
     private boolean spawnEntity_isChunkLoaded(World world, int chunkX, int chunkZ, boolean allowEmpty, Entity ent) {
         assert this == (Object) world;
         if (isCubicWorld()) {
@@ -219,7 +216,8 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
         }
     }
 
-    @Redirect(method = "updateEntityWithOptionalForce", at = @At(value = "INVOKE", target = WORLD_IS_CHUNK_LOADED, ordinal = 0))
+    @Redirect(method = "updateEntityWithOptionalForce",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isChunkLoaded(IIZ)Z", ordinal = 0))
     private boolean updateEntityWithOptionalForce_isChunkLoaded0(World world, int chunkX, int chunkZ, boolean allowEmpty, Entity ent, boolean force) {
         assert this == (Object) world;
         if (isCubicWorld()) {
@@ -229,7 +227,8 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
         }
     }
 
-    @Redirect(method = "updateEntityWithOptionalForce", at = @At(value = "INVOKE", target = WORLD_IS_CHUNK_LOADED, ordinal = 1))
+    @Redirect(method = "updateEntityWithOptionalForce",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isChunkLoaded(IIZ)Z", ordinal = 1))
     private boolean updateEntityWithOptionalForce_isChunkLoaded1(World world, int chunkX, int chunkZ, boolean allowEmpty, Entity ent, boolean force) {
         assert this == (Object) world;
         if (isCubicWorld()) {
@@ -242,7 +241,7 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
     private int updateEntities_enityChunkBlockY;
 
     @Inject(method = "updateEntities",
-            at = @At(value = "INVOKE", target = WORLD_IS_CHUNK_LOADED, ordinal = 0),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isChunkLoaded(IIZ)Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILHARD,
             require = 1)
     private void updateEntities_isChunkLoaded0_getLocals(CallbackInfo cbi, int i, Entity entity, int chunkX, int chunkZ) {
@@ -250,14 +249,14 @@ public abstract class MixinWorld_HeightLimits implements ICubicWorld {
     }
 
     @Inject(method = "updateEntities",
-            at = @At(value = "INVOKE", target = WORLD_IS_CHUNK_LOADED, ordinal = 1),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isChunkLoaded(IIZ)Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILHARD,
             require = 1)
     private void updateEntities_isChunkLoaded1_getLocals(CallbackInfo cbi, int i, Entity entity, Entity ridingEntity, int chunkX, int chunkZ) {
         updateEntities_enityChunkBlockY = cubeToMinBlock(entity.chunkCoordY);
     }
 
-    @Redirect(method = "updateEntities", at = @At(value = "INVOKE", target = WORLD_IS_CHUNK_LOADED, ordinal = 1))
+    @Redirect(method = "updateEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isChunkLoaded(IIZ)Z", ordinal = 1))
     private boolean updateEntities_isChunkLoaded(World world, int chunkX, int chunkZ, boolean allowEmpty) {
         assert this == (Object) world;
         if (isCubicWorld()) {

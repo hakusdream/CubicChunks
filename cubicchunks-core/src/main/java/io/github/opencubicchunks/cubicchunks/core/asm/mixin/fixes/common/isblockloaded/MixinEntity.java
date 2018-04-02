@@ -23,7 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.isblockloaded;
 
-import io.github.opencubicchunks.cubicchunks.core.asm.JvmNames;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -43,7 +42,7 @@ public abstract class MixinEntity {
 
     @Shadow public abstract float getEyeHeight();
 
-    @ModifyArg(method = "getBrightness", index = 1, at = @At(target = JvmNames.MUTABLE_BLOCK_POS_CONSTRUCT, value = "INVOKE"))
+    @ModifyArg(method = "getBrightness", index = 1, at = @At(target = "Lnet/minecraft/util/math/BlockPos$MutableBlockPos;<init>(III)V", value = "INVOKE"))
     public int getModifiedYPos_getBrightness(int y) {
         return MathHelper.floor(this.posY + this.getEyeHeight());
     }
