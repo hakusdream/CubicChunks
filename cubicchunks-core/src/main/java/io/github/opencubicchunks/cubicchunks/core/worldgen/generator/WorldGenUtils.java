@@ -23,8 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.worldgen.generator;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.api.IMinMaxHeight;
+import io.github.opencubicchunks.cubicchunks.api.world.IMinMaxHeight;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

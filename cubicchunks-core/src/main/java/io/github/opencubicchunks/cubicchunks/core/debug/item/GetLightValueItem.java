@@ -35,7 +35,6 @@ import net.minecraft.world.World;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import io.github.opencubicchunks.cubicchunks.core.debug.ItemRegistered;
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 
 @MethodsReturnNonnullByDefault

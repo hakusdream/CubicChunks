@@ -23,11 +23,11 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.lighting.ILightingManager;
-import io.github.opencubicchunks.cubicchunks.api.NotCubicChunksWorldException;
+import io.github.opencubicchunks.cubicchunks.api.util.NotCubicChunksWorldException;
 import io.github.opencubicchunks.cubicchunks.core.IConfigUpdateListener;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;

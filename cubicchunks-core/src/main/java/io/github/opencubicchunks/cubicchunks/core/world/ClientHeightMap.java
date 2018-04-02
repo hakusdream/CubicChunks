@@ -26,7 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core.world;
 import static io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager.MAX_CLIENT_LIGHT_SCAN_DEPTH;
 
 import com.google.common.base.Throwables;
-import io.github.opencubicchunks.cubicchunks.api.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.api.world.IHeightMap;
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;

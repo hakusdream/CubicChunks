@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubeProviderServer;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
 import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;
@@ -37,9 +37,9 @@ import io.github.opencubicchunks.cubicchunks.api.util.IntRange;
 import io.github.opencubicchunks.cubicchunks.core.world.CubeWorldEntitySpawner;
 import io.github.opencubicchunks.cubicchunks.core.world.CubicSaveHandler;
 import io.github.opencubicchunks.cubicchunks.core.world.FastCubeWorldEntitySpawner;
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
-import io.github.opencubicchunks.cubicchunks.api.NotCubicChunksWorldException;
+import io.github.opencubicchunks.cubicchunks.api.util.NotCubicChunksWorldException;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
 import mcp.MethodsReturnNonnullByDefault;

@@ -23,7 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.entity;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityTrackerEntry;

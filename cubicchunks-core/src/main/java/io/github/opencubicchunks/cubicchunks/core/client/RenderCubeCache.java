@@ -26,7 +26,6 @@ package io.github.opencubicchunks.cubicchunks.core.client;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;

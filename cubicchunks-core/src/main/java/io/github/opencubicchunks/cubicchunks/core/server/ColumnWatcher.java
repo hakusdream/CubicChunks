@@ -26,7 +26,6 @@ package io.github.opencubicchunks.cubicchunks.core.server;
 import static io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil.getFieldGetterHandle;
 import static io.github.opencubicchunks.cubicchunks.core.util.ReflectionUtil.getFieldSetterHandle;
 
-import com.google.common.base.Throwables;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketColumn;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
@@ -36,7 +35,7 @@ import io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge.Asy
 import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
 import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.util.XZAddressable;
-import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.world.IColumn;
 import gnu.trove.list.TByteList;
 import gnu.trove.list.array.TByteArrayList;
 import mcp.MethodsReturnNonnullByDefault;

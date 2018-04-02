@@ -26,7 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
 import io.github.opencubicchunks.cubicchunks.core.proxy.CommonProxy;
 import io.github.opencubicchunks.cubicchunks.core.world.type.VanillaCubicWorldType;
-import io.github.opencubicchunks.cubicchunks.api.CubeGeneratorsRegistry;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeGeneratorsRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;

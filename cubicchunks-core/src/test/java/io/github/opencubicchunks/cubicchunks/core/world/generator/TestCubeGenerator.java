@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world.generator;
 
-import io.github.opencubicchunks.cubicchunks.api.CubeGeneratorsRegistry;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeGeneratorsRegistry;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraftforge.fml.common.registry.GameRegistry;

@@ -25,7 +25,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.noncritical.common.
 
 import static net.minecraft.command.CommandBase.getEntity;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

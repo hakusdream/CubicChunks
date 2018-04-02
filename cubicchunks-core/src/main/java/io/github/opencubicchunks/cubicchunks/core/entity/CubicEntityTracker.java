@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.entity;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;

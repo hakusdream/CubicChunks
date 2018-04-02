@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.world.ICube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.chunk.Chunk;
 

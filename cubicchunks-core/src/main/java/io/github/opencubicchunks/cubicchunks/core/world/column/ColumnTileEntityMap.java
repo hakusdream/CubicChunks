@@ -23,8 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world.column;
 
-import io.github.opencubicchunks.cubicchunks.api.IColumn;
-import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.world.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.world.ICube;
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.tileentity.TileEntity;

@@ -25,7 +25,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common.worldg
 
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;

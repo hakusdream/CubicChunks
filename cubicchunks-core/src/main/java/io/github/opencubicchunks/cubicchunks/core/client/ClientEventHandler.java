@@ -27,7 +27,7 @@ import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks.Config.IntOptions;
 import io.github.opencubicchunks.cubicchunks.core.server.ICubicPlayerList;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

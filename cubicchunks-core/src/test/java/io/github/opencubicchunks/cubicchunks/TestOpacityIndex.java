@@ -27,7 +27,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.Lists;
-import io.github.opencubicchunks.cubicchunks.api.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.api.world.IHeightMap;
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
 import mcp.MethodsReturnNonnullByDefault;

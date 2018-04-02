@@ -23,11 +23,10 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.server;
 
-import io.github.opencubicchunks.cubicchunks.api.CubePrimer;
-import io.github.opencubicchunks.cubicchunks.api.ICube;
-import io.github.opencubicchunks.cubicchunks.api.ICubeGenerator;
-import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
-import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.CubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.world.ICube;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubeProviderServer;
 import io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksMixinConfig;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
@@ -38,7 +37,7 @@ import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.util.XYZMap;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
-import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.world.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EnumCreatureType;

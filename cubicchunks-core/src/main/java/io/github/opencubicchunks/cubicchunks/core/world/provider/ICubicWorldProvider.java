@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world.provider;
 
-import io.github.opencubicchunks.cubicchunks.api.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.worldgen.ICubeGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 
 import javax.annotation.Nullable;

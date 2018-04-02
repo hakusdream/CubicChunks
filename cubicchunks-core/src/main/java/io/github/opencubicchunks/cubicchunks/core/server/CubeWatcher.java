@@ -24,11 +24,11 @@
 package io.github.opencubicchunks.cubicchunks.core.server;
 
 import com.google.common.base.Predicate;
-import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
-import io.github.opencubicchunks.cubicchunks.api.ICubeWatcher;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.api.world.ICubeWatcher;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeUnWatchEvent;
-import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeWatchEvent;
+import io.github.opencubicchunks.cubicchunks.api.world.CubeUnWatchEvent;
+import io.github.opencubicchunks.cubicchunks.api.world.CubeWatchEvent;
 import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketCubeBlockChange;
