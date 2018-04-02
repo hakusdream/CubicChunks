@@ -30,8 +30,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import io.github.opencubicchunks.cubicchunks.core.util.XZAddressable;
-import io.github.opencubicchunks.cubicchunks.core.util.XZMap;
+import io.github.opencubicchunks.cubicchunks.api.util.XZAddressable;
+import io.github.opencubicchunks.cubicchunks.api.util.XZMap;
 import mcp.MethodsReturnNonnullByDefault;
 import org.junit.Test;
 

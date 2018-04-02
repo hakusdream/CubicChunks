@@ -23,10 +23,11 @@
  */
 package io.github.opencubicchunks.cubicchunks.testutil;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.MathUtil.max;
+import static io.github.opencubicchunks.cubicchunks.api.util.MathUtil.max;
 import static net.minecraft.world.EnumSkyBlock.BLOCK;
 import static net.minecraft.world.EnumSkyBlock.SKY;
 
+import io.github.opencubicchunks.cubicchunks.api.util.MathUtil;
 import io.github.opencubicchunks.cubicchunks.core.lighting.ILightBlockAccess;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;

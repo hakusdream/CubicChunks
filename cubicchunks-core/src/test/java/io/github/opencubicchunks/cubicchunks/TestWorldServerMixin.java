@@ -28,9 +28,9 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.type.VanillaCubicWorldType;
 import io.github.opencubicchunks.cubicchunks.testutil.MinecraftEnvironment;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.server.MinecraftServer;

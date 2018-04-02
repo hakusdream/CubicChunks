@@ -182,14 +182,17 @@ project(":cubicchunks-cubicgen") {
         compileOnly(project(":cubicchunks-api", "deobfArtifacts"))
         testCompile(project(":cubicchunks-core", "testArtifacts"))
         testCompile(project(":cubicchunks-core", "deobfArtifacts"))
+        testCompile(project(":cubicchunks-api", "deobfArtifacts"))
     }
 }
 
 project(":cubicchunks-core") {
     dependencies {
         val compileOnly by configurations
+        val testCompile by configurations
         // no runtime dependency because cubicgen never runs alone, this root project depends on both core and cubicgen and IDE runs this
         compileOnly(project(":cubicchunks-api", "deobfArtifacts"))
+        testCompile(project(":cubicchunks-api", "deobfArtifacts"))
     }
 }
 

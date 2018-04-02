@@ -25,7 +25,6 @@ package io.github.opencubicchunks.cubicchunks;
 
 import static org.junit.Assert.assertEquals;
 
-import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
 import io.github.opencubicchunks.cubicchunks.core.util.PacketUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

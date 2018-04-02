@@ -23,8 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world.generator;
 
+import io.github.opencubicchunks.cubicchunks.api.CubeGeneratorsRegistry;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.populator.ICubicPopulator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubeGeneratorsRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import static org.mockito.Mockito.mock;
