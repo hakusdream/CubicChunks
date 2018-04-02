@@ -23,10 +23,11 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.client;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -77,7 +78,7 @@ public class RenderCubeCache extends ChunkCache {
                     ExtendedBlockStorage ebs;
                     Map<BlockPos, TileEntity> teMap;
 
-                    Cube cube = ((ICubicWorld) world).getCubeFromCubeCoords(currentCubeX, currentCubeY, currentCubeZ);
+                    Cube cube = ((ICubicWorldInternal) world).getCubeFromCubeCoords(currentCubeX, currentCubeY, currentCubeZ);
                     ebs = cube.getStorage();
 
                     teMap = cube.getTileEntityMap();

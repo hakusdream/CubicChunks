@@ -23,6 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.util;
 
+import io.github.opencubicchunks.cubicchunks.api.util.Bits;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 

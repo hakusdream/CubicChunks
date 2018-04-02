@@ -24,20 +24,21 @@
 package io.github.opencubicchunks.cubicchunks.core.server;
 
 import com.google.common.base.Predicate;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubeWatcher;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeUnWatchEvent;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.CubeWatchEvent;
+import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketCubeBlockChange;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketUnloadCube;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge.AsyncWorldIOExecutor;
 import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.ticket.ITicket;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.list.TShortList;
 import gnu.trove.list.array.TShortArrayList;
@@ -62,7 +63,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CubeWatcher implements XYZAddressable, ITicket {
+public class CubeWatcher implements ITicket, ICubeWatcher {
 
     private final Consumer<Cube> consumer = (c) -> {
         this.cube = c;
@@ -84,10 +85,10 @@ public class CubeWatcher implements XYZAddressable, ITicket {
     // CHECKED: 1.10.2-12.18.1.2092
     CubeWatcher(PlayerCubeMap playerCubeMap, CubePos cubePos) {
         this.playerCubeMap = playerCubeMap;
-        this.cubeCache = ((ICubicWorldServer) playerCubeMap.getWorldServer()).getCubeCache();
+        this.cubeCache = ((ICubicWorldInternal.Server) playerCubeMap.getWorldServer()).getCubeCache();
         this.cubeCache.asyncGetCube(
                 cubePos.getX(), cubePos.getY(), cubePos.getZ(),
-                IProviderExtras.Requirement.LOAD,
+                ICubeProviderServer.Requirement.LOAD,
                 consumer);
         this.cubePos = cubePos;
     }
@@ -105,8 +106,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
 
         if (this.sentToPlayers) {
             this.sendToPlayer(player);
-            ((ICubicWorldServer) playerCubeMap.getWorldServer())
-                    .getCubicEntityTracker()
+            ((CubicEntityTracker) playerCubeMap.getWorldServer().getEntityTracker())
                     .sendLeashedEntitiesInCube(player, this.getCube());
         }
     }
@@ -157,9 +157,9 @@ public class CubeWatcher implements XYZAddressable, ITicket {
 
         playerCubeMap.getWorldServer().profiler.startSection("getCube");
         if (canGenerate) {
-            this.cube = this.cubeCache.getCube(cubeX, cubeY, cubeZ, IProviderExtras.Requirement.LIGHT);
+            this.cube = this.cubeCache.getCube(cubeX, cubeY, cubeZ, ICubeProviderServer.Requirement.LIGHT);
         } else {
-            this.cube = this.cubeCache.getCube(cubeX, cubeY, cubeZ, IProviderExtras.Requirement.LOAD);
+            this.cube = this.cubeCache.getCube(cubeX, cubeY, cubeZ, ICubeProviderServer.Requirement.LOAD);
         }
         if (this.cube != null) {
             this.cube.getTickets().add(this);
@@ -177,7 +177,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
         return this.cube != null;
     }
 
-    public boolean isSentToPlayers() {
+    @Override public boolean isSentToPlayers() {
         return sentToPlayers;
     }
 
@@ -314,7 +314,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
         return dx * dx + dy * dy + dz * dz;
     }
 
-    @Nullable public Cube getCube() {
+    @Override @Nullable public Cube getCube() {
         return this.cube;
     }
 
@@ -342,7 +342,7 @@ public class CubeWatcher implements XYZAddressable, ITicket {
         }
     }
 
-    public void sendPacketToAllPlayers(IMessage packet) {
+    @Override public void sendPacketToAllPlayers(IMessage packet) {
         for (WatcherPlayerEntry entry : this.players.valueCollection()) {
             PacketDispatcher.sendTo(packet, entry.player);
         }

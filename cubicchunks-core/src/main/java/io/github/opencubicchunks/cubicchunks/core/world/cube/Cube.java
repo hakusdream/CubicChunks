@@ -23,19 +23,20 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world.cube;
 
-import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.CubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.ticket.ITicket;
 import io.github.opencubicchunks.cubicchunks.core.util.ticket.TicketList;
 import io.github.opencubicchunks.cubicchunks.core.world.EntityContainer;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -43,6 +44,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
@@ -68,7 +70,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.apache.logging.log4j.LogManager;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.*;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.*;
 
 /**
  * A cube is our extension of minecraft's chunk system to three dimensions. Each cube encloses a cubic area in the world
@@ -76,18 +78,12 @@ import static io.github.opencubicchunks.cubicchunks.core.util.Coords.*;
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class Cube implements XYZAddressable {
+public class Cube implements ICube {
 
     @Nullable protected static final ExtendedBlockStorage NULL_STORAGE = null;
 
     private final Set<NextTickListEntry> pendingTickListEntriesHashSet = new HashSet<NextTickListEntry>();
     private final TreeSet<NextTickListEntry> pendingTickListEntriesTreeSet = new TreeSet<NextTickListEntry>();
-    /**
-     * Side length of a cube
-     */
-    public static final int SIZE = 16;
-
-    public static final double SIZE_D = 16.0D;
 
 
     /**
@@ -182,7 +178,7 @@ public class Cube implements XYZAddressable {
         this.tileEntityMap = new HashMap<>();
         this.tileEntityPosQueue = new ConcurrentLinkedQueue<>();
 
-        this.cubeLightUpdateInfo = ((ICubicWorld) world).getLightingManager().createCubeLightUpdateInfo(this);
+        this.cubeLightUpdateInfo = ((ICubicWorldInternal) world).getLightingManager().createCubeLightUpdateInfo(this);
 
         this.storage = NULL_STORAGE;
     }
@@ -248,71 +244,26 @@ public class Cube implements XYZAddressable {
     //========Chunk vanilla methods=========
     //======================================
 
-    /**
-     * Retrieve the block state at the specified location
-     *
-     * @param pos target location
-     *
-     * @return The block state
-     *
-     * @see Cube#getBlockState(int, int, int)
-     */
-    public IBlockState getBlockState(BlockPos pos) {
+    @Override public IBlockState getBlockState(BlockPos pos) {
         return this.getBlockState(pos.getX(), pos.getY(), pos.getZ());
     }
 
-    /**
-     * Set the block state at the specified location
-     *
-     * @param pos target location
-     * @param newstate target state of the block at that position
-     *
-     * @return The the old state of the block at the position, or null if there was no change
-     *
-     * @see Chunk#setBlockState(BlockPos, IBlockState)
-     */
-    @Nullable public IBlockState setBlockState(BlockPos pos, IBlockState newstate) {
+    @Override @Nullable public IBlockState setBlockState(BlockPos pos, IBlockState newstate) {
         return column.setBlockState(pos, newstate);
     }
 
-    /**
-     * Retrieve the block state at the specified location
-     *
-     * @param blockX block x position
-     * @param localOrBlockY block or local y position
-     * @param blockZ block z position
-     *
-     * @return The block state
-     *
-     * @see Cube#getBlockState(BlockPos)
-     */
-    public IBlockState getBlockState(int blockX, int localOrBlockY, int blockZ) {
+    @Override public IBlockState getBlockState(int blockX, int localOrBlockY, int blockZ) {
         if (storage == NULL_STORAGE) {
             return Blocks.AIR.getDefaultState();
         }
         return storage.get(blockToLocal(blockX), blockToLocal(localOrBlockY), blockToLocal(blockZ));
     }
 
-    /**
-     * Retrieve the raw light level at the specified location
-     *
-     * @param lightType The type of light (sky or block light)
-     * @param pos The position at which light should be checked
-     *
-     * @return the light level
-     */
-    public int getLightFor(EnumSkyBlock lightType, BlockPos pos) {
+    @Override public int getLightFor(EnumSkyBlock lightType, BlockPos pos) {
         return column.getLightFor(lightType, pos);
     }
 
-    /**
-     * Set the raw light level at the specified location
-     *
-     * @param lightType The type of light (sky or block light)
-     * @param pos The position at which light should be updated
-     * @param light the light level
-     */
-    public void setLightFor(EnumSkyBlock lightType, BlockPos pos, int light) {
+    @Override public void setLightFor(EnumSkyBlock lightType, BlockPos pos, int light) {
         column.setLightFor(lightType, pos, light);
     }
 
@@ -335,25 +286,11 @@ public class Cube implements XYZAddressable {
         return null;
     }
 
-    /**
-     * Retrieve the tile entity at the specified location
-     *
-     * @param pos target location
-     * @param createType how fast the tile entity is needed
-     *
-     * @return the tile entity at the specified location, or <code>null</code> if there is no entity and
-     * <code>createType</code> was not {@link net.minecraft.world.chunk.Chunk.EnumCreateEntityType#IMMEDIATE}
-     */
-    @Nullable public TileEntity getTileEntity(BlockPos pos, Chunk.EnumCreateEntityType createType) {
+    @Override @Nullable public TileEntity getTileEntity(BlockPos pos, Chunk.EnumCreateEntityType createType) {
         return column.getTileEntity(pos, createType);
     }
 
-    /**
-     * Add a tile entity to this cube
-     *
-     * @param tileEntity The tile entity to add
-     */
-    public void addTileEntity(TileEntity tileEntity) {
+    @Override public void addTileEntity(TileEntity tileEntity) {
         column.addTileEntity(tileEntity);
     }
 
@@ -452,91 +389,48 @@ public class Cube implements XYZAddressable {
     //=========Other methods===========
     //=================================
 
-    /**
-     * Check if there are any non-air blocks in this cube
-     *
-     * @return <code>true</code> if this cube contains only air blocks, <code>false</code> otherwise
-     */
-    public boolean isEmpty() {
+    @Override public boolean isEmpty() {
         return storage == null || this.storage.isEmpty();
     }
 
-    /**
-     * Convert an integer-encoded address to a local block to a global block position
-     *
-     * @param localAddress the address of the block
-     *
-     * @return the block position
-     */
-    public BlockPos localAddressToBlockPos(int localAddress) {
+    @Override public BlockPos localAddressToBlockPos(int localAddress) {
         int x = localToBlock(this.coords.getX(), AddressTools.getLocalX(localAddress));
         int y = localToBlock(this.coords.getY(), AddressTools.getLocalY(localAddress));
         int z = localToBlock(this.coords.getZ(), AddressTools.getLocalZ(localAddress));
         return new BlockPos(x, y, z);
     }
 
-    /**
-     * @return this cube's world
-     */
     public <T extends World & ICubicWorld> T getWorld() {
         return (T) this.world;
     }
 
-    /**
-     * @return this cube's column
-     */
-    public <T extends Chunk & IColumn> T getColumn() {
+    @Override public <T extends Chunk & IColumn> T getColumn() {
         return (T) this.column;
     }
 
-    /**
-     * Retrieve this cube's x coordinate in cube space
-     *
-     * @return cube x position
-     */
-    public int getX() {
+    @Override public int getX() {
         return this.coords.getX();
     }
 
-    /**
-     * Retrieve this cube's y coordinate in cube space
-     *
-     * @return cube y position
-     */
-    public int getY() {
+    @Override public int getY() {
         return this.coords.getY();
     }
 
-    /**
-     * Retrieve this cube's z coordinate in cube space
-     *
-     * @return cube z position
-     */
-    public int getZ() {
+    @Override public int getZ() {
         return this.coords.getZ();
     }
 
-    /**
-     * @return this cube's position
-     */
-    public CubePos getCoords() {
+    @Override public CubePos getCoords() {
         return this.coords;
     }
 
-    /**
-     * Check whether a given global block position is contained in this cube
-     *
-     * @param blockPos the position of the block
-     *
-     * @return <code>true</code> if the position is within this cube, <code>false</code> otherwise
-     */
-    public boolean containsBlockPos(BlockPos blockPos) {
+    @Override public boolean containsBlockPos(BlockPos blockPos) {
         return this.coords.getX() == blockToCube(blockPos.getX())
                 && this.coords.getY() == blockToCube(blockPos.getY())
                 && this.coords.getZ() == blockToCube(blockPos.getZ());
     }
 
-    @Nullable public ExtendedBlockStorage getStorage() {
+    @Override @Nullable public ExtendedBlockStorage getStorage() {
         return this.storage;
     }
 
@@ -549,20 +443,22 @@ public class Cube implements XYZAddressable {
         storage = new ExtendedBlockStorage(cubeToMinBlock(getY()), world.provider.hasSkyLight());
     }
 
-    /**
-     * Retrieve a map of positions to their respective tile entities
-     *
-     * @return a map containing all tile entities in this cube
-     */
-    public Map<BlockPos, TileEntity> getTileEntityMap() {
+    @Override public Map<BlockPos, TileEntity> getTileEntityMap() {
         return this.tileEntityMap;
     }
 
-    /**
-     * Retrieve a list of entities in this cube
-     *
-     * @return the entities' container
-     */
+    @Override public ClassInheritanceMultiMap<Entity> getEntitySet() {
+        return this.entities.getEntitySet();
+    }
+
+    @Override public void addEntity(Entity entity) {
+        this.entities.addEntity(entity);
+    }
+
+    @Override public boolean removeEntity(Entity entity) {
+        return this.entities.remove(entity);
+    }
+
     public EntityContainer getEntityContainer() {
         return this.entities;
     }
@@ -631,12 +527,7 @@ public class Cube implements XYZAddressable {
         }
     }
 
-    /**
-     * Check if any modifications happened to this cube since it was loaded from disk
-     *
-     * @return <code>true</code> if this cube should be written back to disk
-     */
-    public boolean needsSaving() {
+    @Override public boolean needsSaving() {
         return this.entities.needsSaving(true, this.world.getTotalWorldTime(), this.isModified);
     }
 
@@ -671,20 +562,6 @@ public class Cube implements XYZAddressable {
         );
     }
 
-    /**
-     * Return a seed for random number generation. This seed is persistent across server restarts and returns the same
-     * value on every call for any given cube in any given world.
-     *
-     * @return this cube's random seed
-     */
-    public long cubeRandomSeed() {
-        long hash = 3;
-        hash = 41 * hash + this.world.getSeed();
-        hash = 41 * hash + getX();
-        hash = 41 * hash + getY();
-        return 41 * hash + getZ();
-    }
-
     @Nullable
     public LightingManager.CubeLightUpdateInfo getCubeLightUpdateInfo() {
         return this.cubeLightUpdateInfo;
@@ -701,20 +578,13 @@ public class Cube implements XYZAddressable {
         this.isSurfaceTracked = true;
     }
 
-    /**
-     * Check whether this cube was populated, i.e. if this cube was passed as argument to
-     * {@link ICubeGenerator#populate(Cube)}. Check there for more information regarding
-     * population.
-     *
-     * @return {@code true} if this cube has been populated, {@code false} otherwise
-     */
-    public boolean isPopulated() {
+    @Override public boolean isPopulated() {
         return isPopulated;
     }
 
     /**
      * Mark this cube as populated. This means that this cube was passed as argument to
-     * {@link ICubeGenerator#populate(Cube)}. Check there for more information regarding
+     * {@link ICubeGenerator#populate(ICube)}. Check there for more information regarding
      * population.
      *
      * @param populated whether this cube was populated
@@ -724,20 +594,13 @@ public class Cube implements XYZAddressable {
         this.isModified = true;
     }
 
-    /**
-     * Check whether this cube was fully populated, i.e. if any cube potentially writing to this cube was passed as an
-     * argument to {@link ICubeGenerator#populate(Cube)}. Check there for more
-     * information regarding population
-     *
-     * @return <code>true</code> if this cube has been populated, <code>false</code> otherwise
-     */
-    public boolean isFullyPopulated() {
+    @Override public boolean isFullyPopulated() {
         return this.isFullyPopulated;
     }
 
     /**
      * Mark this cube as fully populated. This means that any cube potentially writing to this cube was passed as an
-     * argument to {@link ICubeGenerator#populate(Cube)}. Check there for more
+     * argument to {@link ICubeGenerator#populate(ICube)}. Check there for more
      * information regarding population
      *
      * @param populated whether this cube was fully populated
@@ -754,19 +617,11 @@ public class Cube implements XYZAddressable {
         this.isSurfaceTracked = value;
     }
 
-    /**
-     * Gets internal isSurfaceTracked value. Intended to be used only for serialization.
-     */
-    public boolean isSurfaceTracked() {
+    @Override public boolean isSurfaceTracked() {
         return this.isSurfaceTracked;
     }
 
-    /**
-     * Check whether this cube's initial diffuse skylight has been calculated
-     *
-     * @return <code>true</code> if it has been calculated, <code>false</code> otherwise
-     */
-    public boolean isInitialLightingDone() {
+    @Override public boolean isInitialLightingDone() {
         return isInitialLightingDone;
     }
 
@@ -782,11 +637,11 @@ public class Cube implements XYZAddressable {
         this.isCubeLoaded = true;
     }
 
-    public boolean isCubeLoaded() {
+    @Override public boolean isCubeLoaded() {
         return this.isCubeLoaded;
     }
 
-    public boolean hasLightUpdates() {
+    @Override public boolean hasLightUpdates() {
         LightingManager.CubeLightUpdateInfo info = this.getCubeLightUpdateInfo();
         return info != null && info.hasUpdates();
     }

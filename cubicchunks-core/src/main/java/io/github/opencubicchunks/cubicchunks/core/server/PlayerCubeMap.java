@@ -23,8 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.server;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 import static net.minecraft.util.math.MathHelper.clamp;
 
 import com.google.common.base.Predicate;
@@ -33,18 +33,19 @@ import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketCubes;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
-import io.github.opencubicchunks.cubicchunks.core.util.XZMap;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.XYZMap;
+import io.github.opencubicchunks.cubicchunks.api.util.XZMap;
 import io.github.opencubicchunks.cubicchunks.core.visibility.CubeSelector;
 import io.github.opencubicchunks.cubicchunks.core.visibility.CuboidalCubeSelector;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -190,10 +191,10 @@ public class PlayerCubeMap extends PlayerChunkMap implements LightingManager.IHe
 
     public PlayerCubeMap(WorldServer worldServer) {
         super((WorldServer) worldServer);
-        this.cubeCache = ((ICubicWorldServer) worldServer).getCubeCache();
+        this.cubeCache = ((ICubicWorldInternal.Server) worldServer).getCubeCache();
         this.setPlayerViewDistance(worldServer.getMinecraftServer().getPlayerList().getViewDistance(),
                 ((ICubicPlayerList) worldServer.getMinecraftServer().getPlayerList()).getVerticalViewDistance());
-        ((ICubicWorld) worldServer).getLightingManager().registerHeightChangeListener(this);
+        ((ICubicWorldInternal) worldServer).getLightingManager().registerHeightChangeListener(this);
     }
 
     /**
@@ -373,7 +374,7 @@ public class PlayerCubeMap extends PlayerChunkMap implements LightingManager.IHe
             PacketDispatcher.sendTo(packet, player);
             //Sending entities per cube.
             for (Cube cube : cubes) {
-                ((ICubicWorldServer) getWorldServer()).getCubicEntityTracker()
+                ((CubicEntityTracker) getWorldServer().getEntityTracker())
                         .sendLeashedEntitiesInCube(player, cube);
             }
         }
@@ -812,8 +813,9 @@ public class PlayerCubeMap extends PlayerChunkMap implements LightingManager.IHe
         world.profiler.startSection("forcedChunkLoading");
         final Iterator<Cube> persistentCubesIterator = persistentChunksFor.keys().stream()
                 .filter(Objects::nonNull)
-                .map(input -> ((IColumn)world.getChunkFromChunkCoords(input.x, input.z)).getLoadedCubes())
-                .collect(ArrayList<Cube>::new, (list,cubeCollection)->((ArrayList<Cube>)list).addAll(cubeCollection), (list,cubeList)->((ArrayList<Cube>)list).addAll(cubeList))
+                .map(input -> (Collection<Cube>) ((IColumn) world.getChunkFromChunkCoords(input.x, input.z)).getLoadedCubes())
+                .collect(ArrayList<Cube>::new, (list, cubeCollection) -> ((ArrayList<Cube>) list).addAll(cubeCollection),
+                        (list, cubeList) -> ((ArrayList<Cube>) list).addAll(cubeList))
                 .iterator();
         world.profiler.endSection();
         

@@ -24,7 +24,7 @@
 package io.github.opencubicchunks.cubicchunks.core.lighting;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.util.Bits;
+import io.github.opencubicchunks.cubicchunks.api.util.Bits;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
 

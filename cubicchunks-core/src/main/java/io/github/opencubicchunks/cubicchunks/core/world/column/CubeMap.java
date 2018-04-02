@@ -24,6 +24,7 @@
 package io.github.opencubicchunks.cubicchunks.core.world.column;
 
 import com.google.common.collect.Lists;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;

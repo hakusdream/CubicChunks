@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.WorldServer;
 

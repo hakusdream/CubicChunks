@@ -24,12 +24,13 @@
 package io.github.opencubicchunks.cubicchunks.core.server;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.util.ticket.ITicket;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -86,7 +87,7 @@ public class SpawnCubes {
                 return; // no spawn chunks OR nothing to remove
             }
 
-            ICubeProvider serverCubeCache = ((ICubicWorld) world).getCubeCache();
+            ICubeProviderInternal serverCubeCache = (ICubeProviderInternal) world.getChunkProvider();
 
             int spawnCubeX = Coords.blockToCube(spawnPoint.getX());
             int spawnCubeY = 128;//Coords.blockToCube(spawnPoint.getY()); // TODO: auto-find better value. This matches height range in vanilla
@@ -106,7 +107,7 @@ public class SpawnCubes {
                 return; // no spawn cubes
             }
 
-            CubeProviderServer serverCubeCache = ((ICubicWorldServer) world).getCubeCache();
+            CubeProviderServer serverCubeCache = (CubeProviderServer) world.getChunkProvider();
 
             // load the cubes around the spawn point
             CubicChunks.LOGGER.info("Loading cubes for spawn...");
@@ -123,7 +124,7 @@ public class SpawnCubes {
             for (int cubeX = spawnCubeX - radius; cubeX <= spawnCubeX + radius; cubeX++) {
                 for (int cubeZ = spawnCubeZ - radius; cubeZ <= spawnCubeZ + radius; cubeZ++) {
                     for (int cubeY = spawnCubeY + radius; cubeY >= spawnCubeY - radius; cubeY--) {
-                        serverCubeCache.getCube(cubeX, cubeY, cubeZ, IProviderExtras.Requirement.LIGHT).getTickets().add(this);
+                        serverCubeCache.getCube(cubeX, cubeY, cubeZ, ICubeProviderServer.Requirement.LIGHT).getTickets().add(this);
                         generated++;
                         if (System.currentTimeMillis() >= lastTime + progressReportInterval) {
                             lastTime = System.currentTimeMillis();

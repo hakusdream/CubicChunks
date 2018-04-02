@@ -25,9 +25,8 @@ package io.github.opencubicchunks.cubicchunks.core.network;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.PacketUtils;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
@@ -134,7 +133,7 @@ public class PacketCubes implements IMessage {
             PacketUtils.ensureMainThread(this, player, message, ctx);
 
             WorldClient worldClient = (WorldClient) player.getEntityWorld();
-            CubeProviderClient cubeCache = ((ICubicWorldClient) worldClient).getCubeCache();
+            CubeProviderClient cubeCache = (CubeProviderClient) worldClient.getChunkProvider();
 
             CubePos[] cubePos = message.getCubePos();
             List<Cube> cubes = new ArrayList<>();

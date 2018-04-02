@@ -25,9 +25,8 @@ package io.github.opencubicchunks.cubicchunks.core.network;
 
 import com.google.common.base.Preconditions;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.PacketUtils;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
@@ -73,8 +72,7 @@ public class PacketUnloadCube implements IMessage {
         public IMessage handleClientMessage(EntityPlayer player, PacketUnloadCube message, MessageContext ctx) {
             PacketUtils.ensureMainThread(this, player, message, ctx);
 
-            ICubicWorldClient worldClient = (ICubicWorldClient) Minecraft.getMinecraft().world;
-            CubeProviderClient cubeCache = worldClient.getCubeCache();
+            CubeProviderClient cubeCache = (CubeProviderClient) Minecraft.getMinecraft().world.getChunkProvider();
 
             // This apparently makes visual chunk holes much more rare/nonexistent
             cubeCache.getCube(message.getCubePos()).markForRenderUpdate();

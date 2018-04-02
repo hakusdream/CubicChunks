@@ -26,7 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core.server;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks.Config;
 import io.github.opencubicchunks.cubicchunks.core.IConfigUpdateListener;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.chunk.Chunk;
@@ -34,7 +34,6 @@ import net.minecraft.world.chunk.Chunk;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
@@ -84,7 +83,7 @@ public class ChunkGc implements IConfigUpdateListener {
         int totalCubes = 0;
         while (columnIt.hasNext()) {
             Chunk storedCol = columnIt.next();
-            Collection<Cube> storedColumnCubes = ((IColumn) storedCol).getLoadedCubes();
+            Collection<Cube> storedColumnCubes = (Collection<Cube>) ((IColumn) storedCol).getLoadedCubes();
             for (Cube c : storedColumnCubes) {
                 if (cubeCache.getLoadedCube(c.getCoords()) != c) {
                     throw new RuntimeException("Cube in column not the same as stored cube!");

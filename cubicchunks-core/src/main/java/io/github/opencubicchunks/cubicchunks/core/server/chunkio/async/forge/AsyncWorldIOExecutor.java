@@ -26,8 +26,9 @@ import com.google.common.collect.Sets;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.server.MinecraftServer;
@@ -142,7 +143,7 @@ public class AsyncWorldIOExecutor {
         if (task != null) {
             runTask(task);
         } else {
-            task = new AsyncColumnIOProvider(key, loader, ((ICubicWorldServer) world).getCubeCache().getCubeGenerator());
+            task = new AsyncColumnIOProvider(key, loader, ((ICubicWorldInternal.Server) world).getCubeCache().getCubeGenerator());
             task.run();
         }
         task.runSynchronousPart();
@@ -224,7 +225,7 @@ public class AsyncWorldIOExecutor {
 
         Chunk loadedIColumn;
         if ((loadedIColumn = cache.getLoadedColumn(x, z)) == null) {
-            cache.asyncGetColumn(x, z, IProviderExtras.Requirement.LIGHT, task::setColumn);
+            cache.asyncGetColumn(x, z, ICubeProviderServer.Requirement.LIGHT, task::setColumn);
         } else {
             //it's already there, tell the task to use it
             task.setColumn(loadedIColumn);
@@ -245,7 +246,7 @@ public class AsyncWorldIOExecutor {
         QueuedColumn key = new QueuedColumn(x, z, world);
         AsyncColumnIOProvider task = columnTasks.get(key);
         if (task == null) {
-            task = new AsyncColumnIOProvider(key, loader, ((ICubicWorldServer) world).getCubeCache().getCubeGenerator());
+            task = new AsyncColumnIOProvider(key, loader, ((ICubicWorldInternal.Server) world).getCubeCache().getCubeGenerator());
             task.addCallback(runnable); // Add before calling execute for thread safety
             columnTasks.put(key, task);
             columnThreadPool.execute(task);

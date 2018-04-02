@@ -25,20 +25,21 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_CONSTRUCT_1;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_STORAGE_ARRAYS;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 
 import com.google.common.base.Predicate;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.world.ClientHeightMap;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
 import io.github.opencubicchunks.cubicchunks.core.world.column.ColumnTileEntityMap;
 import io.github.opencubicchunks.cubicchunks.core.world.column.CubeMap;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
@@ -118,6 +119,10 @@ public abstract class MixinChunk_Cubes implements IColumn {
     private boolean isColumn = false;
 
     @Shadow public abstract byte[] getBiomeArray();
+
+    public <T extends World & ICubicWorldInternal> T getWorld() {
+        return (T) this.world;
+    }
 
     // TODO: make it go through cube raw access methods
     // TODO: make cube an interface, use the implementation only here
@@ -340,7 +345,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
         if (!isColumn) {
             return loaded;
         }
-        Cube cube = this.getLoadedCube(blockToCube(y));
+        ICube cube = this.getLoadedCube(blockToCube(y));
         return cube != null && cube.isCubeLoaded();
     }
 
@@ -564,7 +569,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
         if (!isColumn) {
             return loaded;
         }
-        Cube cube = this.getLoadedCube(blockToCube(te.getPos().getY()));
+        ICube cube = this.getLoadedCube(blockToCube(te.getPos().getY()));
         return cube != null && cube.isCubeLoaded();
     }
 
@@ -577,7 +582,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
         if (!isColumn) {
             return loaded;
         }
-        Cube cube = this.getLoadedCube(blockToCube(pos.getY()));
+        ICube cube = this.getLoadedCube(blockToCube(pos.getY()));
         return cube != null && cube.isCubeLoaded();
     }
 
@@ -798,7 +803,7 @@ public abstract class MixinChunk_Cubes implements IColumn {
         if (!isColumn) {
             return loaded;
         }
-        Cube cube = this.getLoadedCube(blockToCube(pos.getY()));
+        ICube cube = this.getLoadedCube(blockToCube(pos.getY()));
         return cube != null && cube.isCubeLoaded();
     }
 }

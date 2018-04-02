@@ -23,7 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.network;
 
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;

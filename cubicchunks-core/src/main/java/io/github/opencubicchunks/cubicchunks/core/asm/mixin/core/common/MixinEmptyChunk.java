@@ -23,7 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
@@ -65,7 +66,7 @@ public abstract class MixinEmptyChunk extends MixinChunk_Column {
     }
 
     @Override
-    public void addCube(Cube cube) {
+    public void addCube(ICube cube) {
     }
 
     @Override

@@ -25,8 +25,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
 import io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common.MixinWorld;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
-import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
+import io.github.opencubicchunks.cubicchunks.api.util.IntRange;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.multiplayer.ChunkProviderClient;
@@ -41,7 +40,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 @Mixin(WorldClient.class)
-@Implements(@Interface(iface = ICubicWorldClient.class, prefix = "world$"))
+@Implements(@Interface(iface = ICubicWorldInternal.Client.class, prefix = "world$"))
 public abstract class MixinWorldClient extends MixinWorld implements ICubicWorldInternal.Client {
 
     @Shadow private ChunkProviderClient clientChunkProvider;

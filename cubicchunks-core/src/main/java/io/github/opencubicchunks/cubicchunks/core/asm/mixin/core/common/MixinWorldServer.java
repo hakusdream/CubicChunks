@@ -23,23 +23,23 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
+import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.entity.CubicEntityTracker;
 import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;
 import io.github.opencubicchunks.cubicchunks.core.server.ChunkGc;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
-import io.github.opencubicchunks.cubicchunks.core.util.Bits;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.api.util.Bits;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.IntRange;
 import io.github.opencubicchunks.cubicchunks.core.world.CubeWorldEntitySpawner;
 import io.github.opencubicchunks.cubicchunks.core.world.CubicSaveHandler;
 import io.github.opencubicchunks.cubicchunks.core.world.FastCubeWorldEntitySpawner;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
-import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
-import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras.Requirement;
+import io.github.opencubicchunks.cubicchunks.api.NotCubicChunksWorldException;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import io.github.opencubicchunks.cubicchunks.core.world.provider.ICubicWorldProvider;
 import mcp.MethodsReturnNonnullByDefault;
@@ -54,7 +54,6 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 
-import net.minecraft.world.storage.ISaveHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
@@ -92,15 +91,15 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
         this.isCubicWorld = true;
         this.entitySpawner = new CubeWorldEntitySpawner();
 
-        this.chunkProvider = new CubeProviderServer((WorldServer) (Object)this,
+        this.chunkProvider = new CubeProviderServer((WorldServer) (Object) this,
                 ((ICubicWorldProvider) this.provider).createCubeGenerator());
 
-        this.playerChunkMap = new PlayerCubeMap((WorldServer) (Object)this);
+        this.playerChunkMap = new PlayerCubeMap((WorldServer) (Object) this);
         this.chunkGc = new ChunkGc(getCubeCache());
 
-        this.saveHandler = new CubicSaveHandler(this, this.getSaveHandler());
+        this.saveHandler = new CubicSaveHandler((WorldServer) (Object) this, this.getSaveHandler());
 
-        this.firstLightProcessor = new FirstLightProcessor(this);
+        this.firstLightProcessor = new FirstLightProcessor((WorldServer) (Object) this);
         this.entityTracker = new CubicEntityTracker(this);
         CubicChunks.addConfigChangeListener(this);
     }
@@ -121,14 +120,6 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
         this.chunkGc.tick();
     }
 
-    @Override public CubicEntityTracker getCubicEntityTracker() {
-        if (!this.isCubicWorld()) {
-            throw new NotCubicChunksWorldException();
-        }
-        assert this.entityTracker instanceof CubicEntityTracker;
-        return (CubicEntityTracker) this.entityTracker;
-    }
-
     @Override public CubeProviderServer getCubeCache() {
         if (!this.isCubicWorld()) {
             throw new NotCubicChunksWorldException();
@@ -142,13 +133,6 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
         }
         assert this.firstLightProcessor != null;
         return this.firstLightProcessor;
-    }
-
-    @Override public PlayerCubeMap getPlayerCubeMap() {
-        if (!this.isCubicWorld()) {
-            throw new NotCubicChunksWorldException();
-        }
-        return (PlayerCubeMap) this.playerChunkMap;
     }
     
     @Override
@@ -194,7 +178,7 @@ public abstract class MixinWorldServer extends MixinWorld implements ICubicWorld
         if (this.isCubicWorld()) {
             ci.cancel();
             Chunk column = this.getCubeCache().getColumn(Coords.blockToCube(strikeTarget.getX()), Coords.blockToCube(strikeTarget.getZ()),
-                    Requirement.GET_CACHED);
+                    ICubeProviderServer.Requirement.GET_CACHED);
             strikeTarget = column.getPrecipitationHeight(strikeTarget);
             ci.setReturnValue(strikeTarget);
             Cube cube = this.getCubeCache().getLoadedCube(CubePos.fromBlockCoords(strikeTarget));

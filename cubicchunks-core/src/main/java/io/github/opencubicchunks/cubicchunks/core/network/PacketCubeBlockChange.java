@@ -23,12 +23,12 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.network;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 import static net.minecraftforge.fml.common.network.ByteBufUtils.readVarInt;
 
 import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.TShortCollection;
 import gnu.trove.iterator.TIntIterator;

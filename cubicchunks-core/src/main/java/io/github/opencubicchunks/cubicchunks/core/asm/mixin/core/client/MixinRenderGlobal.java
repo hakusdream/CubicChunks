@@ -27,10 +27,11 @@ import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS_
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_GET_ENTITY_LISTS;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_CLIENT_GET_CHUNK_FROM_BLOCK_COORDS;
 
+import io.github.opencubicchunks.cubicchunks.api.ICube;
 import io.github.opencubicchunks.cubicchunks.core.util.ClassInheritanceMultiMapFactory;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
@@ -176,12 +177,12 @@ public class MixinRenderGlobal {
             return chunk.getEntityLists(); //TODO: is this right?
         }
 
-        Cube cube = ((IColumn) chunk).getCube(Coords.blockToCube(position.getY()));
+        ICube cube = ((IColumn) chunk).getCube(Coords.blockToCube(position.getY()));
         if (cube instanceof BlankCube) {
             return ClassInheritanceMultiMapFactory.EMPTY_ARR;
         }
 
-        return new ClassInheritanceMultiMap[]{cube.getEntityContainer().getEntitySet()};
+        return new ClassInheritanceMultiMap[]{cube.getEntitySet()};
     }
 
     /**

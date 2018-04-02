@@ -20,7 +20,7 @@
 package io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge;
 
 import com.google.common.base.MoreObjects;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.world.World;
 

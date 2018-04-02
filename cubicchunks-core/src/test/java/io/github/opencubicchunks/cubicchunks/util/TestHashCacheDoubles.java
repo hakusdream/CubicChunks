@@ -29,7 +29,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import io.github.opencubicchunks.cubicchunks.core.util.cache.HashCacheDoubles;
+import io.github.opencubicchunks.cubicchunks.cubicgen.cache.HashCacheDoubles;
 import org.junit.Test;
 
 import java.util.Random;

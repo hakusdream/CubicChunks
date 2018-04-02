@@ -23,6 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.util;
 
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.network.AbstractClientMessageHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;

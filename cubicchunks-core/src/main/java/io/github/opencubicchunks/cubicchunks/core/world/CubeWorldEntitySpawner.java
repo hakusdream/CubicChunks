@@ -23,11 +23,11 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -118,7 +118,7 @@ public class CubeWorldEntitySpawner extends WorldEntitySpawner {
                         if (isEdge || !world.getWorldBorder().contains(chunkPos.chunkPos())) {
                             continue;
                         }
-                        CubeWatcher chunkInfo = ((ICubicWorldServer) world).getPlayerCubeMap().getCubeWatcher(chunkPos);
+                        CubeWatcher chunkInfo = ((PlayerCubeMap) world.getPlayerChunkMap()).getCubeWatcher(chunkPos);
 
                         if (chunkInfo != null && chunkInfo.isSentToPlayers()) {
                             possibleChunks.add(chunkPos);
@@ -251,55 +251,5 @@ public class CubeWorldEntitySpawner extends WorldEntitySpawner {
         }
         int blockY = pos.getMinBlockY() + world.rand.nextInt(Cube.SIZE);
         return new BlockPos(blockX, blockY, blockZ);
-    }
-
-    public static void initialWorldGenSpawn(WorldServer world, Biome biome, int blockX, int blockY, int blockZ,
-            int sizeX, int sizeY, int sizeZ, Random random) {
-        List<Biome.SpawnListEntry> spawnList = biome.getSpawnableList(EnumCreatureType.CREATURE);
-
-        if (spawnList.isEmpty()) {
-            return;
-        }
-        while (random.nextFloat() < biome.getSpawningChance()) {
-            Biome.SpawnListEntry currEntry = WeightedRandom.getRandomItem(world.rand, spawnList);
-            int groupCount = MathHelper.getInt(random, currEntry.minGroupCount, currEntry.maxGroupCount);
-            IEntityLivingData data = null;
-            int randX = blockX + random.nextInt(sizeX);
-            int randZ = blockZ + random.nextInt(sizeZ);
-
-            final int initRandX = randX;
-            final int initRandZ = randZ;
-
-            for (int i = 0; i < groupCount; ++i) {
-                for (int j = 0; j < 4; ++j) {
-                    do {
-                        randX = initRandX + random.nextInt(5) - random.nextInt(5);
-                        randZ = initRandZ + random.nextInt(5) - random.nextInt(5);
-                    } while (randX < blockX || randX >= blockX + sizeX || randZ < blockZ || randZ >= blockZ + sizeZ);
-
-                    BlockPos pos = ((ICubicWorld)world).findTopBlock(new BlockPos(randX, blockY + sizeY + Cube.SIZE / 2, randZ),
-                            blockY, blockY + sizeY - 1, ICubicWorld.SurfaceType.SOLID);
-                    if (pos == null) {
-                        continue;
-                    }
-
-                    if (canCreatureTypeSpawnAtLocation(EntityLiving.SpawnPlacementType.ON_GROUND, (World) world, pos)) {
-                        EntityLiving spawnedEntity;
-
-                        try {
-                            spawnedEntity = currEntry.newInstance((World) world);
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
-                            continue;
-                        }
-
-                        spawnedEntity.setLocationAndAngles(randX + 0.5, pos.getY(), randZ + 0.5, random.nextFloat() * 360.0F, 0.0F);
-                        world.spawnEntity(spawnedEntity);
-                        data = spawnedEntity.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(spawnedEntity)), data);
-                        break;
-                    }
-                }
-            }
-        }
     }
 }

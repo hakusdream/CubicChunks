@@ -23,17 +23,18 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 
+import io.github.opencubicchunks.cubicchunks.api.ICube;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldSettings;
-import io.github.opencubicchunks.cubicchunks.core.world.NotCubicChunksWorldException;
+import io.github.opencubicchunks.cubicchunks.api.NotCubicChunksWorldException;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -128,11 +129,11 @@ public abstract class MixinWorld implements ICubicWorldInternal {
         return this.maxGenerationHeight;
     }
 
-    @Override public ICubeProvider getCubeCache() {
+    @Override public ICubeProviderInternal getCubeCache() {
         if (!this.isCubicWorld()) {
             throw new NotCubicChunksWorldException();
         }
-        return (ICubeProvider) this.chunkProvider;
+        return (ICubeProviderInternal) this.chunkProvider;
     }
 
     @Override public LightingManager getLightingManager() {
@@ -144,7 +145,7 @@ public abstract class MixinWorld implements ICubicWorldInternal {
     }
 
     @Override
-    public boolean testForCubes(CubePos start, CubePos end, Predicate<Cube> cubeAllowed) {
+    public boolean testForCubes(CubePos start, CubePos end, Predicate<? super ICube> cubeAllowed) {
         // convert block bounds to chunk bounds
         int minCubeX = start.getX();
         int minCubeY = start.getY();

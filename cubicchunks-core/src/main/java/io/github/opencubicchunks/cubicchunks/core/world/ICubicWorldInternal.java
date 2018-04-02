@@ -23,21 +23,54 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.lighting.ILightingManager;
+import io.github.opencubicchunks.cubicchunks.api.NotCubicChunksWorldException;
+import io.github.opencubicchunks.cubicchunks.core.IConfigUpdateListener;
+import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
+import io.github.opencubicchunks.cubicchunks.core.lighting.FirstLightProcessor;
+import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
+import io.github.opencubicchunks.cubicchunks.core.server.ChunkGc;
+import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.api.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+/**
+ * Internal ICubicWorld additions.
+ */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public interface ICubicWorldInternal extends ICubicWorld {
+public interface ICubicWorldInternal extends ICubicWorld, IConfigUpdateListener {
     /**
      * Updates the world
      */
     void tickCubicWorld();
+
+
+    /**
+     * Returns the {@link ICubeProvider} for this world, or throws {@link NotCubicChunksWorldException}
+     * if this is not a CubicChunks world.
+     */
+    @Override
+    ICubeProviderInternal getCubeCache();
+
+    /**
+     * Returns the {@link ILightingManager} for this world, or throws {@link NotCubicChunksWorldException}
+     * if this is not a CubicChunks world.
+     */
+    LightingManager getLightingManager();
+
+    @Override
+    Cube getCubeFromCubeCoords(int cubeX, int cubeY, int cubeZ);
+
+    @Override
+    Cube getCubeFromBlockCoords(BlockPos pos);
 
     public interface Server extends ICubicWorldInternal, ICubicWorldServer {
 
@@ -49,9 +82,16 @@ public interface ICubicWorldInternal extends ICubicWorld {
          */
         void initCubicWorldServer(IntRange heightRange, IntRange generationRange);
 
+        @Override
+        CubeProviderServer getCubeCache();
+
+        FirstLightProcessor getFirstLightProcessor();
+
+        ChunkGc getChunkGarbageCollector();
+
     }
 
-    public interface Client extends ICubicWorldInternal, ICubicWorldClient {
+    public interface Client extends ICubicWorldInternal {
 
         /**
          * Initializes the world to be a CubicChunks world. Must be done before any players are online and before any chunks
@@ -61,5 +101,8 @@ public interface ICubicWorldInternal extends ICubicWorld {
          */
         void initCubicWorldClient(IntRange heightRange, IntRange generationRange);
 
+        CubeProviderClient getCubeCache();
+
+        void setHeightBounds(int minHeight, int maxHeight);
     }
 }

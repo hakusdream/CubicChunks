@@ -23,13 +23,14 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.MinecraftException;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.storage.IChunkLoader;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraft.world.storage.IPlayerFileData;
@@ -45,11 +46,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class CubicSaveHandler implements ISaveHandler {
 
-    private ICubicWorldServer world;
+    private ICubicWorldInternal.Server world;
     private final ISaveHandler originalHandler;
 
-    public CubicSaveHandler(ICubicWorldServer world, ISaveHandler originalHandler) {
-        this.world = world;
+    public CubicSaveHandler(WorldServer world, ISaveHandler originalHandler) {
+        this.world = (ICubicWorldInternal.Server) world;
         this.originalHandler = originalHandler;
     }
 

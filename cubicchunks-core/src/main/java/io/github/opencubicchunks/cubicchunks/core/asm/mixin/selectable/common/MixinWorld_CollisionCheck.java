@@ -27,15 +27,16 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.*;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.*;
 
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -45,7 +46,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 @Mixin(value = World.class, priority = 1001)
-public abstract class MixinWorld_CollisionCheck implements ICubicWorld {
+public abstract class MixinWorld_CollisionCheck implements ICubicWorldInternal {
 
     @Inject(method = "getCollisionBoxes(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/AxisAlignedBB;ZLjava/util/List;)Z",
             at = @At("HEAD"), cancellable = true)

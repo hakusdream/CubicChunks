@@ -23,18 +23,20 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMaxBlock;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMaxBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.util.FastCubeBlockAccess;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.set.TIntSet;
@@ -58,7 +60,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 //TODO: extract interfaces when it's done
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class LightingManager {
+public class LightingManager implements ILightingManager {
 
     public static final boolean NO_SUNLIGHT_PROPAGATION = "true".equalsIgnoreCase(System.getProperty("cubicchunks.nosunlight"));
 
@@ -118,7 +120,7 @@ public class LightingManager {
             TIntIterator it = toDiffuse.iterator();
             while (it.hasNext()) {
                 int cubeY = it.next();
-                Cube cube = ((IColumn) column).getCube(cubeY);
+                ICube cube = ((IColumn) column).getCube(cubeY);
                 boolean success = updateDiffuseLight(cube, localX, localZ, minY, maxY);
                 if (!success) {
                     markCubeBlockColumnForUpdate(cube, blockX, blockZ);
@@ -135,7 +137,7 @@ public class LightingManager {
         }
     }
 
-    private boolean updateDiffuseLight(Cube cube, int localX, int localZ, int minY, int maxY) {
+    private boolean updateDiffuseLight(ICube cube, int localX, int localZ, int minY, int maxY) {
         int minCubeY = cube.getCoords().getMinBlockY();
         int maxCubeY = cube.getCoords().getMaxBlockY();
 
@@ -152,19 +154,19 @@ public class LightingManager {
                 new BlockPos(blockX, minInCubeY, blockZ), new BlockPos(blockX, maxInCubeY, blockZ), EnumSkyBlock.SKY, world::notifyLightSet);
     }
 
-    public void doOnBlockSetLightUpdates(Chunk column, int localX, int oldHeight, int changeY, int localZ) {
+    @Override public void doOnBlockSetLightUpdates(Chunk column, int localX, int oldHeight, int changeY, int localZ) {
         this.columnSkylightUpdate(UpdateType.IMMEDIATE, column, localX, Math.min(oldHeight, changeY), Math.max(oldHeight, changeY), localZ);
     }
 
     //TODO: make it private
-    public void markCubeBlockColumnForUpdate(Cube cube, int blockX, int blockZ) {
-        CubeLightUpdateInfo data = cube.getCubeLightUpdateInfo();
+    @Override public void markCubeBlockColumnForUpdate(ICube cube, int blockX, int blockZ) {
+        CubeLightUpdateInfo data = ((Cube) cube).getCubeLightUpdateInfo();
         if (data != null) {
             data.markBlockColumnForUpdate(Coords.blockToLocal(blockX), Coords.blockToLocal(blockZ));
         }
     }
 
-    public void onHeightMapUpdate(Chunk column, int localX, int localZ, int oldHeight, int newHeight) {
+    @Override public void onHeightMapUpdate(Chunk column, int localX, int localZ, int oldHeight, int newHeight) {
         if (NO_SUNLIGHT_PROPAGATION) {
             return;
         }
@@ -196,7 +198,7 @@ public class LightingManager {
         BlockPos midPos = Coords.midPos(startPos, endPos);
         BlockPos minLoad = startPos.add(-LOAD_RADIUS, -LOAD_RADIUS, -LOAD_RADIUS);
         BlockPos maxLoad = endPos.add(LOAD_RADIUS, LOAD_RADIUS, LOAD_RADIUS);
-        ILightBlockAccess blocks = FastCubeBlockAccess.forBlockRegion(((ICubicWorld) world).getCubeCache(), minLoad, maxLoad);
+        ILightBlockAccess blocks = FastCubeBlockAccess.forBlockRegion((ICubeProviderInternal) world.getChunkProvider(), minLoad, maxLoad);
         this.lightPropagator.propagateLight(midPos, BlockPos.getAllInBox(startPos, endPos), blocks, type, notify);
         return true;
     }
@@ -232,10 +234,10 @@ public class LightingManager {
             if (NO_SUNLIGHT_PROPAGATION) {
                 return;
             }
-            ICubicWorld cubicWorld = (ICubicWorld) cube.getWorld();
-            LightUpdateTracker tracker = cubicWorld.getLightingManager().getTracker();
+            ICubicWorldInternal cubicWorld = cube.getWorld();
             LightingManager manager = cubicWorld.getLightingManager();
-            ICubeProvider cache = cubicWorld.getCubeCache();
+            LightUpdateTracker tracker = manager.getTracker();
+            ICubeProviderInternal cache = cubicWorld.getCubeCache();
 
             for (EnumFacing dir : EnumFacing.values()) {
                 if (cube.edgeNeedSkyLightUpdate[dir.ordinal()]) {

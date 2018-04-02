@@ -25,7 +25,7 @@ package io.github.opencubicchunks.cubicchunks.core.network;
 
 import com.google.common.base.Preconditions;
 import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
-import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.api.IHeightMap;
 import gnu.trove.list.TByteList;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.array.TByteArrayList;

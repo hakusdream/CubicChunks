@@ -26,8 +26,8 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_FALLING_CAN_FALL_THROUGH;
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.WORLD_IS_AIR_BLOCK;
 
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;

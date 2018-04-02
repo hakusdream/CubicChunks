@@ -23,23 +23,23 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.server;
 
-import io.github.opencubicchunks.cubicchunks.api.core.CubePrimer;
-import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
+import io.github.opencubicchunks.cubicchunks.api.CubePrimer;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.ICubeGenerator;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProviderServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksMixinConfig;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.ICubeIO;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.RegionCubeIO;
 import io.github.opencubicchunks.cubicchunks.core.server.chunkio.async.forge.AsyncWorldIOExecutor;
-import io.github.opencubicchunks.cubicchunks.core.util.Box;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.world.IProviderExtras;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.util.Box;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.XYZMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeGenerator;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.vanilla.VanillaCompatibilityGenerator;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.profiler.Profiler;
@@ -51,7 +51,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -76,7 +75,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class CubeProviderServer extends ChunkProviderServer implements ICubeProvider, IProviderExtras {
+public class CubeProviderServer extends ChunkProviderServer implements ICubeProviderServer, ICubeProviderInternal {
 
     @Nonnull private WorldServer worldServer;
     @Nonnull private ICubeIO cubeIO;
@@ -412,7 +411,7 @@ public class CubeProviderServer extends ChunkProviderServer implements ICubeProv
 
         onCubeLoaded(cube, column);
 
-        ((ICubicWorldServer) this.worldServer).getFirstLightProcessor()
+        ((ICubicWorldInternal.Server) this.worldServer).getFirstLightProcessor()
                 .initializeSkylight(cube); // init sky light, (does not require any other cubes, just ServerHeightMap)
 
         return cube;
@@ -472,7 +471,7 @@ public class CubeProviderServer extends ChunkProviderServer implements ICubeProv
                 }
             }
         }
-        ((ICubicWorldServer) this.worldServer).getFirstLightProcessor().diffuseSkylight(cube);
+        ((ICubicWorldInternal.Server) this.worldServer).getFirstLightProcessor().diffuseSkylight(cube);
     }
 
 
@@ -560,7 +559,7 @@ public class CubeProviderServer extends ChunkProviderServer implements ICubeProv
             }
             sb.append("Column[").append(chunk.x).append(", ").append(chunk.z).append("] {");
             boolean isFirst = true;
-            for (Cube cube : ((IColumn) chunk).getLoadedCubes()) {
+            for (ICube cube : ((IColumn) chunk).getLoadedCubes()) {
                 if (!isFirst) {
                     sb.append(", ");
                 }

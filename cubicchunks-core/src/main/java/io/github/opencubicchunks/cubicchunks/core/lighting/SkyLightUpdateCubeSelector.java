@@ -23,13 +23,14 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMaxBlock;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMaxBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;
 
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
@@ -84,7 +85,7 @@ class SkyLightUpdateCubeSelector {
         int maxCubeY = Coords.blockToCube(newMaxBlockY);
 
         //attempt to update lighting only in loaded cubes
-        for (Cube cube : ((IColumn) column).getLoadedCubes()) {
+        for (ICube cube : ((IColumn) column).getLoadedCubes()) {
             int cubeY = cube.getY();
             int minCubeBlockY = cubeY * Cube.SIZE;
 

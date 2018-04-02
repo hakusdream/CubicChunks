@@ -25,8 +25,6 @@ package io.github.opencubicchunks.cubicchunks.core.util;
 
 import com.google.common.base.Throwables;
 import mcp.MethodsReturnNonnullByDefault;
-import net.malisis.core.client.gui.component.UIComponent;
-import net.malisis.core.client.gui.component.container.UIContainer;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -166,14 +164,6 @@ public class ReflectionUtil {
             modifiersField.setInt(f, mod);
         } catch (IllegalAccessException e) {
             throw new AssertionError("Cannot set field modifiers in class Field", e);
-        }
-    }
-
-    public static Set<UIComponent<?>> getField(UIContainer<?> cont, Field componentsField) {
-        try {
-            return (Set<UIComponent<?>>) componentsField.get(cont);
-        } catch (IllegalAccessException e) {
-            throw new Error(e);
         }
     }
 }

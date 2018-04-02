@@ -1,5 +1,7 @@
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgePlugin
+import nl.javadude.gradle.plugins.license.LicensePlugin
+import org.spongepowered.asm.gradle.plugins.MixinGradlePlugin
 import kotlin.apply
 
 // Gradle repositories and dependencies
@@ -8,15 +10,20 @@ buildscript {
         mavenCentral()
         jcenter()
         maven {
+            setUrl("http://files.minecraftforge.net/maven")
+        }
+        maven {
             setUrl("http://repo.spongepowered.org/maven")
         }
         maven {
-            setUrl("http://files.minecraftforge.net/maven")
+            setUrl("https://plugins.gradle.org/m2/")
         }
     }
     dependencies {
-        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
+        classpath("org.ajoberstar:grgit:2.0.0-milestone.1")
         classpath("org.spongepowered:mixingradle:0.4-SNAPSHOT")
+        classpath("gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1")
+        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
     }
 }
 
@@ -27,15 +34,18 @@ val malisisCoreVersion by project
 val malisisCoreMinVersion by project
 
 allprojects {
-
     plugins {
         base
         java
     }
+
     apply {
         plugin<ForgePlugin>()
-        plugin<org.spongepowered.asm.gradle.plugins.MixinGradlePlugin>()
+        plugin<MixinGradlePlugin>()
+        plugin<LicensePlugin>()
     }
+
+    val sourceSets = the<JavaPluginConvention>().sourceSets
 
     configure<ForgeExtension> {
         version = theForgeVersion as String
@@ -78,6 +88,14 @@ allprojects {
         }
     }
 
+    val compile by configurations
+    val testCompile by configurations
+
+    // for unit test dependencies
+    val testArtifacts by configurations.creating
+    val deobfArtifacts by configurations.creating
+    deobfArtifacts.extendsFrom(compile)
+
     // this is needed because it.ozimov:java7-hamcrest-matchers:0.7.0 depends on guava 19, while MC needs guava 21
     configurations.all { resolutionStrategy { force("com.google.guava:guava:21.0") } }
 
@@ -88,21 +106,77 @@ allprojects {
         testCompile("org.mockito:mockito-core:2.1.0-RC.2")
         testCompile("org.spongepowered:launchwrappertestsuite:1.0-SNAPSHOT")
     }
+
+    tasks {
+        val jar = "jar"(Jar::class)
+
+        "build"().dependsOn("reobfJar")
+
+        "javadoc"(Javadoc::class) {
+            (options as StandardJavadocDocletOptions).tags = listOf("reason")
+        }
+        val javadocJar by creating(Jar::class) {
+            classifier = "javadoc"
+            from(tasks["javadoc"])
+        }
+        val sourcesJar by creating(Jar::class) {
+            classifier = "sources"
+            from(sourceSets["main"].java.srcDirs)
+        }
+        // for project dependency to work correctly
+        val deobfJar by creating(Jar::class) {
+            classifier = "deobf"
+            from(sourceSets["main"].output)
+        }
+        // tests jar used as test dependency to use by other modules
+        val testsJar by creating(Jar::class) {
+            classifier = "tests"
+            from(sourceSets["test"].output)
+        }
+
+
+        // tasks must be before artifacts, don't change the order
+        artifacts {
+            withGroovyBuilder {
+                "testArtifacts"(testsJar)
+                "deobfArtifacts"(deobfJar)
+                "archives"(jar, sourcesJar, javadocJar)
+            }
+        }
+    }
 }
 
-project(":cubicchunks-cubicgen") {
+configure<ForgeExtension> {
+    subprojects.forEach {
+        it.the<JavaPluginConvention>().sourceSets["main"].resources.asFileTree.filter { it.name.endsWith("_at.cfg") }.forEach { at(it) }
+    }
+}
 
+
+project(":cubicchunks-cubicgen") {
     dependencies {
-        compileOnly(project(":cubicchunks-core", "deobfArtifacts"))
-        //runtime(project(":cubicchunks-core"))
+        val compileOnly by configurations
+        val testCompile by configurations
+        // no runtime dependency because cubicgen never runs alone, this root project depends on both core and cubicgen and IDE runs this
+        //compileOnly(project(":cubicchunks-core", "deobfArtifacts"))
+        compileOnly(project(":cubicchunks-api", "deobfArtifacts"))
         testCompile(project(":cubicchunks-core", "testArtifacts"))
         testCompile(project(":cubicchunks-core", "deobfArtifacts"))
     }
 }
 
+project(":cubicchunks-core") {
+    dependencies {
+        val compileOnly by configurations
+        // no runtime dependency because cubicgen never runs alone, this root project depends on both core and cubicgen and IDE runs this
+        compileOnly(project(":cubicchunks-api", "deobfArtifacts"))
+    }
+}
+
 dependencies {
+    val compile by configurations
+
     childProjects.forEach { t, _ ->
         compile(project(t))
     }
-
 }

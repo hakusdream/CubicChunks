@@ -23,12 +23,12 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.client;
 
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldClient;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.XYZMap;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.BlankCube;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
@@ -41,16 +41,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-//TODO: break off ICubeProvider
+//TODO: break off ICubeProviderInternal
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class CubeProviderClient extends ChunkProviderClient implements ICubeProvider {
+public class CubeProviderClient extends ChunkProviderClient implements ICubeProviderInternal {
 
-    @Nonnull private ICubicWorldClient world;
+    @Nonnull private ICubicWorldInternal.Client world;
     @Nonnull private Cube blankCube;
     @Nonnull private XYZMap<Cube> cubeMap = new XYZMap<>(0.7f, 8000);
 
-    public CubeProviderClient(ICubicWorldClient world) {
+    public CubeProviderClient(ICubicWorldInternal.Client world) {
         super((World) world);
         this.world = world;
         this.blankCube = new BlankCube(blankChunk);

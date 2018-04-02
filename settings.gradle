@@ -1,3 +1,4 @@
 include 'cubicchunks-core'
 include 'cubicchunks-cubicgen'
+include 'cubicchunks-api'
 

@@ -23,14 +23,17 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.util;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
 
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.core.lighting.ILightBlockAccess;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeProviderServer;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -65,12 +68,12 @@ public class FastCubeBlockAccess implements ILightBlockAccess {
     private final int dx, dy, dz;
     @Nonnull private final ICubicWorld world;
 
-    public FastCubeBlockAccess(ICubeProvider cache, Cube cube, int radius) {
+    public FastCubeBlockAccess(ICubeProviderInternal cache, Cube cube, int radius) {
         this(cube.getWorld(), cache,
                 cube.getCoords().sub(radius, radius, radius), cube.getCoords().add(radius, radius, radius));
     }
 
-    private FastCubeBlockAccess(ICubicWorld world, ICubeProvider prov, CubePos start, CubePos end) {
+    private FastCubeBlockAccess(ICubicWorld world, ICubeProviderInternal prov, CubePos start, CubePos end) {
         this.dx = Math.abs(end.getX() - start.getX()) + 1;
         this.dy = Math.abs(end.getY() - start.getY()) + 1;
         this.dz = Math.abs(end.getZ() - start.getZ()) + 1;
@@ -98,8 +101,6 @@ public class FastCubeBlockAccess implements ILightBlockAccess {
         }
     }
 
-    // TODO: Remove calling world: temporary workaround for lighting code being broken
-    
     @Nullable
     private ExtendedBlockStorage getStorage(int blockX, int blockY, int blockZ) {
         int cubeX = Coords.blockToCube(blockX);
@@ -226,7 +227,7 @@ public class FastCubeBlockAccess implements ILightBlockAccess {
         }
     }
 
-    public static ILightBlockAccess forBlockRegion(ICubeProvider prov, BlockPos startPos, BlockPos endPos) {
+    public static ILightBlockAccess forBlockRegion(ICubeProviderInternal prov, BlockPos startPos, BlockPos endPos) {
         //TODO: fix it
         BlockPos midPos = Coords.midPos(startPos, endPos);
         Cube center = prov.getCube(CubePos.fromBlockCoords(midPos));

@@ -23,7 +23,6 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.server.chunkio;
 
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.IThreadedFileIO;

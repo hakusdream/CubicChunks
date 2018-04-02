@@ -23,20 +23,21 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.lighting;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToCube;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.blockToLocal;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMaxBlock;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.cubeToMinBlock;
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.getCubeCenter;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToCube;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.blockToLocal;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMaxBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.getCubeCenter;
 
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
 import io.github.opencubicchunks.cubicchunks.core.util.FastCubeBlockAccess;
-import io.github.opencubicchunks.cubicchunks.core.util.MathUtil;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
-import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.util.MathUtil;
+import io.github.opencubicchunks.cubicchunks.api.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenCustomHashMap;
@@ -46,6 +47,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.WorldServer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -96,7 +98,7 @@ public class FirstLightProcessor {
 
     @Nonnull private final MutableBlockPos mutablePos = new MutableBlockPos();
 
-    @Nonnull private final ICubeProvider cache;
+    @Nonnull private final ICubeProviderInternal cache;
 
     @Nonnull private final LightPropagator propagator = new LightPropagator();
     @Nonnull private final LightUpdateTracker tracker;
@@ -107,9 +109,9 @@ public class FirstLightProcessor {
      *
      * @param world the world for which the FirstLightProcessor will be used
      */
-    public FirstLightProcessor(ICubicWorldServer world) {
-        this.cache = world.getCubeCache();
-        this.tracker = new LightUpdateTracker(world.getPlayerCubeMap());
+    public FirstLightProcessor(WorldServer world) {
+        this.cache = (ICubeProviderInternal) world.getChunkProvider();
+        this.tracker = new LightUpdateTracker((PlayerCubeMap) world.getPlayerChunkMap());
     }
 
 
@@ -158,7 +160,7 @@ public class FirstLightProcessor {
             cube.setInitialLightingDone(true);
             return;
         }
-        ICubicWorld world = cube.getWorld();
+        ICubicWorldInternal world = cube.getWorld();
 
         // Cache min/max Y, generating them may be expensive
         int[][] minBlockYArr = new int[Cube.SIZE][Cube.SIZE];
@@ -193,10 +195,10 @@ public class FirstLightProcessor {
 
         List<BlockPos> toUpdate = new ArrayList<>();
 
-        IColumn IColumn = cube.getColumn();
+        IColumn column = cube.getColumn();
         // Iterate over all affected cubes.
-        Iterable<Cube> cubes = IColumn.getLoadedCubes(blockToCube(maxMaxHeight), blockToCube(minMinHeight));
-        for (Cube otherCube : cubes) {
+        Iterable<? extends ICube> cubes = column.getLoadedCubes(blockToCube(maxMaxHeight), blockToCube(minMinHeight));
+        for (Cube otherCube : (Iterable<Cube>) cubes) {
             int minCubeBlockY = otherCube.getCoords().getMinBlockY();
             int maxCubeBlockY = otherCube.getCoords().getMaxBlockY();
             for (int blockX = minBlockX; blockX <= maxBlockX; blockX++) {
@@ -218,7 +220,7 @@ public class FirstLightProcessor {
                     }
 
                     this.mutablePos.setPos(blockX, this.mutablePos.getY(), blockZ);
-                    int topBlockY = getOcclusionHeight(IColumn, blockToLocal(blockX), blockToLocal(blockZ));
+                    int topBlockY = getOcclusionHeight(column, blockToLocal(blockX), blockToLocal(blockZ));
 
                     if (otherCube != cube && canStopUpdating(cube, this.mutablePos, topBlockY)) {
                         // mark this column so min > max

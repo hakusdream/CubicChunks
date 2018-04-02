@@ -23,13 +23,14 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.server.chunkio;
 
-import static io.github.opencubicchunks.cubicchunks.core.util.Coords.localToBlock;
+import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;
 
 import io.github.opencubicchunks.cubicchunks.core.CubicChunks;
 import io.github.opencubicchunks.cubicchunks.core.lighting.LightingManager;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
@@ -263,7 +264,7 @@ public class IONbtReader {
         // but it will be fixed by lighting update in other cube anyway
         int minBlockY = Coords.cubeToMinBlock(cube.getY());
         int maxBlockY = Coords.cubeToMaxBlock(cube.getY());
-        LightingManager lightManager = cube.getWorld().getLightingManager();
+        LightingManager lightManager = ((ICubicWorldInternal) cube.getWorld()).getLightingManager();
         for (int i = 0; i < currentHeightMap.length; i++) {
             int currentY = currentHeightMap[i];
             int lastY = lastHeightMap[i];

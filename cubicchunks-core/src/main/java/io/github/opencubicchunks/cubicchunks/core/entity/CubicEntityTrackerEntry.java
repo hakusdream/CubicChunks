@@ -23,7 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.entity;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityTrackerEntry;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -50,7 +51,7 @@ public class CubicEntityTrackerEntry extends EntityTrackerEntry {
 
     @Override
     protected boolean isPlayerWatchingThisChunk(EntityPlayerMP player) {
-        return ((ICubicWorldServer) player.getServerWorld()).getPlayerCubeMap()
+        return ((PlayerCubeMap) player.getServerWorld().getPlayerChunkMap())
                 .isPlayerWatchingCube(player, this.trackedEntity.chunkCoordX, this.trackedEntity.chunkCoordY, this.trackedEntity.chunkCoordZ);
     }
 }

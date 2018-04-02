@@ -23,32 +23,23 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common;
 
-import com.google.common.base.Predicate;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.IHeightMap;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.column.CubeMap;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
-import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -94,8 +85,8 @@ public abstract class MixinChunk_Column implements IColumn {
     }
 
 
-    @Override public void addCube(Cube cube) {
-        this.cubeMap.put(cube);
+    @Override public void addCube(ICube cube) {
+        this.cubeMap.put((Cube) cube);
     }
 
 
@@ -115,7 +106,7 @@ public abstract class MixinChunk_Column implements IColumn {
         return !cubeMap.isEmpty();
     }
 
-    @Override public <T extends World & ICubicWorld> T getWorld() {
+    public <T extends World & ICubicWorldInternal> T getWorld() {
         return (T) this.world;
     }
 
@@ -144,7 +135,7 @@ public abstract class MixinChunk_Column implements IColumn {
     }
 
 
-    @Override public void preCacheCube(Cube cube) {
-        this.cachedCube = cube;
+    @Override public void preCacheCube(ICube cube) {
+        this.cachedCube = (Cube) cube;
     }
 }

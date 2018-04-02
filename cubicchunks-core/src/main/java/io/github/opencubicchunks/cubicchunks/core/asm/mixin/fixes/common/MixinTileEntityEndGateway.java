@@ -25,7 +25,8 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_GET_TOP_FILLED_SEGMENT;
 
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.tileentity.TileEntityEndGateway;
@@ -70,7 +71,7 @@ public class MixinTileEntityEndGateway {
     @Overwrite
     private static Chunk getChunk(World world, Vec3d pos) {
         Chunk chunk = world.getChunkFromChunkCoords(MathHelper.floor(pos.x / Cube.SIZE_D), MathHelper.floor(pos.z / Cube.SIZE_D));
-        if (((IColumn) chunk).getWorld().isCubicWorld()) {
+        if (((ICubicWorld) chunk.getWorld()).isCubicWorld()){
             for (int cubeY = 0; cubeY < 16; cubeY++) {
                 ((IColumn) chunk).getCube(cubeY);// load the cube
             }

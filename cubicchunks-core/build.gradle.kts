@@ -1,5 +1,3 @@
-import me.champeau.gradle.JMHPlugin
-import me.champeau.gradle.JMHPluginExtension
 import net.minecraftforge.gradle.tasks.DeobfuscateJar
 import net.minecraftforge.gradle.user.ReobfMappingType
 import net.minecraftforge.gradle.user.ReobfTaskFactory
@@ -36,7 +34,6 @@ buildscript {
         classpath("org.ajoberstar:grgit:2.0.0-milestone.1")
         classpath("org.spongepowered:mixingradle:0.4-SNAPSHOT")
         classpath("gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1")
-        classpath("me.champeau.gradle:jmh-gradle-plugin:0.3.1")
         classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
     }
 }
@@ -48,13 +45,6 @@ plugins {
     eclipse
     maven
     signing
-}
-
-apply {
-    plugin<ForgePlugin>()
-    plugin<MixinGradlePlugin>()
-    plugin<LicensePlugin>()
-    plugin<JMHPlugin>()
 }
 
 val deobfMcSRG: DeobfuscateJar by tasks
@@ -97,11 +87,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-mixin {
+configure<MixinExtension> {
     token("MC_FORGE", extractForgeMinorVersion())
 }
 
-license {
+configure<LicenseExtension> {
     val ext = (this as HasConvention).convention.extraProperties
     ext["project"] = projectName
     ext["year"] = licenseYear
@@ -117,23 +107,6 @@ license {
     mapping(mapOf("java" to "SLASHSTAR_STYLE"))
 }
 
-jmh {
-    iterations = 10
-    benchmarkMode = listOf("thrpt")
-    batchSize = 16
-    timeOnIteration = "1000ms"
-    fork = 1
-    threads = 1
-    timeUnit = "ms"
-    verbosity = "NORMAL"
-    warmup = "1000ms"
-    warmupBatchSize = 16
-    warmupForks = 1
-    warmupIterations = 10
-    profilers = listOf("perfasm")
-    jmhVersion = "1.17.1"
-}
-
 signing {
     isRequired = false
     // isRequired = gradle.taskGraph.hasTask("uploadArchives")
@@ -141,25 +114,17 @@ signing {
 }
 
 // configurations, needed for extendsFrom
-val jmh by configurations
 val forgeGradleMc by configurations
 val forgeGradleMcDeps by configurations
 val forgeGradleGradleStart by configurations
 val compile by configurations
 val testCompile by configurations
+val deobfCompile by configurations
 
 val embed by configurations.creating
 val embedOnly by configurations.creating
 val coreShadow by configurations.creating
 
-// for unit test dependencies
-val testArtifacts by configurations.creating
-val deobfArtifacts by configurations.creating
-deobfArtifacts.extendsFrom(compile)
-
-jmh.extendsFrom(compile)
-jmh.extendsFrom(forgeGradleMc)
-jmh.extendsFrom(forgeGradleMcDeps)
 testCompile.extendsFrom(forgeGradleGradleStart)
 testCompile.extendsFrom(forgeGradleMcDeps)
 compile.extendsFrom(embed)
@@ -168,7 +133,6 @@ testCompile.extendsFrom(embed)
 compile.extendsFrom(coreShadow)
 
 dependencies {
-    embed("com.flowpowered:flow-noise:1.0.1-SNAPSHOT")
     // https://mvnrepository.com/artifact/com.typesafe/config
     embed("com.typesafe:config:1.2.0")
 
@@ -177,53 +141,13 @@ dependencies {
     }
 
     embed("io.github.opencubicchunks:regionlib:0.44.0-SNAPSHOT")
-
-    deobfCompile("net.malisis:malisiscore:$malisisCoreVersion") {
-        isTransitive = false
-    }
-    embedOnly("net.malisis:malisiscore:$malisisCoreVersion") {
-        isTransitive = false
-    }
 }
 
 // TODO: coremod dependency extraction
 
 // modified version of https://github.com/PaleoCrafter/Dependency-Extraction-Example/blob/coremod-separation/build.gradle
 tasks {
-    val jar = "jar"(Jar::class)
 
-    "build"().dependsOn("reobfJar")
-
-    "javadoc"(Javadoc::class) {
-        (options as StandardJavadocDocletOptions).tags = listOf("reason")
-    }
-    val javadocJar by creating(Jar::class) {
-        classifier = "javadoc"
-        from(tasks["javadoc"])
-    }
-    val sourcesJar by creating(Jar::class) {
-        classifier = "sources"
-        from(sourceSets["main"].java.srcDirs)
-    }
-    // tests jar used as test dependency to use by other modules
-    val testsJar by creating(Jar::class) {
-        classifier = "tests"
-        from(sourceSets["test"].output)
-    }
-    // for project dependency to work correctly
-    val deobfJar by creating(Jar::class) {
-        classifier = "deobf"
-        from(sourceSets["main"].output)
-    }
-
-    // tasks must be before artifacts, don't change the order
-    artifacts {
-        withGroovyBuilder {
-            "testArtifacts"(testsJar)
-            "deobfArtifacts"(deobfJar)
-            "archives"(jar, sourcesJar, javadocJar)
-        }
-    }
     // based on:
     // https://github.com/Ordinastie/MalisisCore/blob/30d8efcfd047ac9e9bc75dfb76642bd5977f0305/build.gradle#L204-L256
     // https://github.com/gradle/kotlin-dsl/blob/201534f53d93660c273e09f768557220d33810a9/samples/maven-plugin/build.gradle.kts#L10-L44
@@ -296,7 +220,7 @@ tasks {
     val coreJar by creating(org.gradle.api.tasks.bundling.Jar::class) {
         // need FQN because ForgeGradle needs this exact class and default imports use different one
         from(mainSourceSet.output) {
-            include("cubicchunks/asm/**", "**.json")
+            include("io/github/opencubicchunks/cubicchunks/core/asm/**", "**.json")
         }
         // Standard coremod manifest definitions
         manifest {
@@ -314,7 +238,7 @@ tasks {
         classifier = "core"
     }
 
-    reobf {
+    configure<NamedDomainObjectContainer<ReobfTaskFactory.ReobfTaskWrapper>> {
         create("coreJar").apply {
             mappingType = ReobfMappingType.SEARGE
         }

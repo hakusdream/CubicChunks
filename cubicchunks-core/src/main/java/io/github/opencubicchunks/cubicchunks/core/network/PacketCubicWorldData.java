@@ -23,11 +23,11 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.network;
 
-import io.github.opencubicchunks.cubicchunks.core.util.IntRange;
+import io.github.opencubicchunks.cubicchunks.api.util.IntRange;
 import io.github.opencubicchunks.cubicchunks.core.util.PacketUtils;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
-import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldType;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;

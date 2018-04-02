@@ -33,8 +33,6 @@ import io.github.opencubicchunks.cubicchunks.core.world.IHeightMap;
 import io.github.opencubicchunks.cubicchunks.core.world.ServerHeightMap;
 import mcp.MethodsReturnNonnullByDefault;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.spongepowered.lwts.runner.LaunchWrapperTestRunner;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

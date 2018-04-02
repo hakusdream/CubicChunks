@@ -23,12 +23,12 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorldServer;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldServer;
 import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -89,7 +89,7 @@ public class FastCubeWorldEntitySpawner extends WorldEntitySpawner {
         Random rand = world.rand;
         BlockPos spawnPoint = world.getSpawnPoint();
         int spawned = 0;
-        PlayerCubeMap playerCubeMap = ((ICubicWorldServer) world).getPlayerCubeMap();
+        PlayerCubeMap playerCubeMap = (PlayerCubeMap) world.getPlayerChunkMap();
         Iterator<CubeWatcher> cwi = playerCubeMap.getRandomWrappedCubeWatcherIterator(rand.nextInt());
         while (cwi.hasNext()) {
             CubeWatcher chunkInfo = cwi.next();

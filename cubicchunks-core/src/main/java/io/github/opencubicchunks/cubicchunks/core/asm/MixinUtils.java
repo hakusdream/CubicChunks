@@ -23,7 +23,8 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.asm;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.BlockPos;
@@ -52,6 +53,6 @@ public class MixinUtils {
         if (canTickCube == null) {
             return true;
         }
-        return canTickCube.test(((ICubicWorld) world).getCubeFromBlockCoords(pos));
+        return canTickCube.test(((ICubicWorldInternal) world).getCubeFromBlockCoords(pos));
     }
 }

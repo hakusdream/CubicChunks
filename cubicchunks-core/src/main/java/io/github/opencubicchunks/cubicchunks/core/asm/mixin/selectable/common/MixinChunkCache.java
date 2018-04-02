@@ -26,6 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.selectable.common;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,12 +34,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
-import io.github.opencubicchunks.cubicchunks.core.world.type.ICubicWorldType;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorldType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -74,7 +74,7 @@ public class MixinChunkCache {
         dx = Math.abs(end.getX() - start.getX()) + 1;
         dy = Math.abs(end.getY() - start.getY()) + 1;
         dz = Math.abs(end.getZ() - start.getZ()) + 1;
-        ICubeProvider prov = (ICubeProvider) worldIn.getChunkProvider();
+        ICubeProviderInternal prov = (ICubeProviderInternal) worldIn.getChunkProvider();
         this.cubes = new Cube[dx][dy][dz];
         this.originX = Math.min(start.getX(), end.getX());
         this.originY = Math.min(start.getY(), end.getY());

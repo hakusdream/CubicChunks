@@ -25,7 +25,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.BLOCK_POS;
 
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;

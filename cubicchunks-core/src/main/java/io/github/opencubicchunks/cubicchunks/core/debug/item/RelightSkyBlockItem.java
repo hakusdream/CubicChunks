@@ -26,9 +26,10 @@ package io.github.opencubicchunks.cubicchunks.core.debug.item;
 import io.github.opencubicchunks.cubicchunks.core.debug.ItemRegistered;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketCubes;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubeProvider;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.ICubeProvider;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.core.world.ICubeProviderInternal;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,7 +66,7 @@ public class RelightSkyBlockItem extends ItemRegistered {
         if (world.checkLightFor(EnumSkyBlock.SKY, placePos)) {
             playerIn.sendMessage(new TextComponentString("Successfully updated lighting at " + placePos));
             CubePos cubePos = CubePos.fromBlockCoords(placePos);
-            ICubeProvider cubeCache = ((ICubicWorld) world).getCubeCache();
+            ICubeProviderInternal cubeCache = (ICubeProviderInternal) world.getChunkProvider();
             //re-send them to player
             List<Cube> cubes = new ArrayList<>();
             cubePos.forEachWithinRange(1, (p) -> cubes.add(cubeCache.getCube(p)));

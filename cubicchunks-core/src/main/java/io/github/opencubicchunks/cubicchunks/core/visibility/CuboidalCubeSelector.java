@@ -23,7 +23,7 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.visibility;
 
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.math.ChunkPos;
 

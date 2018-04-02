@@ -27,9 +27,9 @@ import io.github.opencubicchunks.cubicchunks.core.network.PacketCubeSkyLightUpda
 import io.github.opencubicchunks.cubicchunks.core.server.CubeWatcher;
 import io.github.opencubicchunks.cubicchunks.core.server.PlayerCubeMap;
 import io.github.opencubicchunks.cubicchunks.core.util.AddressTools;
-import io.github.opencubicchunks.cubicchunks.core.util.CubePos;
-import io.github.opencubicchunks.cubicchunks.core.util.XYZAddressable;
-import io.github.opencubicchunks.cubicchunks.core.util.XYZMap;
+import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
+import io.github.opencubicchunks.cubicchunks.api.util.XYZAddressable;
+import io.github.opencubicchunks.cubicchunks.api.util.XYZMap;
 import gnu.trove.list.TShortList;
 import gnu.trove.list.array.TShortArrayList;
 import net.minecraft.util.math.BlockPos;

@@ -25,14 +25,15 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.fixes.common;
 
 import static io.github.opencubicchunks.cubicchunks.core.asm.JvmNames.CHUNK_IS_POPULATED;
 
+import io.github.opencubicchunks.cubicchunks.api.ICube;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
-import io.github.opencubicchunks.cubicchunks.api.core.ICubicWorld;
-import io.github.opencubicchunks.cubicchunks.core.world.column.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.ICubicWorld;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -61,8 +62,8 @@ public abstract class MixinWorld implements ICubicWorld {
             // vanilla compatibility
             return chunk.isPopulated();
         }
-        IColumn IColumn = (IColumn) chunk;
-        Cube cube = IColumn.getCube(Coords.blockToCube(pos.getY()));
+        IColumn column = (IColumn) chunk;
+        ICube cube = column.getCube(Coords.blockToCube(pos.getY()));
         return cube.isFullyPopulated();
     }
 }

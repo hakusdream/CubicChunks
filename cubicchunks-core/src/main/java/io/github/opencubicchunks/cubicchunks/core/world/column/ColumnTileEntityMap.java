@@ -23,7 +23,9 @@
  */
 package io.github.opencubicchunks.cubicchunks.core.world.column;
 
-import io.github.opencubicchunks.cubicchunks.core.util.Coords;
+import io.github.opencubicchunks.cubicchunks.api.IColumn;
+import io.github.opencubicchunks.cubicchunks.api.ICube;
+import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -47,14 +49,14 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
     }
 
     @Override public int size() {
-        return column.getLoadedCubes().stream()
+        return ((Collection<Cube>) column.getLoadedCubes()).stream()
                 .map(Cube::getTileEntityMap)
                 .map(Map::size)
                 .reduce((a, b) -> a + b).orElse(0);
     }
 
     @Override public boolean isEmpty() {
-        return column.getLoadedCubes().stream()
+        return ((Collection<Cube>) column.getLoadedCubes()).stream()
                 .map(Cube::getTileEntityMap)
                 .allMatch(Map::isEmpty);
     }
@@ -65,7 +67,7 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
         }
         BlockPos pos = (BlockPos) o;
         int y = Coords.blockToCube(pos.getY());
-        Cube cube = column.getCube(y); // see comment in get() for why getCube instead of getLoadedCube is used
+        ICube cube = column.getCube(y); // see comment in get() for why getCube instead of getLoadedCube is used
         return cube.getTileEntityMap().containsKey(o);
     }
 
@@ -75,7 +77,7 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
         }
         BlockPos pos = ((TileEntity) o).getPos();
         int y = Coords.blockToCube(pos.getY());
-        Cube cube = column.getLoadedCube(y);
+        ICube cube = column.getLoadedCube(y);
         assert cube != null : "Cube is null but tile entity in it exists!";
         return cube.getTileEntityMap().containsValue(o);
     }
@@ -91,13 +93,13 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
         // with the already existing TE. But the "create new TE" code will continue not knowing the TE just got loaded
         // and will replace the newly loaded one
         // so load the cube here to avoid problems. Other places use getCube() for consistency
-        Cube cube = column.getCube(y);
+        ICube cube = column.getCube(y);
         return cube.getTileEntityMap().get(o);
     }
 
     @Override public TileEntity put(BlockPos blockPos, TileEntity tileEntity) {
         int y = Coords.blockToCube(blockPos.getY());
-        Cube cube = column.getCube(y);
+        ICube cube = column.getCube(y);
         return cube.getTileEntityMap().put(blockPos, tileEntity);
     }
 
@@ -107,7 +109,7 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
         }
         BlockPos pos = (BlockPos) o;
         int y = Coords.blockToCube(pos.getY());
-        Cube cube = column.getLoadedCube(y);
+        ICube cube = column.getLoadedCube(y);
         return cube == null ? null : cube.getTileEntityMap().remove(pos);
     }
 
@@ -135,7 +137,7 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
 
             @Nonnull @Override public Iterator<BlockPos> iterator() {
                 return new Iterator<BlockPos>() {
-                    Iterator<Cube> cubes = column.getLoadedCubes().iterator();
+                    Iterator<Cube> cubes = (Iterator<Cube>) column.getLoadedCubes().iterator();
                     Iterator<BlockPos> curIt = !cubes.hasNext() ? null : cubes.next().getTileEntityMap().keySet().iterator();
                     BlockPos nextVal;
 
@@ -195,7 +197,7 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
 
             @Override public Iterator<TileEntity> iterator() {
                 return new Iterator<TileEntity>() {
-                    Iterator<Cube> cubes = column.getLoadedCubes().iterator();
+                    Iterator<Cube> cubes = (Iterator<Cube>) column.getLoadedCubes().iterator();
                     Iterator<TileEntity> curIt = !cubes.hasNext() ? null : cubes.next().getTileEntityMap().values().iterator();
                     TileEntity nextVal;
 
@@ -261,7 +263,7 @@ public class ColumnTileEntityMap implements Map<BlockPos, TileEntity> {
 
             @Nonnull @Override public Iterator<Entry<BlockPos, TileEntity>> iterator() {
                 return new Iterator<Entry<BlockPos, TileEntity>>() {
-                    Iterator<Cube> cubes = column.getLoadedCubes().iterator();
+                    Iterator<Cube> cubes = (Iterator<Cube>) column.getLoadedCubes().iterator();
                     Iterator<Entry<BlockPos, TileEntity>> curIt = !cubes.hasNext() ? null : cubes.next().getTileEntityMap().entrySet().iterator();
                     Entry<BlockPos, TileEntity> nextVal;
 

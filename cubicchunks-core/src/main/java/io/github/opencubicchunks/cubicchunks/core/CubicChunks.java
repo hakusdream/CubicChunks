@@ -23,11 +23,10 @@
  */
 package io.github.opencubicchunks.cubicchunks.core;
 
-import io.github.opencubicchunks.cubicchunks.core.debug.DebugWorldType;
 import io.github.opencubicchunks.cubicchunks.core.network.PacketDispatcher;
 import io.github.opencubicchunks.cubicchunks.core.proxy.CommonProxy;
 import io.github.opencubicchunks.cubicchunks.core.world.type.VanillaCubicWorldType;
-import io.github.opencubicchunks.cubicchunks.core.worldgen.generator.CubeGeneratorsRegistry;
+import io.github.opencubicchunks.cubicchunks.api.CubeGeneratorsRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -95,7 +94,6 @@ public class CubicChunks {
     public static final boolean DEBUG_ENABLED = System.getProperty("cubicchunks.debug", "false").equalsIgnoreCase("true");
     public static final String MODID = "cubicchunks";
     public static final String VERSION = "@@VERSION@@";
-    public static final String MALISIS_VERSION = "@@MALISIS_VERSION@@";
 
     @Nonnull
     public static Logger LOGGER = LogManager.getLogger("EarlyCubicChunks");//use some logger even before it's set. useful for unit tests
@@ -116,7 +114,6 @@ public class CubicChunks {
         config = new Config(new Configuration(e.getSuggestedConfigurationFile()));
 
         CCFixType.addFixableWorldType(VanillaCubicWorldType.create());
-        CCFixType.addFixableWorldType(DebugWorldType.create());
         LOGGER.debug("Registered world types");
 
         CCFixType.registerWalkers();
