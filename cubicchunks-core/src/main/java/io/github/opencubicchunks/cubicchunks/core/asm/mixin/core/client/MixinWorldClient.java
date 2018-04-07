@@ -26,7 +26,7 @@ package io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.client;
 import io.github.opencubicchunks.cubicchunks.core.asm.mixin.core.common.MixinWorld;
 import io.github.opencubicchunks.cubicchunks.core.client.CubeProviderClient;
 import io.github.opencubicchunks.cubicchunks.api.util.IntRange;
-import io.github.opencubicchunks.cubicchunks.core.world.ICubicWorldInternal;
+import io.github.opencubicchunks.cubicchunks.core.asm.mixin.ICubicWorldInternal;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.multiplayer.ChunkProviderClient;
 import net.minecraft.client.multiplayer.WorldClient;
