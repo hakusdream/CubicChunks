@@ -187,8 +187,6 @@ tasks {
         dependencies {
             include(dependency("org.spongepowered:mixin"))
         }
-        // need FQN because ForgeGradle needs this exact class and default imports use different one
-
         // Standard coremod manifest definitions
         manifest {
             attributes["FMLAT"] = "cubicchunks_at.cfg"
@@ -211,7 +209,7 @@ tasks {
             mappingType = ReobfMappingType.SEARGE
         }
     }
-    "build"().dependsOn("reobfCoreMixinJar")
+    "assemble"().dependsOn("reobfCoreMixinJar")
 
     "jar"(Jar::class) {
         exclude("io/github/opencubicchunks/cubicchunks/core/asm/**", "**.json", "LICENSE.txt", "log4j2.xml")

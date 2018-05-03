@@ -1,5 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import net.minecraftforge.gradle.user.ReobfTaskFactory
+import net.minecraftforge.gradle.user.TaskSingleReobf
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgePlugin
 import nl.javadude.gradle.plugins.license.LicenseExtension
@@ -7,6 +9,7 @@ import nl.javadude.gradle.plugins.license.LicensePlugin
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.operation.DescribeOp
 import org.gradle.api.internal.HasConvention
+import org.gradle.api.internal.artifacts.dependencies.DefaultProjectDependency
 import org.spongepowered.asm.gradle.plugins.MixinExtension
 import org.spongepowered.asm.gradle.plugins.MixinGradlePlugin
 import kotlin.apply
@@ -197,7 +200,8 @@ allprojects {
         replaceIn("cubicchunks/CubicChunks.java")
 
         val args = listOf(
-                "-Dfml.coreMods.load=cubicchunks.asm.CubicChunksCoreMod", //the core mod class, needed for mixins
+                // the core mod classes, needed for mixins
+                "-Dfml.coreMods.load=cubicchunks.asm.CubicChunksCoreMod,io.github.opencubicchunks.cubicchunks.core.asm.CubicGenCoreMod",
                 "-Dmixin.env.compatLevel=JAVA_8", //needed to use java 8 when using mixins
                 "-Dmixin.debug.verbose=true", //verbose mixin output for easier debugging of mixins
                 "-Dmixin.debug.export=true", //export classes from mixin to runDirectory/.mixin.out
@@ -232,7 +236,7 @@ subprojects {
     val sourceSets = the<JavaPluginConvention>().sourceSets
     val mainSourceSet = sourceSets["main"]!!
 
-    java {
+    configure<JavaPluginConvention> {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -280,11 +284,8 @@ subprojects {
     }
 
     tasks {
-        val jar = "jar"(Jar::class) {
-
-        }
-
-        "build"().dependsOn("reobfJar")
+        val jar by tasks
+        "assemble"().dependsOn("reobfJar")
 
         "javadoc"(Javadoc::class) {
             (options as StandardJavadocDocletOptions).tags = listOf("reason")
@@ -381,34 +382,81 @@ minecraft.apply {
 }
 
 val embed by configurations.creating
+val shadeEmbed by configurations.creating
 val mainJar by configurations.creating
+val shade by configurations.creating
+shade.extendsFrom(mainJar)
 
 dependencies {
     mainJar(project(":cubicchunks-core", "coreModArtifacts"))
     embed(project(":cubicchunks-core", "mainModArtifacts"))
     embed(project(":cubicchunks-api"))
     embed(project(":cubicchunks-cubicgen"))
+
+    shade(project(":cubicchunks-core", "mainModArtifacts"))
+    shade(project(":cubicchunks-api"))
+    shadeEmbed(project(":cubicchunks-cubicgen", "shadeJarAtrifact"))
 }
 
-tasks {
-    "jar"(Jar::class) {
-        dependsOn(mainJar)
-        from(zipTree(mainJar.resolvedConfiguration.getFiles().iterator().next()))
-        into("/") {
-            from(embed).exclude { it.name.toLowerCase().contains("dummy") }
-        }
+project(":") {
+    fun Jar.setupManifest(embed: Configuration) {
         manifest {
             attributes["FMLAT"] = "cubicchunks_at.cfg"
             attributes["FMLCorePlugin"] = "io.github.opencubicchunks.cubicchunks.core.asm.CubicChunksCoreMod"
             attributes["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
             attributes["TweakOrder"] = "0"
             attributes["ForceLoadAsMod"] = "true"
-            // Strictly speaking not required (right now)
-            // Allows Forge to extract the dependency to a local repository (Given that the corresponding PR is merged)
-            // If another mod ships the same dependency, it doesn't have to be extracted twice
-            println("${project.group}:${project.base.archivesBaseName}:${project.version}:core")
+            // LazyToString is a workaround to gradle attempting to resolve the configurations now,
+            // before ForgeGradle does it's magic to make deobfCompile dependencies in subprojects work
+            attributes["ContainedDeps"] = LazyToString { embed.files.joinToString(" ") { it.name } }
             attributes["Maven-Version"] = "${project.group}:${project.base.archivesBaseName}:${project.version}:core"
         }
-        classifier = "all"
+    }
+
+    tasks {
+        // Note: this jar doesn't work yet, waiting for Mixin to make it work
+        // create another jar task so that reobfJar doesn't run twice on the same files
+        // because we include files from already reobfuscated jar from a subproject
+        val depExtJar by creating(Jar::class) {
+            dependsOn(":cubicchunks-core:reobfCoreMixinJar")
+            from(zipTree(mainJar.files.single()))
+            into("/") {
+                from(embed).exclude { it.name.toLowerCase().contains("dummy") }
+            }
+
+            setupManifest(embed)
+            classifier = "all-depext"
+        }
+        val shadeJarBase by creating(ShadowJar::class) {
+            dependsOn(
+                    ":cubicchunks-core:reobfCoreMixinJar",
+                    ":cubicchunks-core:reobfJar",
+                    ":cubicchunks-api:reobfJar"
+            )
+            exclude("META-INF/MUMFREY.*")
+            configurations = listOf(shade)
+            classifier = "shade-base"
+        }
+        // this needs to be separate from the shadeJarBase task because ShadowJar doesn't support embedding jars inside jars
+        val shadeJarDepExt by creating(Jar::class) {
+            dependsOn(shadeJarBase, ":cubicchunks-cubicgen:reobfShadeJar")
+            from(zipTree(shadeJarBase.archivePath))
+            into("/") {
+                from(shadeEmbed).exclude { it.name.toLowerCase().contains("dummy") }
+            }
+            setupManifest(shadeEmbed)
+            classifier = "shade-all"
+        }
+        "assemble"().dependsOn(depExtJar, shadeJarDepExt)
+        // and make the original jar as empty as possible, we won't use it
+        "jar"(Jar::class) {
+            exclude("*")
+            archiveName = "dummyOutput.jar"
+        }
+    }
+}
+class LazyToString(val obj: () -> Any) {
+    override fun toString(): String {
+        return obj().toString()
     }
 }
